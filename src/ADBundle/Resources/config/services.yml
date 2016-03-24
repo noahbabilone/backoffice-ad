@@ -1,0 +1,4 @@
+services:
+    ad_active_directory:
+        class: ADBundle\Service\ActiveDirectory  
+        arguments: [ '%active_directory_ip_server%','%active_directory_user%','%active_directory_pass%']

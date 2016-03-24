@@ -1,0 +1,13 @@
+ad:
+    resource: "@ADBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+    
+ad_remove_user:
+    pattern: /user-remove/
+    defaults: { _controller: ADBundle:AD:removeUserAjax}
+    options:
+        expose: true
