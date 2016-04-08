@@ -6,6 +6,7 @@ use ADBundle\Entity\User;
 use ADBundle\Form\UserSessionType;
 use ADBundle\Form\UserType;
 use ADBundle\Form\UserEditType;
+use ADBundle\Form\UserEditPasswordType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,15 +27,16 @@ class ADController extends Controller
         $form = $this->createForm(new UserSessionType(), $user);
         if ($form->handleRequest($request)->isValid()) {
 
-            //A tester 
-            $session = $request->getSession();
-            $session->set('login', $user->getLogin());
-            $session->set('pass', $user->getLogin());
-            $session->set('user', $user);
 
             $ad = $this->get("ad_active_directory");
             $result = $ad->checkSession($user->getLogin(), $user->getPassword());
             if ($result) {
+                //A tester 
+                $session = $request->getSession();
+                $session->set('login', $user->getLogin());
+                $session->set('pass', $user->getLogin());
+                $session->set('user', $user);
+
                 return $this->redirectToRoute('list_users');
             }
             $error = " Login ou Mot de passe <b>Incorrect</b>.";
@@ -128,7 +130,7 @@ class ADController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function editUserAction(Request $request,$person)
+    public function editUserAction(Request $request, $person)
     {
         $ad = $this->get("ad_active_directory");
         $ad = $ad->getUser($person);
@@ -137,7 +139,7 @@ class ADController extends Controller
         $user = new User();
         $user = $user->init($ad);
         $form = $this->createForm(new UserEditType(), $user);
-        $data = array('form' => $form->createView(),'user'=>$user);
+        $data = array('form' => $form->createView(), 'user' => $user);
         if ($form->handleRequest($request)->isValid()) {
             $ad = $this->get("ad_active_directory");
             $result = $ad->editUser($user);
@@ -147,6 +149,82 @@ class ADController extends Controller
         return $this->render('ADBundle:Default:edit.html.twig', $data);
 
     }
+
+
+    /**
+     * @Route("/user-edit-pwd/{person}", name="edit_password_user")
+     * @param $person
+     * @param Request $request
+     * @return Response
+     */
+    public function editPasswordAction(Request $request, $person)
+    {
+        $ad = $this->get("ad_active_directory");
+        $adUser = $ad->getUserByLogin($person);
+        $data = array();
+        $user = new User();
+        $user = $user->init($adUser);
+
+        if (!empty($user->getDn())) {
+            $result = null;
+            $form = $this->createForm(new UserEditPasswordType(), $user);
+            $data['form'] = $form->createView();
+            $data['user'] = $user;
+            if ($form->handleRequest($request)->isValid()) {
+                $ad = $this->get("ad_active_directory");
+                $result = $ad->changePasswordUser($user);
+                $data["result"] = $result;
+            }
+        }
+        return $this->render('ADBundle:Default:edit-pwd.html.twig', $data);
+
+    }
+
+    /**
+     * @Route("/ad-edit-pwd/{person}", name="edit_password")
+     * @param $person
+     * @param Request $request
+     * @return Response
+     */
+    public function editPasswordUserAction(Request $request, $person)
+    {
+        $ad = $this->get("ad_active_directory");
+        $adUser = $ad->getUserByLogin($person);
+        $data = array();
+        $user = new User();
+        $user = $user->init($adUser);
+
+        if (!empty($user->getDn())) {
+            $result = null;
+            $form = $this->createForm(new UserEditPasswordType(), $user);
+            $data['form'] = $form->createView();
+            $data['user'] = $user;
+            if ($form->handleRequest($request)->isValid()) {
+                $ad = $this->get("ad_active_directory");
+                $result = $ad->changePasswordUser($user);
+                $data["result"] = $result;
+            }
+        }
+        return $this->render('ADBundle:Default:edit-pwd-user.html.twig', $data);
+
+    }
+
+    /**
+     * @Route("/get-by-login/{login}", name="get_by_login")
+     * @param $login
+     * @return Response
+     */
+    public function byLoginAction($login)
+    {
+        $ad = $this->get("ad_active_directory");
+        $ad = $ad->getUserByLogin($login);
+        $result = null;
+        $user = new User();
+        $user = $user->init($ad);
+        dump($user);
+        die;
+    }
+
 
     /**
      * @param Request $request
@@ -166,6 +244,23 @@ class ADController extends Controller
             } else {
                 $message = $username . " n'a pas pu être supprimé.";
             }
+        }
+        return new response (json_encode(array('result' => $result, "message" => $message)));
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function checkPasswordAjaxAction(Request $request)
+    {
+        $result = false;
+        $message = "Erreur XMLHttpRequest";
+        if ($request->isXmlHttpRequest()) {
+            $login = $request->get('login');
+            $password = $request->get('login');
+            $ad = $this->get("ad_active_directory");
+            $result = $ad->checkSession($login, $password);
         }
         return new response (json_encode(array('result' => $result, "message" => $message)));
     }

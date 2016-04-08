@@ -46,7 +46,13 @@ class User
      *
      * @ORM\Column(name="password", type="string", length=255)
      */
-    private $password;
+    private $password;    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="oldPassword", type="string", length=255)
+     */
+    private $oldPassword;
     /**
      * @var string
      *
@@ -223,6 +229,27 @@ class User
     public function getPassword()
     {
         return $this->password;
+    }
+ /**
+     * Set oldPassword
+     * @param string $oldPassword
+     * @return User
+     */
+    public function setOldPassword($oldPassword)
+    {
+        $this->oldPassword = $oldPassword;
+
+        return $this;
+    }
+
+    /**
+     * Get oldPassword
+     *
+     * @return string
+     */
+    public function getOldPassword()
+    {
+        return $this->oldPassword;
     }
 
     /**

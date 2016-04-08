@@ -8,7 +8,7 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-
+    httpProtocol: https
 framework:
     #esi:             ~
     #translator:      { fallbacks: ["%locale%"] }
@@ -37,6 +37,8 @@ twig:
     strict_variables: "%kernel.debug%"
     globals:
         ad_active_directory: "@ad_active_directory"
+        recaptcha_key_secret: "%recaptcha_key_secret%"
+        recaptcha_key_site: "%recaptcha_key_site%"
 # Assetic Configuration
 assetic:
     debug:          "%kernel.debug%"

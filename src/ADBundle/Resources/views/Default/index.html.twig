@@ -82,18 +82,19 @@
                                                 <td>{{ ad_active_directory.getData(user,"givenname") }}</td>
                                                 <td>{{ ad_active_directory.getData(user,"mail") }}</td>
                                                 <td>
-                                                    <a href="{{ path('get_user',{'login':ad_active_directory.getData(user,"distinguishedname") }) }}"
-                                                       class="btn btn-sm btn-primary"><i
-                                                                class="glyphicon glyphicon-user"></i></a>
-                                                    <a href="{{ path('edit_user',{'person':ad_active_directory.getData(user,"distinguishedname") }) }}" class="btn btn-sm btn-primary"><i
-                                                                class="glyphicon glyphicon-edit"></i></a>
+                                                    <a href="{{ path('get_user',{'login':ad_active_directory.getData(user,"samaccountname") }) }}"
+                                                       class="btn btn-xs"><i
+                                                                class="fa fa-user"></i></a>
+                                                    <a href="{{ path('edit_password_user',{'person':ad_active_directory.getData(user,"samaccountname") }) }}" 
+                                                       class="btn btn-xs btn-warning"><i class="fa fa-unlock-alt"></i></a> 
+                                                    <a href="{{ path('edit_user',{'person':ad_active_directory.getData(user,"samaccountname") }) }}" 
+                                                       class="btn btn-xs btn-info"><i
+                                                                class="fa fa-edit"></i></a>
                                                     <a href="{{ path('remove_user',{'person':ad_active_directory.getData(user,"cn") }) }}"
-                                                       class="btn btn-sm btn-danger btn-remove-user"
+                                                       class="btn btn-xs btn-danger btn-remove-user"
                                                        id="{{ ad_active_directory.getData(user,"cn") }}"
                                                        data-tree="{{ ad_active_directory.getData(user,"distinguishedname") }}"
-                                                       data-line="line-{{ key }}"
-                                                            ><i
-                                                                class="glyphicon glyphicon-remove"></i></a>
+                                                       data-line="line-{{ key }}"><i class="fa fa-remove"></i></a>
                                                 </td>
                                             </tr>
                                         {% endif %}

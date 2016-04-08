@@ -7,8 +7,7 @@
     <title>{% block title %}AD Mtvc{% endblock %}</title>
     {#{% block stylesheets %}{% endblock %}#}
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Arimo:400,700,400italic">
-
+    {#<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Arimo:400,700,400italic">#}
     {% block stylesheets %}
         {% stylesheets
         'bundles/ad/bower_components/bootstrap/dist/css/bootstrap.min.css'
@@ -29,16 +28,18 @@
     'bundles/ad/bower_components/bootstrap/dist/js/bootstrap.min.js'
     'bundles/ad/bower_components/metisMenu/dist/metisMenu.min.js'
     'bundles/fosjsrouting/js/router.js'
-    'bundles/ad/dist/js/sb-admin-2.js'
-    'bundles/ad/js/app.js'
-    %}
-{#
-    'bundles/ad/bower_components/jquery/dist/jquery.min.js'
-#}
+    'bundles/ad/dist/js/sb-admin-2.js' %}
+    {#
+        'bundles/ad/bower_components/jquery/dist/jquery.min.js'
+    #}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}
+<script src="https://www.google.com/recaptcha/api.js" async defer>
+</script>
+<script src="{{ asset("bundles/ad/js/app.js") }}" type="text/javascript"></script>
 <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
 
 </body>
 </html>
+    

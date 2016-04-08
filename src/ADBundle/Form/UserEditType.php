@@ -38,7 +38,8 @@ class UserEditType extends AbstractType
                     'attr' => array(
                         'class' => 'form-control login',
                         'placeholder' => 'Login',
-                        
+                        'autocomplete' => 'off'
+
                     ),
                 )
             )

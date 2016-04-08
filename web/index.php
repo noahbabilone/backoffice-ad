@@ -1,0 +1,1 @@
+<html><head>    <title>Maties & Chill</title>    <meta charset="UTF-8">    <meta http-equiv="refresh" content="1; URL=app_dev.php"></head><body>    <p style="text-align: center; ">        Ce projet est en cours de développement.         Redirection vers app_dev.php dans 0 secondes.        <a href="app_dev.php">Pour voir le projet</a>    </p></body></html> 

@@ -2,7 +2,7 @@ ad:
     resource: "@ADBundle/Controller/"
     type:     annotation
     prefix:   /
-
+    schemes:  [%httpProtocol%]
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
     
