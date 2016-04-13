@@ -15,20 +15,30 @@ class UserEditType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-//            ->add('name', 'text', array(
-//                    'label' => 'Nom',
+            ->add('name', 'text', array(
+                    'label' => 'Nom',
+                    'required' => true,
+                    'attr' => array(
+                        'class' => 'form-control name',
+                        'placeholder' => 'Nom',
+                    ),
+                )
+            )->add('firstName', 'text', array(
+                    'label' => 'Prenom',
+                    'required' => true,
+                    'attr' => array(
+                        'class' => 'form-control firstName',
+                        'placeholder' => 'Prenom',
+                    ),
+                )
+            )
+//            ->add('fullName', 'text', array(
+//                    'label' => 'Nom Complet',
+//                    'disabled' => true,
 //                    'required' => true,
 //                    'attr' => array(
-//                        'class' => 'form-control name',
-//                        'placeholder' => 'Nom',
-//                    ),
-//                )
-//            )->add('firstName', 'text', array(
-//                    'label' => 'Prenom',
-//                    'required' => true,
-//                    'attr' => array(
-//                        'class' => 'form-control firstName',
-//                        'placeholder' => 'Prenom',
+//                        'class' => 'form-control fullName',
+//                        'placeholder' => 'Nom Complet',
 //                    ),
 //                )
 //            )
@@ -51,84 +61,85 @@ class UserEditType extends AbstractType
                     ),
                 )
             )
-//            ->add('address', 'text', array(
-//                    'label' => 'Adresse',
-//                    'required' => false,
-//                    'attr' => array(
-//                        'class' => 'form-control',
-//                        'placeholder' => 'Adresse',
-//                    ),
-//                )
-//            )->add('street', 'number', array(
-//                    'label' => 'Rue',
-//                    'required' => false,
-//                    'attr' => array(
-//                        'class' => 'form-control',
-//                        'placeholder' => 'Rue',
-//                    ),
-//                )
-//            )
-//            ->add('state', 'number', array(
-//                    'label' => 'Code postal',
-//                    'required' => false,
-//                    'attr' => array(
-//                        'class' => 'form-control',
-//                        'placeholder' => '75001',
-//                    ),
-//                )
-//            )->add('office', 'text', array(
-//                    'label' => 'Poste',
-//                    'required' => false,
-//                    'attr' => array(
-//                        'class' => 'form-control',
-//                        'placeholder' => 'Ingénieur, Développeur,...',
-//                    ),
-//
-//                )
-//            )
-//            ->add('city', 'text', array(
-//                    'label' => 'Ville',
-//                    'attr' => array(
-//                        'class' => 'form-control',
-//                        'placeholder' => 'Paris',
-//                    ),
-//
-//                )
-//            )  ->add('service', 'choice', array(
-//                    'label' => 'Service',
-//                    'choices' => array(
-//                        "Saint-Mande"=>"42Consulting Paris",
-//                        "Luxembourg"=>"42Consulting Lux",
-//                        "Issy-Les-Moulineaux"=>"42Mtvc",
-//                    ),
-//                    'attr' => array(
-//                        'class' => 'form-control',
-//                        'placeholder' => 'service',
-//                    ),
-//
-//                )
-//            )
-//            ->add('phone', 'number', array(
-//                    'label' => 'Téléphone',
-//                    'required' => false,
-//                    'attr' => array(
-//                        'class' => 'form-control',
-//                        'placeholder' => 'Téléphone',
-//                    ),
-//
-//                )
-//            )
-//            ->add('email', 'email', array(
-//                    'label' => 'Email',
-//                    'required' => true,
-//                    'disabled'=> true,
-//                    'attr' => array(
-//                        'class' => 'form-control',
-//                        'placeholder' => 'nom.prenom',),
-//
-//                )
-//            )
-        ;
+            ->add('address', 'text', array(
+                    'label' => 'Adresse',
+                    'required' => false,
+                    'attr' => array(
+                        'class' => 'form-control',
+                        'placeholder' => 'Adresse',
+                    ),
+                )
+            )->add('street', 'number', array(
+                    'label' => 'Rue',
+                    'required' => false,
+                    'attr' => array(
+                        'class' => 'form-control',
+                        'placeholder' => 'Rue',
+                    ),
+                )
+            )
+            ->add('state', 'number', array(
+                    'label' => 'Code postal',
+                    'required' => false,
+                    'attr' => array(
+                        'class' => 'form-control',
+                        'placeholder' => '75001',
+                    ),
+                )
+            )->add('office', 'text', array(
+                    'label' => 'Poste',
+                    'required' => false,
+                    'attr' => array(
+                        'class' => 'form-control',
+                        'placeholder' => 'Ingénieur, Développeur,...',
+                    ),
+
+                )
+            )
+            ->add('city', 'text', array(
+                    'label' => 'Ville',
+                                        'required' => false,
+
+                    'attr' => array(
+                        'class' => 'form-control',
+                        'placeholder' => 'Paris',
+                    ),
+
+                )
+            )->add('service', 'choice', array(
+                    'label' => 'Service',
+                    'choices' => array(
+                        "Saint-Mande" => "42Consulting Paris",
+                        "Luxembourg" => "42Consulting Lux",
+                        "Issy-Les-Moulineaux" => "42Mtvc",
+                    ),
+                    'attr' => array(
+                        'class' => 'form-control',
+                        'placeholder' => 'service',
+                    ),
+
+                )
+            )
+            ->add('phone', 'number', array(
+                    'label' => 'Téléphone',
+                    'required' => false,
+                    'attr' => array(
+                        'class' => 'form-control',
+                        'placeholder' => 'Téléphone',
+                    ),
+
+                )
+            )
+            ->add('email', 'email', array(
+                    'label' => 'Email',
+                    'required' => true,
+                    'disabled' => true,
+                    'attr' => array(
+                        'class' => 'form-control',
+                        'placeholder' => 'nom.prenom',),
+
+                )
+            );
     }
 
     /**

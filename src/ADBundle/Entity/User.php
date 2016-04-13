@@ -37,6 +37,14 @@ class User
     /**
      * @var string
      *
+     * @ORM\Column(name="fullName", type="string", length=255)
+     */
+    private $fullName;
+
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="login", type="string", length=255)
      */
     private $login;
@@ -46,7 +54,7 @@ class User
      *
      * @ORM\Column(name="password", type="string", length=255)
      */
-    private $password;    
+    private $password;
     /**
      * @var string
      *
@@ -118,34 +126,16 @@ class User
 
     public function init($data)
     {
-//        dump($data);
-        if (isset($data[0]["givenname"][0]))
-            $this->setName($data[0]["givenname"][0]);   
-        if (isset($data[0]["firstname"][0]))
-            $this->setFirstName($data[0]["firstname"][0]);
-
-        if (isset($data[0]["physicaldeliveryofficename"][0]))
-            $this->setOffice($data[0]["physicaldeliveryofficename"][0]);
-
-        if (isset($data[0]["description"][0]))
-            $this->setOffice($data[0]["description"][0]);
-
-        if (isset($data[0]["telephonenumber"][0]))
-            $this->setPhone($data[0]["telephonenumber"][0]);
-
-//        if (isset($data[0]["givenname"][0]))
-//            $this->setName($data[0]["givenname"][0]);
-
-        if (isset($data[0]["samaccountname"][0]))
-            $this->setLogin($data[0]["samaccountname"][0]);
-
-        if (isset($data[0]["mail"][0]))
-            $this->setEmail($data[0]["mail"][0]);
-
-        if (isset($data[0]["distinguishedname"][0]))
-            $this->setDn($data[0]["distinguishedname"][0]);
-
-//        die;
+        $this->setName($this->getData($data, "sn"));
+        $this->setFirstName($this->getData($data, "givenname"));
+        $this->setFullName($this->getData($data, "displayname"));
+        $this->setOffice($this->getData($data, "physicaldeliveryofficename"));
+        //$this->setOffice($this->getData($data, "description"));
+        $this->setPhone($this->getData($data, "telephonenumber"));
+        $this->setLogin($this->getData($data, "userprincipalname"));
+        $this->setEmail($this->getData($data, "mail"));
+        $this->setDn($this->getData($data, "distinguishedname"));
+ 
         return $this;
 
     }
@@ -183,6 +173,29 @@ class User
     public function getFirstName()
     {
         return $this->firstName;
+    }
+
+    /**
+     * Set fullName
+     *
+     * @param string $fullName
+     * @return User
+     */
+    public function setFullName($fullName)
+    {
+        $this->fullName = $fullName;
+
+        return $this;
+    }
+
+    /**
+     * Get fullName
+     *
+     * @return string
+     */
+    public function getFullName()
+    {
+        return $this->fullName;
     }
 
     /**
@@ -230,7 +243,8 @@ class User
     {
         return $this->password;
     }
- /**
+
+    /**
      * Set oldPassword
      * @param string $oldPassword
      * @return User
@@ -504,5 +518,15 @@ class User
     public function getDn()
     {
         return $this->dn;
+    }
+
+    /**
+     * @param $array
+     * @param $attr
+     * @return null
+     */
+    function getData($array, $attr)
+    {
+        return isset($array[0][$attr][0]) ? $array[0][$attr][0] : null;
     }
 }

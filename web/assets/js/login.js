@@ -1,0 +1,1 @@
+$( document ).ready(function() {    console.log( "ready!" );        $('#connexion').submit(function(e){               if(!$.trim($(".login").val())){            console.log("login vide");        }           if(!$.trim($(".password").val())){            console.log("login vide");        }        e.preventDefault();    });});

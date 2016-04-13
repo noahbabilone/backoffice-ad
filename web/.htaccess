@@ -47,7 +47,8 @@ DirectoryIndex app.php
     #   following RewriteCond (best solution)
     RewriteCond %{ENV:REDIRECT_STATUS} ^$
     RewriteRule ^app\.php(/(.*)|$) %{ENV:BASE}/$2 [R=301,L]
-
+#    RewriteRule ^/articles/lire-([0-9]+)-([a-z0-9\-]+)\.html$ /index.php?rub=lireArticle&id=$1 [L]
+    
     # If the requested filename exists, simply serve it.
     # We only want to let Apache serve files and not directories.
     RewriteCond %{REQUEST_FILENAME} -f

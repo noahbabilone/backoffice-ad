@@ -12,9 +12,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use \Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
+
 
 class ADController extends Controller
 {
+    protected $accessControl = array('administrator', "yannick.said@42consulting.fr");
+
     /**
      * @Route("/",name="login")
      * @param Request $request
@@ -22,22 +26,27 @@ class ADController extends Controller
      */
     public function loginAction(Request $request)
     {
+        $ad = $this->get("ad_active_directory");
+        if ($request->getSession()->has('user')) {
+            if (in_array($ad->base64Decode($request->getSession()->get('user')), $this->accessControl)) {
+                return $this->redirectToRoute('list_users');
+            }
+            return $this->redirectToRoute('edit_password', array('person' => $request->getSession()->get('user')), 301);
+        }
+
         $user = new User();
         $error = "";
         $form = $this->createForm(new UserSessionType(), $user);
         if ($form->handleRequest($request)->isValid()) {
 
-
-            $ad = $this->get("ad_active_directory");
             $result = $ad->checkSession($user->getLogin(), $user->getPassword());
             if ($result) {
-                //A tester 
-                $session = $request->getSession();
-                $session->set('login', $user->getLogin());
-                $session->set('pass', $user->getLogin());
-                $session->set('user', $user);
+                $request->getSession()->set('user', $ad->base64Encode($user->getLogin()));
+                if (in_array(strtolower($user->getLogin()), $this->accessControl)) {
+                    return $this->redirectToRoute('list_users');
+                }
 
-                return $this->redirectToRoute('list_users');
+                return $this->redirectToRoute('edit_password', array('person' => $ad->base64Encode($user->getLogin())), 301);
             }
             $error = " Login ou Mot de passe <b>Incorrect</b>.";
 
@@ -49,10 +58,41 @@ class ADController extends Controller
     }
 
     /**
-     * @Route("/users", name="list_users")
+     * @Route("/admin",name="login_admin")
+     * @param Request $request
+     * @return RedirectResponse|Response
      */
-    public function listUsersAction()
+    public function loginAdminAction(Request $request)
     {
+        $user = new User();
+        $error = "";
+        $form = $this->createForm(new UserSessionType(), $user);
+        if ($form->handleRequest($request)->isValid()) {
+            
+            $ad = $this->get("ad_active_directory");
+            $result = $ad->checkSession($user->getLogin(), $user->getPassword());
+            if ($result) {
+                $request->getSession()->set('user', $ad->base64Encode($user->getLogin()));
+                return $this->redirectToRoute('list_users');
+            }
+            $error = " Login ou Mot de passe <b>Incorrect</b>.";
+        }
+        return $this->render('ADBundle:Default:login-1.html.twig', array(
+            'form' => $form->createView(),
+            "error" => $error,
+        ));
+    }
+
+    /**
+     * @Route("/list-users", name="list_users")
+     * @param Request $request
+     * @return RedirectResponse|Response
+     */
+    public function listUsersAction(Request $request)
+    {
+        if (!$request->getSession()->has('user')) {
+            return $this->redirectToRoute('login', array(), 301);
+        }
         $ad = $this->get("ad_active_directory");
         $users = $ad->getAllUser();
         return $this->render('ADBundle:Default:index.html.twig', array(
@@ -62,9 +102,13 @@ class ADController extends Controller
 
     /**
      * @Route("/users/{ou}", name="users_by_ou")
+     * @param $ou
+     * @return Response
      */
     public function UsersByOuAction($ou)
     {
+
+        $this->checkSession();
         $ad = $this->get("ad_active_directory");
 
         $tabOU = array("Issy-Les-Moulineaux", "Saint-mande", "Luxembourg", "Compteutilisateur", "Compteutilisateur");
@@ -80,9 +124,12 @@ class ADController extends Controller
 
     /**
      * @Route("/user/{login}", name="get_user")
+     * @param $login
+     * @return
      */
     public function getUserAction($login)
     {
+        $this->checkSession();
         $ad = $this->get("ad_active_directory");
         $user = $ad->getUser($login);
 
@@ -100,6 +147,7 @@ class ADController extends Controller
      */
     public function addUserAction(Request $request)
     {
+        $this->checkSession();
         $result = null;
         $user = new User();
         $form = $this->createForm(new UserType(), $user);
@@ -119,6 +167,7 @@ class ADController extends Controller
      */
     public function removeUserAction($person)
     {
+        $this->checkSession();
         $ad = $this->get("ad_active_directory");
         $ad->removeUser($person);
         return $this->redirectToRoute('list_users');
@@ -132,18 +181,22 @@ class ADController extends Controller
      */
     public function editUserAction(Request $request, $person)
     {
+        if (!$request->getSession()->has('user')) {
+            return $this->redirectToRoute('login', array(), 301);
+        }
         $ad = $this->get("ad_active_directory");
-        $ad = $ad->getUser($person);
-//
+        $person = $ad->base64Decode($person);
+        $adUser = $ad->getUserByUserPrincipalName($person);
         $result = null;
         $user = new User();
-        $user = $user->init($ad);
+        $user = $user->init($adUser);
         $form = $this->createForm(new UserEditType(), $user);
-        $data = array('form' => $form->createView(), 'user' => $user);
+        $data = array('form' => $form->createView(), 'user' => $user,"test"=>$adUser);
         if ($form->handleRequest($request)->isValid()) {
-            $ad = $this->get("ad_active_directory");
             $result = $ad->editUser($user);
             $data["result"] = $result;
+            dump($user);
+            die;
 
         }
         return $this->render('ADBundle:Default:edit.html.twig', $data);
@@ -152,60 +205,36 @@ class ADController extends Controller
 
 
     /**
-     * @Route("/user-edit-pwd/{person}", name="edit_password_user")
-     * @param $person
-     * @param Request $request
-     * @return Response
-     */
-    public function editPasswordAction(Request $request, $person)
-    {
-        $ad = $this->get("ad_active_directory");
-        $adUser = $ad->getUserByLogin($person);
-        $data = array();
-        $user = new User();
-        $user = $user->init($adUser);
-
-        if (!empty($user->getDn())) {
-            $result = null;
-            $form = $this->createForm(new UserEditPasswordType(), $user);
-            $data['form'] = $form->createView();
-            $data['user'] = $user;
-            if ($form->handleRequest($request)->isValid()) {
-                $ad = $this->get("ad_active_directory");
-                $result = $ad->changePasswordUser($user);
-                $data["result"] = $result;
-            }
-        }
-        return $this->render('ADBundle:Default:edit-pwd.html.twig', $data);
-
-    }
-
-    /**
-     * @Route("/ad-edit-pwd/{person}", name="edit_password")
+     * @Route("/active-directory/user={person}.html", name="edit_password")
      * @param $person
      * @param Request $request
      * @return Response
      */
     public function editPasswordUserAction(Request $request, $person)
     {
+        if (!$request->getSession()->has('user')) {
+            return $this->redirectToRoute('login', array(), 301);
+        }
+
         $ad = $this->get("ad_active_directory");
-        $adUser = $ad->getUserByLogin($person);
+        $person = $ad->base64Decode($person);
+        $adUser = $ad->getUserByUserPrincipalName($person);
         $data = array();
         $user = new User();
+
         $user = $user->init($adUser);
 
-        if (!empty($user->getDn())) {
+        if (!empty($user->getDn() && !in_array(strtolower($person), $this->accessControl))) {
             $result = null;
             $form = $this->createForm(new UserEditPasswordType(), $user);
             $data['form'] = $form->createView();
             $data['user'] = $user;
             if ($form->handleRequest($request)->isValid()) {
-                $ad = $this->get("ad_active_directory");
                 $result = $ad->changePasswordUser($user);
                 $data["result"] = $result;
             }
         }
-        return $this->render('ADBundle:Default:edit-pwd-user.html.twig', $data);
+        return $this->render('ADBundle:Default:edit-pwd-user-1.html.twig', $data);
 
     }
 
@@ -225,6 +254,16 @@ class ADController extends Controller
         die;
     }
 
+    /**
+     * @Route("/logout", name="logout")
+     */
+    public function disconnectionAction()
+    {
+        $this->get('session')->remove('user');
+        $this->get('session')->clear();
+        return $this->redirectToRoute('login', array(), 301);
+
+    }
 
     /**
      * @param Request $request
@@ -248,21 +287,16 @@ class ADController extends Controller
         return new response (json_encode(array('result' => $result, "message" => $message)));
     }
 
+
     /**
-     * @param Request $request
-     * @return JsonResponse
+     * @return RedirectResponse
      */
-    public function checkPasswordAjaxAction(Request $request)
+    protected function  checkSession()
     {
-        $result = false;
-        $message = "Erreur XMLHttpRequest";
-        if ($request->isXmlHttpRequest()) {
-            $login = $request->get('login');
-            $password = $request->get('login');
-            $ad = $this->get("ad_active_directory");
-            $result = $ad->checkSession($login, $password);
-        }
-        return new response (json_encode(array('result' => $result, "message" => $message)));
+        if (!$this->get('session')->has('user')) {
+            return $this->redirectToRoute('login', array(), 301);
+        } 
     }
+
 
 }

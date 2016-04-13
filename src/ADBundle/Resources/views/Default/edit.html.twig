@@ -13,13 +13,14 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h3 class="page-header">AddUser</h3>
+                    <h3 class="page-header"><i class="fa fa-edit fa-fw"></i>Edit</h3>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
-            {#{{ dump(users) }}#}
+            {#{{ dump(user) }}#}
             <div class="row">
                 <div class="col-lg-12">
+                    {#{{ dump(test) }}#}
                     {% if result is defined %}
                         {% if result %}
                             <div class="alert alert-success" role="alert">
@@ -45,7 +46,7 @@
                     {% endif %}
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-user-plus fa-fw"></i> Ajout utilisateur
+                            <i class="fa fa-user fa-fw"></i> Modification utilisateur 
                             <div class="pull-right">
                                 <a href="{{ path('list_users') }}" class="btn btn-success btn-xs"> <i
                                             class="fa fa-users fa-fw"></i>Liste
@@ -67,7 +68,7 @@
                                                     {{ form_label(form.name) }}
                                                     <div class="input-group">
                                                         <div class="input-group-addon">
-                                                            <i class="fa fa-user"></i>
+                                                            <i class="fa fa-user fa-fw"></i>
                                                         </div>
                                                         {{ form_widget(form.name) }}
                                                     </div>
@@ -80,7 +81,7 @@
                                                     {{ form_label(form.firstName) }}
                                                     <div class="input-group">
                                                         <div class="input-group-addon">
-                                                            <i class="fa fa-user"></i>
+                                                            <i class="fa fa-user fa-fw"></i>
                                                         </div>
                                                         {{ form_widget(form.firstName) }}
                                                     </div>
@@ -93,7 +94,7 @@
                                         <div class="form-group">
                                             {{ form_label(form.service) }}
                                             <div class="input-group">
-                                                <div class="input-group-addon"><i class="fa fa-sitemap"></i></div>
+                                                <div class="input-group-addon"><i class="fa fa-sitemap fa-fw"></i></div>
                                                 {{ form_widget(form.service) }}
                                             </div>
                                         </div>
@@ -104,7 +105,7 @@
                                             {{ form_label(form.login) }}
 
                                             <div class="input-group">
-                                                <div class="input-group-addon"><i class="fa fa-user"></i>
+                                                <div class="input-group-addon"><i class="fa fa-user fa-fw"></i>
                                                 </div>
                                                 {{ form_widget(form.login) }}
                                             </div>
@@ -115,7 +116,7 @@
                                         <div class="form-group">
                                             {{ form_label(form.password) }}
                                             <div class="input-group">
-                                                <div class="input-group-addon"><i class="fa fa-unlock-alt"></i>
+                                                <div class="input-group-addon"><i class="fa fa-unlock-alt fa-fw"></i>
                                                 </div>
                                                 {{ form_widget(form.password) }}
                                             </div>
@@ -125,12 +126,12 @@
                                                 Confirmation Mot de passe</label>
 
                                             <div class="input-group">
-                                                <div class="input-group-addon"><i class="fa fa-unlock-alt"></i>
+                                                <div class="input-group-addon"><i class="fa fa-unlock-alt fa-fw"></i>
                                                 </div>
                                                 <input type="password" placeholder="Confirmation mot de passe"
                                                        id="confirm-password"
                                                        class="form-control confirm-pwd"
-                                                       name="confirm-password" autocomplete="off" required="required"/>
+                                                       name="confirm-password" autocomplete="off"/>
                                             </div>
                                         </div>
                                     {% endif %}
@@ -165,7 +166,7 @@
                                                     {{ form_label(form.address) }}
                                                     <div class="input-group">
                                                         <div class="input-group-addon">
-                                                            <i class="fa fa-location-arrow"></i>
+                                                            <i class="fa fa-location-arrow fa-fw"></i>
                                                         </div>
                                                         {{ form_widget(form.address) }}
                                                     </div>
@@ -193,7 +194,7 @@
                                                     {{ form_label(form.city) }}
                                                     <div class="input-group">
                                                         <div class="input-group-addon">
-                                                            <i class="fa fa-home"></i>
+                                                            <i class="fa fa-home fa-fw"></i>
                                                         </div>
                                                         {{ form_widget(form.city) }}
                                                     </div>
@@ -209,7 +210,7 @@
                                                 <div class="form-group">
                                                     <div class="input-group">
                                                         <div class="input-group-addon">
-                                                            <i class="fa fa-envelope"></i>
+                                                            <i class="fa fa-envelope fa-fw"></i>
                                                         </div>
                                                         {{ form_widget(form.email) }}
 
@@ -238,7 +239,7 @@
 
                                                     <div class="input-group">
                                                         <div class="input-group-addon">
-                                                            <i class="fa fa-phone"></i>
+                                                            <i class="fa fa-phone fa-fw"></i>
                                                         </div>
                                                         {{ form_widget(form.phone) }}
                                                     </div>
@@ -250,7 +251,7 @@
                                                     {{ form_label(form.office) }}
                                                     <div class="input-group">
                                                         <div class="input-group-addon"><i
-                                                                    class="fa fa-graduation-cap"></i>
+                                                                    class="fa fa-graduation-cap fa-fw"></i>
                                                         </div>
                                                         {{ form_widget(form.office) }}
                                                     </div>
@@ -261,8 +262,8 @@
 
                                 </div>
 
-                                <div class="col-sm-12">
-                                    <button type="submit" class="btn btn-sm btn-success btn-sm" id="save-edit">
+                                <div class="col-sm-4">
+                                    <button type="submit" class="btn btn-sm btn-success btn-block" id="save-edit">
                                         Enregistrer
                                     </button>
                                 </div>

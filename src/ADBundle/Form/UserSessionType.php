@@ -15,15 +15,20 @@ class UserSessionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-           ->add('login', 'text', array(
+            ->add('login', 'text', array(
+                'label' => 'Email',
                 'attr' => array(
-                    'class' => 'form-control',
-                    'placeholder' => 'Login',),
+                    'class' => 'form-control validate email',
+                   // 'placeholder' => 'Email',
+                    ),
             ))
             ->add('password', 'password', array(
+                'label' => 'Mot de passe',
                 'attr' => array(
-                    'class' => 'form-control',
-                    'placeholder' => 'Mot de passe',),
+                    'class' => 'form-control validate password',
+                    'data-placement'=>'right', 
+                   // 'placeholder' => 'Mot de passe',
+                    ),
 
             ));
     }

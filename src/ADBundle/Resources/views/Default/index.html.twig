@@ -47,7 +47,8 @@
                                         <li><a href="{{ path('users_by_ou',{'ou': 'Saint-mande'}) }}">Saint Mande</a>
                                         </li>
                                         <li class="divider"></li>
-                                        <li><a href="{{ path('users_by_ou',{'ou': 'Compteutilisateur'}) }}">compte utilsiateur</a>
+                                        <li><a href="{{ path('users_by_ou',{'ou': 'Compteutilisateur'}) }}">compte
+                                                utilsiateur</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -64,8 +65,8 @@
                                     <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Nom</th>
                                         <th>Login</th>
+                                        <th>Nom</th>
                                         <th>Email</th>
                                         <th>actions</th>
                                     </tr>
@@ -77,24 +78,20 @@
                                         {% if  key != "count" or key =="0" %}
                                             <tr id="line-{{ key }}">
                                                 <td>{{ key }}</td>
-                                                <td>{{ ad_active_directory.getData(user,"cn") }}</td>
                                                 <td>{{ ad_active_directory.getData(user,"samaccountname") }}</td>
-                                                <td>{{ ad_active_directory.getData(user,"givenname") }}</td>
+                                                <td>{{ ad_active_directory.getData(user,"displayname") }}</td>
                                                 <td>{{ ad_active_directory.getData(user,"mail") }}</td>
                                                 <td>
-                                                    <a href="{{ path('get_user',{'login':ad_active_directory.getData(user,"samaccountname") }) }}"
-                                                       class="btn btn-xs"><i
-                                                                class="fa fa-user"></i></a>
-                                                    <a href="{{ path('edit_password_user',{'person':ad_active_directory.getData(user,"samaccountname") }) }}" 
-                                                       class="btn btn-xs btn-warning"><i class="fa fa-unlock-alt"></i></a> 
-                                                    <a href="{{ path('edit_user',{'person':ad_active_directory.getData(user,"samaccountname") }) }}" 
-                                                       class="btn btn-xs btn-info"><i
-                                                                class="fa fa-edit"></i></a>
+                                                    {% set login=ad_active_directory.getData(user,"userprincipalname") %}
+                                                    <a href="{{ path('get_user',{'login':login }) }}"
+                                                       class="btn btn-xs btn-info"><i class="fa fa-user fa-fw"></i></a>
+                                                    <a href="{{ path('edit_user',{'person':ad_active_directory.base64Encode(login) }) }}"
+                                                       class="btn btn-xs btn-primary"><i class="fa fa-edit fa-fw"></i></a>
                                                     <a href="{{ path('remove_user',{'person':ad_active_directory.getData(user,"cn") }) }}"
                                                        class="btn btn-xs btn-danger btn-remove-user"
                                                        id="{{ ad_active_directory.getData(user,"cn") }}"
                                                        data-tree="{{ ad_active_directory.getData(user,"distinguishedname") }}"
-                                                       data-line="line-{{ key }}"><i class="fa fa-remove"></i></a>
+                                                       data-line="line-{{ key }}"><i class="fa fa-remove fa-fw"></i></a>
                                                 </td>
                                             </tr>
                                         {% endif %}

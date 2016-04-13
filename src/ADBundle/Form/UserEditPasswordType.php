@@ -21,24 +21,23 @@ class UserEditPasswordType extends AbstractType
                     'disabled' => true,
                     'attr' => array(
                         'class' => 'form-control login',
-                        'placeholder' => 'Login',
+                        'placeholder' => 'Email',
                         'autocomplete' => 'off'
-
                     ),
                 )
             )
             ->add('password', 'password', array(
-                    'label' => 'Not de passe',
+                    'label' => 'Nouveau mot de passe',
                     'attr' => array(
                         'class' => 'form-control password',
                         'placeholder' => 'Nouveau mot de passe',
                     ),
                 )
             )->add('oldPassword', 'password', array(
-                    'label' => 'Ancien mot de passe',
+                    'label' => 'Mot de passe actuel',
                     'attr' => array(
-                        'class' => 'form-control old-dpassword',
-                        'placeholder' => 'Ancien mot de passe',
+                        'class' => 'form-control old-password',
+                        'placeholder' => 'Mot de passe actuel',
                     ),
                 )
             )
