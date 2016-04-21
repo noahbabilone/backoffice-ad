@@ -8,8 +8,6 @@
       <link rel="stylesheet" href="{{ asset_url }}"/>
       {% endstylesheets %}
   {% endblock %}
-
-
 {% block body %}
 
     {% if form is defined %}
@@ -18,13 +16,18 @@
             <div class="row" id="login">
 
                 <div class="col-md-5 col-md-offset-3 text-center">
-                    <img class="logo-42" src="{{ asset("images/1.png") }}" alt="logo"/>
+                    <img class="logo-42" src="{{ asset("images/42consulting-groupe.png") }}" alt="logo"/>
                 </div>
 
-
-                <div class="col-md-5 col-md-offset-3">
+                <div class="col-md-5 col-md-offset-3" style="margin-bottom: 15px; margin-top: 2px;">
+                      <div class="alert alert-danger hide text-center" id="field-message-error" role="alert" style="margin-bottom:25px;">
+                        {#<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>#}
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Error:</span>
+                        <span class="message-error"></span>
+                    </div>
                     {% if error is defined and error %}
-                        <div class="alert alert-warning" role="alert" style="margin-bottom:15px;">
+                        <div class="alert alert-danger text-center" id="error-connexion" role="alert" style="margin-bottom:25px;">
                             <p>
                                 <i class="fa fa-warning"></i>
                                 {{ error | raw }}</p>
@@ -33,25 +36,27 @@
                     {{ form_start(form, { 'method': 'POST','attr': { 'role':'form'} }) }}
                     {#<fieldset>#}
                     {% if form.login is defined %}
-                        {#{{ form_label(form.login) }}#}
-                        <div class="input-field">
+                       
+                        <div class="form-group has-feedback" id="field-login">
+                            <div class="input-field">
                             {{ form_widget(form.login) }}
-                            <label for="user_session_login"><i class="fa fa-envelope"></i> Email</label>
+                            <label for="user_session_login"><i class="fa fa-envelope fa-fw"></i> Email</label>
+                            </div>
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 
                         </div>
 
                     {% endif %}
                     {% if form.password is defined %}
-
-                        <div class="input-field">
-                            {{ form_widget(form.password) }}
-                            {#{{ form_label(form.password) }}#}
-                            <label for="user_session_password"><i class="fa fa-key"></i> Mot de passe</label>
+                        <div class="form-group has-feedback" id="field-password">
+                            <div class="input-field">
+                                {{ form_widget(form.password) }}
+                                <label for="user_session_password"><i class="fa fa-key fa-fw"></i> Mot de passe</label>
+                            </div>
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 
                         </div>
                     {% endif %}
-
-               
 
 
                     <div class="checkbox">
@@ -60,9 +65,9 @@
                         </label>
                     </div>
                     <!-- Change this to a button or input when using this as a form -->
-                    <button id="connexion" type="submit"
-                            class="btn btn-sm btn-danger btn-block waves-effect waves-light red darken-3">
-                       Connexion
+                    <button id="btn-connexion" type="submit"
+                            class="btn btn-sm btn-danger btn-block waves-effect waves-light deep-orange darken-2">
+                        <span class="glyphicon glyphicon-off"></span> Connexion
                     </button>
                     {#</fieldset>#}
                     {{ form_end(form) }}
@@ -77,7 +82,8 @@
 {% block javascripts %}
     {{ parent() }}
     {% javascripts
-    'https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js' %}
+    'https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js'
+    'assets/js/login.js' %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}

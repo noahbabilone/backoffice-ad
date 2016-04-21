@@ -18,7 +18,7 @@ class UserSessionType extends AbstractType
             ->add('login', 'text', array(
                 'label' => 'Email',
                 'attr' => array(
-                    'class' => 'form-control validate email',
+                    'class' => 'form-control validate login',
                    // 'placeholder' => 'Email',
                     ),
             ))

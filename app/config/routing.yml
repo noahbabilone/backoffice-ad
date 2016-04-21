@@ -11,3 +11,8 @@ ad_remove_user:
     defaults: { _controller: ADBundle:AD:removeUserAjax}
     options:
         expose: true
+ad_get_user:
+    pattern: /get-user/
+    defaults: { _controller: ADBundle:AD:getUserAjax}
+    options:
+        expose: true

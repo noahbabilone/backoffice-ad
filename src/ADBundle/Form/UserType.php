@@ -21,6 +21,7 @@ class UserType extends AbstractType
                     'attr' => array(
                         'class' => 'form-control name',
                         'placeholder' => 'Nom',
+                        'autocomplete' => 'off'
                     ),
                 )
             )->add('firstName', 'text', array(
@@ -29,6 +30,7 @@ class UserType extends AbstractType
                     'attr' => array(
                         'class' => 'form-control firstName',
                         'placeholder' => 'Prenom',
+                        'autocomplete' => 'off'
                     ),
                 )
             )
@@ -38,6 +40,7 @@ class UserType extends AbstractType
                     'attr' => array(
                         'class' => 'form-control login',
                         'placeholder' => 'Login',
+                        'autocomplete' => 'off'
                     ),
                 )
             )
@@ -45,8 +48,9 @@ class UserType extends AbstractType
                     'label' => 'Mot de passe',
                     'required' => true,
                     'attr' => array(
-                        'class' => 'form-control',
+                        'class' => 'form-control password',
                         'placeholder' => 'Mot de passe',
+                        'autocomplete' => 'off'
                     ),
                 )
             )
@@ -56,37 +60,33 @@ class UserType extends AbstractType
                     'attr' => array(
                         'class' => 'form-control',
                         'placeholder' => 'Adresse',
-                    ),
-                )
-            )->add('street', 'number', array(
-                    'label' => 'Rue',
-                    'required' => false,
-                    'attr' => array(
-                        'class' => 'form-control',
-                        'placeholder' => 'Rue',
+                        'autocomplete' => 'off'
                     ),
                 )
             )
-            ->add('state', 'number', array(
+            ->add('postalCode', 'number', array(
                     'label' => 'Code postal',
                     'required' => false,
                     'attr' => array(
                         'class' => 'form-control',
                         'placeholder' => '75001',
+                        'autocomplete' => 'off'
                     ),
                 )
-            )->add('office', 'text', array(
-                    'label' => 'Poste',
+            )->add('description', 'textarea', array(
+                    'label' => 'Description',
                     'required' => false,
                     'attr' => array(
                         'class' => 'form-control',
                         'placeholder' => 'Ingénieur, Développeur,...',
+                        'autocomplete' => 'off'
                     ),
 
                 )
             )
             ->add('city', 'text', array(
                     'label' => 'Ville',
+                                        'required' => false,
                     'attr' => array(
                         'class' => 'form-control',
                         'placeholder' => 'Paris',
@@ -96,9 +96,12 @@ class UserType extends AbstractType
             )  ->add('service', 'choice', array(
                     'label' => 'Service',
                     'choices' => array(
-                        "Saint-Mande"=>"42Consulting Paris",
-                        "Luxembourg"=>"42Consulting Lux",
-                        "Issy-Les-Moulineaux"=>"42Mtvc",
+                       "42Consulting Paris" => "Saint-Mandé",
+                        "42Consulting Lux" => "Luxembourg",
+                        "42MediaTelecom" => "Issy-Les-Moulineaux",
+                        "test" => "test",
+                        "test2" => "test2",
+                        "test3" => "test3",
                     ),
                     'attr' => array(
                         'class' => 'form-control',
@@ -107,23 +110,42 @@ class UserType extends AbstractType
 
                 )
             )
+            ->add('at', 'choice', array(
+                    'label' => ' ',
+                    'choices' => array(
+                        "42consulting.fr"=>"42consulting.fr",
+                        "42consulting.lu"=>"42consulting.lu",
+                        "42Madiatvcom.fr"=>"42Mediatvcom.fr",
+                    ),
+                    'attr' => array(
+                        'class' => 'form-control',
+                        'placeholder' => 'service',
+                    ),
+
+                )
+            )
+            
+            
             ->add('phone', 'number', array(
                     'label' => 'Téléphone',
                     'required' => false,
                     'attr' => array(
                         'class' => 'form-control',
                         'placeholder' => 'Téléphone',
+                        'autocomplete' => 'off'
                     ),
 
                 )
-            )
+            )  
             ->add('email', 'email', array(
                     'label' => 'Email',
                     'required' => true,
                     'disabled'=> true,
                     'attr' => array(
-                        'class' => 'form-control',
-                        'placeholder' => 'nom.prenom',),
+                        'class' => 'form-control email',
+                        'placeholder' => 'nom.prenom',
+                        'autocomplete' => 'off'
+                        ),
 
                 )
             );

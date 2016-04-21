@@ -80,12 +80,7 @@ class User
      * @ORM\Column(name="phone", type="string", length=255)
      */
     private $phone;
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="street", type="string", length=255)
-     */
-    private $street;
+
     /**
      * @var string
      *
@@ -95,9 +90,15 @@ class User
     /**
      * @var string
      *
-     * @ORM\Column(name="state", type="string", length=255)
+     * @ORM\Column(name="country", type="string", length=255)
      */
-    private $state;
+    private $country;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="postalCode", type="string", length=255)
+     */
+    private $postalCode;
     /**
      * @var string
      *
@@ -124,18 +125,44 @@ class User
     private $description;
 
 
+    /**
+     * @var text
+     *
+     * @ORM\Column(name="at", type="string", length=255)
+     */
+    private $at;
+
+    private $OU = array("Saint-Mandé", "Luxembourg", "Issy-Les-Moulineaux", "test", "test2",'test3');
+
+
     public function init($data)
     {
-        $this->setName($this->getData($data, "sn"));
-        $this->setFirstName($this->getData($data, "givenname"));
-        $this->setFullName($this->getData($data, "displayname"));
-        $this->setOffice($this->getData($data, "physicaldeliveryofficename"));
-        //$this->setOffice($this->getData($data, "description"));
-        $this->setPhone($this->getData($data, "telephonenumber"));
-        $this->setLogin($this->getData($data, "userprincipalname"));
-        $this->setEmail($this->getData($data, "mail"));
-        $this->setDn($this->getData($data, "distinguishedname"));
- 
+        if (!empty($data)) {
+
+            $this->setName($this->getData($data, "sn"));
+            $this->setFirstName($this->getData($data, "givenname"));
+            $this->setFullName($this->getData($data, "displayname"));
+//        $this->setOffice($this->getData($data, "physicaldeliveryofficename"));
+            $this->setAddress($this->getData($data, "st"));
+            $this->setCity($this->getData($data, "l"));
+            $this->setPostalCode($this->getData($data, "postalcode"));
+            $this->setDescription($this->getData($data, "description"));
+            $this->setPhone($this->getData($data, "telephonenumber"));
+            $login = $this->getData($data, "userprincipalname");
+            $at = explode("@", $login);
+            $this->setLogin($login);
+            if (count($at) > 0) {
+                $this->setAt(substr(strstr($login, '@', false), 1));
+            }
+            if (!empty($this->getName()) && !empty($this->getFirstName())) {
+                $this->setEmail($this->getFirstName() . "." . $this->getName());
+            }
+            $dn = $this->getData($data, "distinguishedname");
+            $this->setDn($dn);
+            $this->setService($this->service($dn));
+
+
+        }
         return $this;
 
     }
@@ -160,7 +187,7 @@ class User
      */
     public function setFirstName($firstName)
     {
-        $this->firstName = $firstName;
+        $this->firstName = ucfirst($firstName);
 
         return $this;
     }
@@ -183,7 +210,7 @@ class User
      */
     public function setFullName($fullName)
     {
-        $this->fullName = $fullName;
+        $this->fullName = ucfirst($fullName);
 
         return $this;
     }
@@ -312,27 +339,28 @@ class User
         return $this->phone;
     }
 
+
     /**
-     * Set street
+     * Set country
      *
-     * @param string $street
+     * @param string $country
      * @return User
      */
-    public function setStreet($street)
+    public function setCountry($country)
     {
-        $this->street = $street;
+        $this->country = $country;
 
         return $this;
     }
 
     /**
-     * Get street
+     * Get country
      *
      * @return string
      */
-    public function getStreet()
+    public function getCountry()
     {
-        return $this->street;
+        return $this->country;
     }
 
     /**
@@ -359,26 +387,26 @@ class User
     }
 
     /**
-     * Set state
+     * Set postalCode
      *
-     * @param string $state
+     * @param string $postalCode
      * @return User
      */
-    public function setState($state)
+    public function setPostalCode($postalCode)
     {
-        $this->state = $state;
+        $this->postalCode = $postalCode;
 
         return $this;
     }
 
     /**
-     * Get state
+     * Get postalCode
      *
      * @return string
      */
-    public function getState()
+    public function getPostalCode()
     {
-        return $this->state;
+        return $this->postalCode;
     }
 
     /**
@@ -435,6 +463,7 @@ class User
      */
     public function setService($service)
     {
+
         $this->service = $service;
 
         return $this;
@@ -498,6 +527,29 @@ class User
     }
 
     /**
+     * Get at
+     *
+     * @return string
+     */
+    public function getAt()
+    {
+        return $this->at;
+    }
+
+    /**
+     * Set at
+     *
+     * @param string $at
+     * @return User
+     */
+    public function setAt($at)
+    {
+        $this->at = $at;
+
+        return $this;
+    }
+
+    /**
      * Set dn
      *
      * @param string $dn
@@ -509,6 +561,7 @@ class User
 
         return $this;
     }
+
 
     /**
      * Get dn
@@ -528,5 +581,16 @@ class User
     function getData($array, $attr)
     {
         return isset($array[0][$attr][0]) ? $array[0][$attr][0] : null;
+    }
+
+    function service($dn)
+    {
+   
+        foreach ($this->OU as $ou) {
+            if (strpos(strtolower($dn), strtolower("OU=" . $ou)) !== false) {
+               return $ou;
+            }
+        }
+        return  strtolower($dn);
     }
 }

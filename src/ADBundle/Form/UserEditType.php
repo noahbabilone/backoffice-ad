@@ -55,6 +55,7 @@ class UserEditType extends AbstractType
             )
             ->add('password', 'password', array(
                     'label' => 'Nouveau Mot de passe',
+                    'required' => false,
                     'attr' => array(
                         'class' => 'form-control password',
                         'placeholder' => 'Nouveau mot de passe',
@@ -69,16 +70,8 @@ class UserEditType extends AbstractType
                         'placeholder' => 'Adresse',
                     ),
                 )
-            )->add('street', 'number', array(
-                    'label' => 'Rue',
-                    'required' => false,
-                    'attr' => array(
-                        'class' => 'form-control',
-                        'placeholder' => 'Rue',
-                    ),
-                )
             )
-            ->add('state', 'number', array(
+            ->add('postalCode', 'number', array(
                     'label' => 'Code postal',
                     'required' => false,
                     'attr' => array(
@@ -86,19 +79,20 @@ class UserEditType extends AbstractType
                         'placeholder' => '75001',
                     ),
                 )
-            )->add('office', 'text', array(
-                    'label' => 'Poste',
+            )->add('description', 'textarea', array(
+                    'label' => 'Description',
                     'required' => false,
                     'attr' => array(
                         'class' => 'form-control',
                         'placeholder' => 'Ingénieur, Développeur,...',
+                        'autocomplete' => 'off'
                     ),
 
                 )
             )
             ->add('city', 'text', array(
                     'label' => 'Ville',
-                                        'required' => false,
+                    'required' => false,
 
                     'attr' => array(
                         'class' => 'form-control',
@@ -108,10 +102,14 @@ class UserEditType extends AbstractType
                 )
             )->add('service', 'choice', array(
                     'label' => 'Service',
+                    'choices_as_values' => true,
                     'choices' => array(
-                        "Saint-Mande" => "42Consulting Paris",
-                        "Luxembourg" => "42Consulting Lux",
-                        "Issy-Les-Moulineaux" => "42Mtvc",
+                        "42Consulting Paris" => "Saint-Mandé",
+                        "42Consulting Lux" => "Luxembourg",
+                        "42MediaTelecom" => "Issy-Les-Moulineaux",
+                        "test" => "test",
+                        "test2" => "test2",
+                        "test3" => "test3",
                     ),
                     'attr' => array(
                         'class' => 'form-control',
@@ -135,11 +133,26 @@ class UserEditType extends AbstractType
                     'required' => true,
                     'disabled' => true,
                     'attr' => array(
-                        'class' => 'form-control',
+                        'class' => 'form-control email',
                         'placeholder' => 'nom.prenom',),
 
                 )
+            )
+            ->add('at', 'choice', array(
+                    'label' => ' ',
+                    'choices' => array(
+                        "42consulting.fr" => "42consulting.fr",
+                        "42consulting.lu" => "42consulting.lu",
+                        "42Madiatvcom.fr" => "42Mediatvcom.fr",
+                    ),
+                    'attr' => array(
+                        'class' => 'form-control',
+                        'placeholder' => 'service',
+                    ),
+
+                )
             );
+
     }
 
     /**
