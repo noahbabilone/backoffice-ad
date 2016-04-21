@@ -194,13 +194,19 @@ class ADController extends Controller
         $data['user'] = $user;
         $data['users'] = $adUser;
 
+        if ($request->getSession()->has('result-edit')) {
+            $data['result'] = $request->getSession()->get('result-edit');
+            $request->getSession()->remove('result-edit');
+        }
+
         if ($form->handleRequest($request)->isValid()) {
             $result = $ad->editUser($user, $person);
             $data["result"] = $result !== null ? true : false;
             if ($result !== null) {
                 $data['user'] = $result;
-                $form = $this->createForm(new UserEditType(), $result);
-                $data['form'] = $form->createView();
+                $request->getSession()->set('result-edit', true);
+                return $this->redirectToRoute('edit_user', array('person' => $ad->base64Encode($result->getDn())), 301);
+
             }
 
         }

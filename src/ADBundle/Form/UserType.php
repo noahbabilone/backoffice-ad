@@ -86,19 +86,19 @@ class UserType extends AbstractType
             )
             ->add('city', 'text', array(
                     'label' => 'Ville',
-                                        'required' => false,
+                    'required' => false,
                     'attr' => array(
                         'class' => 'form-control',
                         'placeholder' => 'Paris',
                     ),
 
                 )
-            )  ->add('service', 'choice', array(
+            )->add('service', 'choice', array(
                     'label' => 'Service',
                     'choices' => array(
-                       "42Consulting Paris" => "Saint-Mandé",
-                        "42Consulting Lux" => "Luxembourg",
-                        "42MediaTelecom" => "Issy-Les-Moulineaux",
+                        "Saint-Mandé" => "42Consulting Paris",
+                        "Luxembourg" => "42Consulting Lux",
+                        "Issy-Les-Moulineaux" => "42MediaTelecom",
                         "test" => "test",
                         "test2" => "test2",
                         "test3" => "test3",
@@ -113,9 +113,9 @@ class UserType extends AbstractType
             ->add('at', 'choice', array(
                     'label' => ' ',
                     'choices' => array(
-                        "42consulting.fr"=>"42consulting.fr",
-                        "42consulting.lu"=>"42consulting.lu",
-                        "42Madiatvcom.fr"=>"42Mediatvcom.fr",
+                        "42consulting.fr" => "42consulting.fr",
+                        "42consulting.lu" => "42consulting.lu",
+                        "42Madiatvcom.fr" => "42Mediatvcom.fr",
                     ),
                     'attr' => array(
                         'class' => 'form-control',
@@ -124,8 +124,6 @@ class UserType extends AbstractType
 
                 )
             )
-            
-            
             ->add('phone', 'number', array(
                     'label' => 'Téléphone',
                     'required' => false,
@@ -136,16 +134,16 @@ class UserType extends AbstractType
                     ),
 
                 )
-            )  
+            )
             ->add('email', 'email', array(
                     'label' => 'Email',
                     'required' => true,
-                    'disabled'=> true,
+                    'disabled' => true,
                     'attr' => array(
                         'class' => 'form-control email',
                         'placeholder' => 'nom.prenom',
                         'autocomplete' => 'off'
-                        ),
+                    ),
 
                 )
             );
