@@ -83,7 +83,7 @@ class ADController extends Controller
     }
 
     /**
-     * @Route("/account/list-users", name="list_users")
+     * @Route("/list-users.html", name="list_users")
      * @param Request $request
      * @return RedirectResponse|Response
      */
@@ -98,9 +98,25 @@ class ADController extends Controller
             "users" => $users,
         ));
     }
+    /**
+     * @Route("/list-groups.html", name="list_groups")
+     * @param Request $request
+     * @return RedirectResponse|Response
+     */
+    public function listGroupAction(Request $request)
+    {
+        if (!$request->getSession()->has('user')) {
+            return $this->redirectToRoute('login', array(), 301);
+        }
+        $ad = $this->get("ad_active_directory");
+        $groups = $ad->getAllGroup();
+        return $this->render('ADBundle:Default:group.html.twig', array(
+            "groups" => $groups,
+        ));
+    }
 
     /**
-     * @Route("/account/users/{ou}", name="users_by_ou")
+     * @Route("/users/{ou}", name="users_by_ou")
      * @param $ou
      * @return Response
      */
@@ -338,6 +354,31 @@ class ADController extends Controller
         if (!$this->get('session')->has('user')) {
             return $this->redirectToRoute('login', array(), 301);
         }
+    }
+
+
+    /**
+     * @Route("/search/{person}", name="ad_search")
+     * @param $person
+     * @return RedirectResponse|Response
+     */
+    public function searchAction($person)
+    {
+        dump($person);
+        die;
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function searchAjaxAction(Request $request)
+    {
+        if ($request->isXmlHttpRequest()) {
+             $username = $request->get('person');        
+        }
+
+
     }
 
 

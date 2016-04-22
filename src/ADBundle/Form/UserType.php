@@ -99,9 +99,10 @@ class UserType extends AbstractType
                         "Saint-Mandé" => "42Consulting Paris",
                         "Luxembourg" => "42Consulting Lux",
                         "Issy-Les-Moulineaux" => "42MediaTelecom",
-                        "test" => "test",
-                        "test2" => "test2",
-                        "test3" => "test3",
+                        "test1" => "test 1",
+                        "test2" => "test 2",
+                        "test3" => "test 3",
+                        
                     ),
                     'attr' => array(
                         'class' => 'form-control',

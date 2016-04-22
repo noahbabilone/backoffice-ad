@@ -132,7 +132,7 @@ class User
      */
     private $at;
 
-    private $OU = array("Saint-Mandé", "Luxembourg", "Issy-Les-Moulineaux", "test", "test2",'test3');
+    private $OU = array("Saint-Mandé", "Luxembourg", "Issy-Les-Moulineaux", "test1", "test2",'test3');
 
 
     public function init($data)
@@ -585,12 +585,12 @@ class User
 
     function service($dn)
     {
-   
+        $result=null;
         foreach ($this->OU as $ou) {
             if (strpos(strtolower($dn), strtolower("OU=" . $ou)) !== false) {
-               return $ou;
+               return strtolower($ou);
             }
         }
-        return  strtolower($dn);
+        return  $result;
     }
 }

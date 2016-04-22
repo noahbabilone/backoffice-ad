@@ -107,9 +107,9 @@ class UserEditType extends AbstractType
                         "42Consulting Paris" => "Saint-Mandé",
                         "42Consulting Lux" => "Luxembourg",
                         "42MediaTelecom" => "Issy-Les-Moulineaux",
-                        "test" => "test",
-                        "test2" => "test2",
-                        "test3" => "test3",
+                        "test1" => "test 1",
+                        "test2" => "test 2",
+                        "test3" => "test 3",
                     ),
                     'attr' => array(
                         'class' => 'form-control',
