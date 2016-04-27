@@ -1,5 +1,13 @@
 {% extends "ADBundle::layout.html.twig" %}
+ {% block stylesheets %}
+     {{ parent() }}
+     {% stylesheets
+     'assets/css/bootstrap-multiselect.css'
+     filter='cssrewrite' %}
+     <link rel="stylesheet" href="{{ asset_url }}"/>
+     {% endstylesheets %}
 
+ {% endblock %}
 
 {% block title %}
     Dashboard - {{ parent() }}
@@ -28,7 +36,7 @@
                     </div>
 
                     {% if result is defined %}
-                        {% if result == "success"%}
+                        {% if result == "success" %}
                             <div class="alert alert-success" role="alert">
                                 <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                 L'utulisateur a été ajouté avec succès .
@@ -101,18 +109,57 @@
                                                 </div>
                                             {% endif %}
                                         </div>
+                                        {% if form.service is defined %}
+                                            <div class="col-sm-7">
+                                                <div class="form-group has-feedback">
+                                                    {{ form_label(form.service) }}
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon"><i
+                                                                    class="fa fa-fw fa-sitemap"></i></div>
+                                                        {{ form_widget(form.service) }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+
+
+                                        {% if form.group is defined  and groups is defined %}
+                                            <div class="col-sm-5">
+                                                <div class="form-group has-feedback">
+                                                    <label><i class="fa fa-fw fa-users"></i>Groupes</label>
+                                                    {#{{ form_widget(form.group) }}#}
+                                                    <select name="group" id="select-group" class="form-control"
+                                                            multiple="multiple">
+                                                        {% for  key, tab in groups %}
+                                                            {% for  group in tab %}
+                                                                {% if group|length >1 %}
+                                                                    {#{% if  keyUser != "count" or keyUser =="0" %}#}
+                                                                    {% set titre =ad_active_directory.getData(group,"cn") %}
+                                                                    {% set dn =ad_active_directory.getData(group,"distinguishedname") %}
+                                                                    {% set dnGroup = dn |split(','~ad_tree) %}
+
+                                                                    <option value="{{ attribute(dnGroup,0) }}">{{ titre }}</option>
+                                                                {% endif %}
+
+                                                            {% endfor %}
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        {% endif %}
                                     </div>
 
-                                    {% if form.service is defined %}
-                                        <div class="form-group has-feedback">
-                                            {{ form_label(form.service) }}
-                                            <div class="input-group">
-                                                <div class="input-group-addon"><i class="fa fa-fw fa-sitemap"></i></div>
-                                                {{ form_widget(form.service) }}
-                                            </div>
-                                        </div>
-                                    {% endif %}
+                                    {% if form.group is defined %}
+                                        {#<div class="form-group has-feedback">#}
+                                        {#&#123;&#35;{{ form_label(form.group) }}&#35;&#125;#}
+                                        {#<div class="input-group input-group">#}
+                                        {#<div class="input-group-addon"><i class="fa fa-fw fa-users"></i>#}
+                                        {#</div>#}
+                                        {{ form_widget(form.group) }}
+                                        {#</div>#}
+                                        {#</div>#}
 
+                                    {% endif %}
                                     {% if form.login is defined %}
                                         <div class="form-group has-feedback">
                                             {{ form_label(form.login) }}
@@ -150,8 +197,6 @@
                                             <span class="glyphicon form-control-feedback"
                                                   aria-hidden="true"></span>
                                         </div>
-
-
                                     {% endif %}
 
 
@@ -186,11 +231,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                         {% endif %}
 
                                         <div class="col-lg-12">
-
                                             {% if form.address is defined %}
                                                 <div class="form-group has-feedback">
                                                     {{ form_label(form.address) }}
@@ -202,7 +245,6 @@
                                                     </div>
                                                 </div>
                                             {% endif %}
-
                                         </div>
                                         <div class="col-lg-4">
 
@@ -230,11 +272,8 @@
                                                     </div>
                                                 </div>
                                             {% endif %}
-
                                         </div>
-
                                         <div class="col-lg-12">
-
                                             {% if form.phone is defined %}
                                                 <div class="form-group has-feedback">
                                                     {{ form_label(form.phone) }}
@@ -251,20 +290,22 @@
                                             {% if form.description is defined %}
                                                 <div class="form-group has-feedback">
                                                     {{ form_label(form.description) }}
-                                                        {{ form_widget(form.description) }}
-                                                    
+                                                    {{ form_widget(form.description) }}
                                                 </div>
                                             {% endif %}
                                         </div>
                                     </div>
-
-
                                 </div>
 
-                                <div class="col-sm-3">
-                                    <button type="submit" href="" class="btn btn-sm btn-success btn-block add-user">
-                                        Enregistrer
-                                    </button>
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <button type="submit" href=""
+                                                    class="btn btn-sm btn-success btn-block add-user">
+                                                Enregistrer
+                                            </button>
+                                        </div>
+                                    </div>
 
                                 </div>
                                 {{ form_end(form) }}
@@ -282,6 +323,38 @@
         </div>
     </div>
     <!-- /#wrapper -->
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts
+    'assets/js/bootstrap-multiselect.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script>
+
+        $(document).ready(function () {
+            $('#select-group').multiselect({
+                includeSelectAllOption: true,
+                selectAllText: 'Tout',
+                allSelectedText: "Tout",
+                nonSelectedText: 'Choisir groupe(s)',
+                nSelectedText: ' groupes'
+
+            });
+            $('#select-group').change(function () {
+                var dn="";
+                $.each($(this).val(), function (i, group) {
+                    console.log(group);
+                    dn +="#DnGroup:"+group;
+                });
+                $("#user_group").val(dn );
+            });
+        });
+    </script>
+
+
 {% endblock %}
 
 

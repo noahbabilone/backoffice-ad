@@ -21,6 +21,8 @@ class UserEditType extends AbstractType
                     'attr' => array(
                         'class' => 'form-control name',
                         'placeholder' => 'Nom',
+                        'autocomplete' => 'off'
+
                     ),
                 )
             )->add('firstName', 'text', array(
@@ -29,6 +31,8 @@ class UserEditType extends AbstractType
                     'attr' => array(
                         'class' => 'form-control firstName',
                         'placeholder' => 'Prenom',
+                        'autocomplete' => 'off'
+
                     ),
                 )
             )
@@ -68,6 +72,8 @@ class UserEditType extends AbstractType
                     'attr' => array(
                         'class' => 'form-control',
                         'placeholder' => 'Adresse',
+                        'autocomplete' => 'off'
+
                     ),
                 )
             )
@@ -77,6 +83,8 @@ class UserEditType extends AbstractType
                     'attr' => array(
                         'class' => 'form-control',
                         'placeholder' => '75001',
+                        'autocomplete' => 'off'
+
                     ),
                 )
             )->add('description', 'textarea', array(
@@ -86,6 +94,7 @@ class UserEditType extends AbstractType
                         'class' => 'form-control',
                         'placeholder' => 'Ingénieur, Développeur,...',
                         'autocomplete' => 'off'
+
                     ),
 
                 )
@@ -97,16 +106,17 @@ class UserEditType extends AbstractType
                     'attr' => array(
                         'class' => 'form-control',
                         'placeholder' => 'Paris',
+                        'autocomplete' => 'off'
+
                     ),
 
                 )
             )->add('service', 'choice', array(
                     'label' => 'Service',
-                    'choices_as_values' => true,
                     'choices' => array(
-                        "42Consulting Paris" => "Saint-Mandé",
-                        "42Consulting Lux" => "Luxembourg",
-                        "42MediaTelecom" => "Issy-Les-Moulineaux",
+                        "Saint-Mandé" => "42Consulting Paris",
+                        "Luxembourg" => "42Consulting Lux",
+                        "Issy-Les-Moulineaux" => "42MediaTelecom",
                         "test1" => "test 1",
                         "test2" => "test 2",
                         "test3" => "test 3",
@@ -118,14 +128,30 @@ class UserEditType extends AbstractType
 
                 )
             )
+            ->add('group', 'hidden', array(
+                    'label' => '',
+                    'required' => false,
+                    'attr' => array(
+                        'class' => 'select-groups',
+                    ),
+                )
+            )  
+            ->add('groupNotSelect', 'hidden', array(
+                    'label' => '',
+                    'required' => false,
+                    'attr' => array(
+                        'class' => 'select-groups',
+                    ),
+                )
+            )
             ->add('phone', 'number', array(
                     'label' => 'Téléphone',
                     'required' => false,
                     'attr' => array(
                         'class' => 'form-control',
                         'placeholder' => 'Téléphone',
+                        'autocomplete' => 'off'
                     ),
-
                 )
             )
             ->add('email', 'email', array(
@@ -134,7 +160,10 @@ class UserEditType extends AbstractType
                     'disabled' => true,
                     'attr' => array(
                         'class' => 'form-control email',
-                        'placeholder' => 'nom.prenom',),
+                        'placeholder' => 'nom.prenom',
+                        'autocomplete' => 'off'
+
+                    ),
 
                 )
             )
@@ -143,7 +172,7 @@ class UserEditType extends AbstractType
                     'choices' => array(
                         "42consulting.fr" => "42consulting.fr",
                         "42consulting.lu" => "42consulting.lu",
-                        "42Madiatvcom.fr" => "42Mediatvcom.fr",
+                        "42mediatvcom.fr" => "42mediatvcom.fr",
                     ),
                     'attr' => array(
                         'class' => 'form-control',

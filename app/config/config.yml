@@ -41,6 +41,7 @@ twig:
     strict_variables: "%kernel.debug%"
     globals:
         ad_active_directory: "@ad_active_directory"
+        ad_tree: "%active_directory_tree%"
         recaptcha_key_secret: "%recaptcha_key_secret%"
         recaptcha_key_site: "%recaptcha_key_site%"
 # Assetic Configuration

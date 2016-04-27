@@ -2,300 +2,377 @@
 
 
 {% block title %}
-    Dashboard - {{ parent() }}
+    BackOffice - {{ parent() }}
 {% endblock %}
+
+ {% block stylesheets %}
+     {{ parent() }}
+     {% stylesheets
+     'assets/css/bootstrap-multiselect.css'
+     filter='cssrewrite' %}
+     <link rel="stylesheet" href="{{ asset_url }}"/>
+     {% endstylesheets %}
+
+ {% endblock %}
 
 {% block ad_body %}
 
-<div id="wrapper">
-    <!-- Navigation -->
+    <div id="wrapper">
+        <!-- Navigation -->
 
-    <div id="page-wrapper">
-        <div class="row">
-            <div class="col-lg-12">
-                <h3 class="page-header"><i class="fa fa-edit fa-fw"></i>Edit</h3>
-            </div>
-            <!-- /.col-lg-12 -->
-        </div>
-        {{ dump(user) }}
-        {{ dump(users) }}
-        <div class="row">
-            <div class="col-lg-12">
-
-                <div class="alert alert-warning hide" id="field-message-error" role="alert">
-                    {#<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>#}
-                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                    <span class="sr-only">Error:</span>
-                    <span class="message-error"></span>
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 class="page-header"><i class="fa fa-edit fa-fw"></i>Edit</h3>
                 </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            {{ dump(user) }}
+            {{ dump(users) }}
+            {{ dump(groups) }}
+            <div class="row">
+                <div class="col-lg-12">
 
-                {% if result is defined %}
-                    {% if result %}
-                        <div class="alert alert-success" role="alert">
-                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                            <span class="sr-only">Error:</span>
-                            L'utulisateur a été modifié avec succes .
-                        </div>
-                    {% else %}
-                        <div class="alert alert-danger" role="alert">
-                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                            <span class="sr-only">Error:</span>
-                            Error: L'utilisateur n'a pas pu être modifié.
-                        </div>
-                    {% endif %}
-
-
-                    {% if error is defined and error %}
-                        <div class="alert alert-warning" role="alert" style="margin-top: 30px;">
-                            {{ error | raw }}.
-                        </div>
-                    {% endif %}
-
-                {% endif %}
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <i class="fa fa-user fa-fw"></i> Modification utilisateur
-                        <div class="pull-right">
-                            <a href="{{ path('list_users') }}" class="btn btn-success btn-xs"> <i
-                                        class="fa fa-users fa-fw"></i>Liste
-                                d'utilisateurs</a>
-                        </div>
-
+                    <div class="alert alert-warning hide" id="field-message-error" role="alert">
+                        {#<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>#}
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Error:</span>
+                        <span class="message-error"></span>
                     </div>
-                    <!-- /.panel-heading -->
-                    <div class="panel-body">
 
-                        {% if user is defined %}
-                            <div class="row">
-
-                                {% if form is defined and user.dn is not null %}
-
-                                    {{ form_start(form, { 'method': 'POST','attr': { 'role':'form'} }) }}
-                                    <div class="col-lg-6">
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                {% if form.name is defined %}
-                                                    <div class="form-group has-feedback" id="field-name">
-                                                        {{ form_label(form.name) }}
-                                                        <div class="input-group">
-                                                            <div class="input-group-addon">
-                                                                <i class="fa fa-user fa-fw"></i>
-                                                            </div>
-                                                            {{ form_widget(form.name) }}
-
-                                                        </div> <span class="glyphicon form-control-feedback"
-                                                                     aria-hidden="true"></span>
-                                                    </div>
+                    {% if result is defined %}
+                        {% if result %}
+                            <div class="alert alert-success" role="alert">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <span class="sr-only">Error:</span>
+                                L'utulisateur a été modifié avec succes .
+                            </div>
+                        {% else %}
+                            <div class="alert alert-danger" role="alert">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <span class="sr-only">Error:</span>
+                                Error: L'utilisateur n'a pas pu être modifié.
+                            </div>
+                        {% endif %}
 
 
-                                                {% endif %}
-                                            </div>
-                                            <div class="col-sm-6">
-                                                {% if form.firstName is defined %}
-                                                    <div class="form-group has-feedback" id="field-firstName">
-                                                        {{ form_label(form.firstName) }}
-                                                        <div class="input-group">
-                                                            <div class="input-group-addon">
-                                                                <i class="fa fa-user fa-fw"></i>
-                                                            </div>
-                                                            {{ form_widget(form.firstName) }}
+                        {% if error is defined and error %}
+                            <div class="alert alert-warning" role="alert" style="margin-top: 30px;">
+                                {{ error | raw }}.
+                            </div>
+                        {% endif %}
+
+                    {% endif %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-user fa-fw"></i> Modification utilisateur
+                            <div class="pull-right">
+                                <a href="{{ path('list_users') }}" class="btn btn-success btn-xs"> <i
+                                            class="fa fa-users fa-fw"></i>Liste
+                                    d'utilisateurs</a>
+                            </div>
+
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+
+                            {% if user is defined %}
+                                <div class="row">
+
+                                    {% if form is defined and user.dn is not null %}
+
+                                        {{ form_start(form, { 'method': 'POST','attr': { 'role':'form'} }) }}
+                                        <div class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    {% if form.name is defined %}
+                                                        <div class="form-group has-feedback" id="field-name">
+                                                            {{ form_label(form.name) }}
+                                                            <div class="input-group">
+                                                                <div class="input-group-addon">
+                                                                    <i class="fa fa-user fa-fw"></i>
+                                                                </div>
+                                                                {{ form_widget(form.name) }}
+
+                                                            </div> <span class="glyphicon form-control-feedback"
+                                                                         aria-hidden="true"></span>
                                                         </div>
+
+
+                                                    {% endif %}
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    {% if form.firstName is defined %}
+                                                        <div class="form-group has-feedback" id="field-firstName">
+                                                            {{ form_label(form.firstName) }}
+                                                            <div class="input-group">
+                                                                <div class="input-group-addon">
+                                                                    <i class="fa fa-user fa-fw"></i>
+                                                                </div>
+                                                                {{ form_widget(form.firstName) }}
+                                                            </div>
                                                         <span class="glyphicon form-control-feedback"
                                                               aria-hidden="true"></span>
 
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+
+                                                {% if form.service is defined %}
+                                                    <div class="col-sm-8">
+
+                                                        <div class="form-group has-feedback">
+                                                            {{ form_label(form.service) }}
+                                                            <div class="input-group">
+                                                                <div class="input-group-addon"><i
+                                                                            class="fa fa-fw fa-sitemap"></i></div>
+                                                                {{ form_widget(form.service) }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+                                                {% if form.group is defined  and groups is defined %}
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group has-feedback"
+                                                             style="margin-left: -12px;">
+                                                            <label><i class="fa fa-fw fa-users"></i>Groupes</label>
+                                                            {#{{ form_widget(form.group) }}#}
+                                                            <select name="group" id="select-group" class="form-control"
+                                                                    multiple="multiple" style="margin-left:-2px;">
+                                                                {% for  key, tab in groups %}
+                                                                    {% for  group in tab %}
+                                                                        {% if group|length >1 %}
+                                                                            {#{% if  keyUser != "count" or keyUser =="0" %}#}
+                                                                            {% set titre =ad_active_directory.getData(group,"cn") %}
+                                                                            {% set dn =ad_active_directory.getData(group,"distinguishedname") %}
+                                                                            {% set dnGroup = dn |split(','~ad_tree) %}
+                                                                            <option value="{{ attribute(dnGroup,0) }}"
+                                                                                    {% if ad_active_directory.checkMemberOfGroup(group,user.dn) %} selected="selected" {% endif %}>
+                                                                                {{ titre }} </option>
+                                                                        {% endif %}
+
+                                                                    {% endfor %}
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
                                                     </div>
                                                 {% endif %}
                                             </div>
-                                        </div>
 
-                                        {% if form.service is defined %}
-                                            <div class="form-group has-feedback">
-                                                {{ form_label(form.service) }}
-                                                <div class="input-group">
-                                                    <div class="input-group-addon"><i
-                                                                class="fa fa-fw fa-sitemap"></i></div>
-                                                    {{ form_widget(form.service) }}
-                                                </div>
-                                            </div>
-                                        {% endif %}
 
-                                        {% if form.login is defined %}
-                                            <div class="form-group has-feedback">
-                                                {{ form_label(form.login) }}
+                                            {% if form.login is defined %}
+                                                <div class="form-group has-feedback">
+                                                    {{ form_label(form.login) }}
 
-                                                <div class="input-group input-group">
-                                                    <div class="input-group-addon"><i class="fa fa-fw fa-user"></i>
+                                                    <div class="input-group input-group">
+                                                        <div class="input-group-addon"><i class="fa fa-fw fa-user"></i>
+                                                        </div>
+                                                        {{ form_widget(form.login) }}
                                                     </div>
-                                                    {{ form_widget(form.login) }}
                                                 </div>
-                                            </div>
 
-                                        {% endif %}
-                                        {% if form.password is defined %}
-                                            <div class="form-group has-feedback" id="field-password">
-                                                {{ form_label(form.password) }}
-                                                <div class="input-group">
+                                            {% endif %}
+                                            {% if form.password is defined %}
+                                                <div class="form-group has-feedback" id="field-password">
+                                                    {{ form_label(form.password) }}
+                                                    <div class="input-group">
                                                 <span class="input-group-addon"><i class="fa fa-unlock-alt fa-fw"></i>
                                                 </span>
-                                                    {{ form_widget(form.password) }}
-                                                </div>
-                                            <span class="glyphicon form-control-feedback"
-                                                  aria-hidden="true"></span>
-                                            </div>
-                                            <div class="form-group has-feedback" id="field-confirm-password">
-                                                <label for="confirm-password" class="control-label">
-                                                    Confirmation Mot de passe</label>
-
-                                                <div class="input-group">
-                                                    <div class="input-group-addon"><i
-                                                                class="fa fa-fw fa-unlock-alt"></i>
+                                                        {{ form_widget(form.password) }}
                                                     </div>
-                                                    <input type="password" placeholder="Confirmation mot de passe"
-                                                           class="form-control confirm-password"
-                                                           name="confirm-password" autocomplete="off">
-                                                </div>
                                             <span class="glyphicon form-control-feedback"
                                                   aria-hidden="true"></span>
-                                            </div>
-
-
-                                        {% endif %}
-
-
-                                    </div>
-                                    <div class="col-lg-6">
-
-                                        <div class="row">
-                                            {% if form.email is defined %}
-                                                <div class="col-lg-12">
-                                                    {{ form_label(form.email) }}
                                                 </div>
-                                                <div class="col-lg-6">
-                                                    <div class="form-group has-feedback" id="field-email">
-                                                        <div class="input-group">
-                                                            <div class="input-group-addon">
-                                                                <i class="fa fa-fw fa-envelope"></i>
-                                                            </div>
-                                                            {{ form_widget(form.email) }}
+                                                <div class="form-group has-feedback" id="field-confirm-password">
+                                                    <label for="confirm-password" class="control-label">
+                                                        Confirmation Mot de passe</label>
 
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon"><i
+                                                                    class="fa fa-fw fa-unlock-alt"></i>
                                                         </div>
+                                                        <input type="password" placeholder="Confirmation mot de passe"
+                                                               class="form-control confirm-password"
+                                                               name="confirm-password" autocomplete="off">
+                                                    </div>
+                                            <span class="glyphicon form-control-feedback"
+                                                  aria-hidden="true"></span>
+                                                </div>
+
+
+                                            {% endif %}
+
+
+                                        </div>
+                                        <div class="col-lg-6">
+
+                                            <div class="row">
+                                                {% if form.email is defined %}
+                                                    <div class="col-lg-12">
+                                                        {{ form_label(form.email) }}
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group has-feedback" id="field-email">
+                                                            <div class="input-group">
+                                                                <div class="input-group-addon">
+                                                                    <i class="fa fa-fw fa-envelope"></i>
+                                                                </div>
+                                                                {{ form_widget(form.email) }}
+
+                                                            </div>
                                                     <span class="glyphicon form-control-feedback"
                                                           aria-hidden="true"></span>
+                                                        </div>
                                                     </div>
+                                                {% endif %}
+                                                {% if form.at is defined %}
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group has-feedback">
+                                                            <div class="input-group">
+                                                                <div class="input-group-addon">@</div>
+                                                                {{ form_widget(form.at) }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                {% endif %}
+
+                                                <div class="col-lg-12">
+
+                                                    {% if form.address is defined %}
+                                                        <div class="form-group has-feedback">
+                                                            {{ form_label(form.address) }}
+                                                            <div class="input-group">
+                                                                <div class="input-group-addon">
+                                                                    <i class="fa fa-fw fa-location-arrow"></i>
+                                                                </div>
+                                                                {{ form_widget(form.address) }}
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+
                                                 </div>
-                                            {% endif %}
-                                            {% if form.at is defined %}
-                                                <div class="col-lg-6">
-                                                    <div class="form-group has-feedback">
-                                                        <div class="input-group">
-                                                            <div class="input-group-addon">@</div>
-                                                            {{ form_widget(form.at) }}
+                                                <div class="col-lg-4">
+
+                                                    {% if form.postalCode is defined %}
+                                                        <div class="form-group has-feedback">
+                                                            {{ form_label(form.postalCode) }}
+                                                            <div class="input-group">
+                                                                <div class="input-group-addon">
+                                                                    <i class="glyphicon glyphicon-globe"></i>
+                                                                </div>
+                                                                {{ form_widget(form.postalCode) }}
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="col-lg-8">
+                                                    {% if form.city is defined %}
+                                                        <div class="form-group has-feedback">
+                                                            {{ form_label(form.city) }}
+                                                            <div class="input-group">
+                                                                <div class="input-group-addon">
+                                                                    <i class="fa fa-fw fa-home"></i>
+                                                                </div>
+                                                                {{ form_widget(form.city) }}
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+
                                                 </div>
 
-                                            {% endif %}
+                                                <div class="col-lg-12">
 
-                                            <div class="col-lg-12">
+                                                    {% if form.phone is defined %}
+                                                        <div class="form-group has-feedback">
+                                                            {{ form_label(form.phone) }}
 
-                                                {% if form.address is defined %}
-                                                    <div class="form-group has-feedback">
-                                                        {{ form_label(form.address) }}
-                                                        <div class="input-group">
-                                                            <div class="input-group-addon">
-                                                                <i class="fa fa-fw fa-location-arrow"></i>
+                                                            <div class="input-group">
+                                                                <div class="input-group-addon">
+                                                                    <i class="fa fa-fw fa-phone"></i>
+                                                                </div>
+                                                                {{ form_widget(form.phone) }}
                                                             </div>
-                                                            {{ form_widget(form.address) }}
                                                         </div>
-                                                    </div>
-                                                {% endif %}
+                                                    {% endif %}
 
-                                            </div>
-                                            <div class="col-lg-4">
+                                                    {% if form.description is defined %}
+                                                        <div class="form-group has-feedback">
+                                                            {{ form_label(form.description) }}
+                                                            {{ form_widget(form.description) }}
 
-                                                {% if form.postalCode is defined %}
-                                                    <div class="form-group has-feedback">
-                                                        {{ form_label(form.postalCode) }}
-                                                        <div class="input-group">
-                                                            <div class="input-group-addon">
-                                                                <i class="glyphicon glyphicon-globe"></i>
-                                                            </div>
-                                                            {{ form_widget(form.postalCode) }}
                                                         </div>
-                                                    </div>
-                                                {% endif %}
-                                            </div>
-                                            <div class="col-lg-8">
-                                                {% if form.city is defined %}
-                                                    <div class="form-group has-feedback">
-                                                        {{ form_label(form.city) }}
-                                                        <div class="input-group">
-                                                            <div class="input-group-addon">
-                                                                <i class="fa fa-fw fa-home"></i>
-                                                            </div>
-                                                            {{ form_widget(form.city) }}
-                                                        </div>
-                                                    </div>
-                                                {% endif %}
-
+                                                    {% endif %}
+                                                </div>
                                             </div>
 
-                                            <div class="col-lg-12">
 
-                                                {% if form.phone is defined %}
-                                                    <div class="form-group has-feedback">
-                                                        {{ form_label(form.phone) }}
-
-                                                        <div class="input-group">
-                                                            <div class="input-group-addon">
-                                                                <i class="fa fa-fw fa-phone"></i>
-                                                            </div>
-                                                            {{ form_widget(form.phone) }}
-                                                        </div>
-                                                    </div>
-                                                {% endif %}
-
-                                                {% if form.description is defined %}
-                                                    <div class="form-group has-feedback">
-                                                        {{ form_label(form.description) }}
-                                                        {{ form_widget(form.description) }}
-
-                                                    </div>
-                                                {% endif %}
-                                            </div>
                                         </div>
 
+                                        <div class="col-sm-4">
+                                            <button type="submit" class="btn btn-sm btn-success btn-block"
+                                                    id="save-edit">
+                                                Enregistrer
+                                            </button>
+                                        </div>
 
-                                    </div>
+                                        {{ form_end(form) }}
 
-                                    <div class="col-sm-4">
-                                        <button type="submit" class="btn btn-sm btn-success btn-block"
-                                                id="save-edit">
-                                            Enregistrer
-                                        </button>
-                                    </div>
+                                    {% else %}
+                                        <div class="col-sm-12 text-center">
+                                            <h3>L'utilisateur demandé n'existe plus :'(</h3>
+                                        </div>
 
-                                    {{ form_end(form) }}
-
-                                {% else %}
-                                    <div class="col-sm-12 text-center">
-                                        <h3>L'utilisateur demandé n'existe plus :'(</h3>
-                                    </div>
-
-                                {% endif %}
-                            </div>
-                        {% endif %}
-                        <!-- /.panel-body -->
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                            <!-- /.panel-body -->
+                        </div>
                     </div>
+                    <!-- /.row -->
                 </div>
-                <!-- /.row -->
+                <!-- /#page-wrapper -->
             </div>
-            <!-- /#page-wrapper -->
+            <!-- /#wrapper -->
         </div>
-        <!-- /#wrapper -->
     </div>
 
+{% endblock %}
 
-    {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts
+    'assets/js/bootstrap-multiselect.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script>
+        $(document).ready(function () {
+            $('#select-group').multiselect({
+                includeSelectAllOption: true,
+                selectAllText: 'Tout',
+                allSelectedText: "Tout",
+                nonSelectedText: 'Choisir groupe(s)',
+                nSelectedText: ' groupes',
+            });
 
+
+            var dnGroup = "";
+            $('#select-group option:selected').each(function (i, selected) {
+                dnGroup += "#DnGroup:" + $(selected).val();
+            });
+            $("#user_edit_group").val(dnGroup);
+
+            $('#select-group').change(function () {
+                var dn = "";
+                $.each($(this).val(), function (i, group) {
+                    console.log(group);
+                    dn += "#DnGroup:" + group;
+                });
+                $("#user_edit_group").val(dn);
+            });
+        });
+    </script>
+
+
+{% endblock %}
 

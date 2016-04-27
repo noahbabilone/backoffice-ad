@@ -14,6 +14,7 @@ class UserType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         $builder
             ->add('name', 'text', array(
                     'label' => 'Nom',
@@ -102,7 +103,7 @@ class UserType extends AbstractType
                         "test1" => "test 1",
                         "test2" => "test 2",
                         "test3" => "test 3",
-                        
+
                     ),
                     'attr' => array(
                         'class' => 'form-control',
@@ -110,13 +111,19 @@ class UserType extends AbstractType
                     ),
 
                 )
+            )->add('group', 'hidden', array(
+                    'label' => '',
+                    'attr' => array(
+                        'class' => 'select-groups',
+                    ),
+                )
             )
             ->add('at', 'choice', array(
                     'label' => ' ',
                     'choices' => array(
                         "42consulting.fr" => "42consulting.fr",
                         "42consulting.lu" => "42consulting.lu",
-                        "42Madiatvcom.fr" => "42Mediatvcom.fr",
+                        "42mediatvcom.fr" => "42mediatvcom.fr",
                     ),
                     'attr' => array(
                         'class' => 'form-control',

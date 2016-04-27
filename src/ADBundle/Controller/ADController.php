@@ -2,6 +2,7 @@
 
 namespace ADBundle\Controller;
 
+use ADBundle\Entity\Group;
 use ADBundle\Entity\User;
 use ADBundle\Form\UserSessionType;
 use ADBundle\Form\UserType;
@@ -17,7 +18,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class ADController extends Controller
 {
-    protected $accessControl = array('administrator', "yannick.said@42consulting.fr");
+    protected $accessControl = array('administrator', "yannick.said@42consulting.fr","rachid.dahmani@42consulting.fr");
     //protected $accessControl = array('administrator');
     /**
      * @Route("/",name="login")
@@ -97,7 +98,24 @@ class ADController extends Controller
         return $this->render('ADBundle:Default:index.html.twig', array(
             "users" => $users,
         ));
+    }    
+    /**
+     * @Route("/list-computers.html", name="list_computers")
+     * @param Request $request
+     * @return RedirectResponse|Response
+     */
+    public function listComputerAction(Request $request)
+    {
+        if (!$request->getSession()->has('user')) {
+            return $this->redirectToRoute('login', array(), 301);
+        }
+        $ad = $this->get("ad_active_directory");
+        $users = $ad->getAllComputer();
+        return $this->render('ADBundle:Default:index.html.twig', array(
+            "users" => $users,
+        ));
     }
+
     /**
      * @Route("/list-groups.html", name="list_groups")
      * @param Request $request
@@ -109,9 +127,9 @@ class ADController extends Controller
             return $this->redirectToRoute('login', array(), 301);
         }
         $ad = $this->get("ad_active_directory");
-        $groups = $ad->getAllGroup();
+        $adGroups = $ad->getAllGroup();
         return $this->render('ADBundle:Default:group.html.twig', array(
-            "groups" => $groups,
+            "groups" => $adGroups,
         ));
     }
 
@@ -163,12 +181,14 @@ class ADController extends Controller
     public function addUserAction(Request $request)
     {
         $this->checkSession();
+        $ad = $this->get("ad_active_directory");
         $result = null;
         $user = new User();
+        $adGroups = $ad->getAllGroup();
+        $data["groups"] = $adGroups;
         $form = $this->createForm(new UserType(), $user);
-        $data = array('form' => $form->createView());
+        $data ['form'] = $form->createView();
         if ($form->handleRequest($request)->isValid()) {
-            $ad = $this->get("ad_active_directory");
             $result = $ad->addUser($user);
             $data["result"] = $result;
         }
@@ -209,6 +229,9 @@ class ADController extends Controller
         $data = array('form' => $form->createView());
         $data['user'] = $user;
         $data['users'] = $adUser;
+        $adGroups = $ad->getAllGroup();
+        $data["groups"] = $adGroups;
+
 
         if ($request->getSession()->has('result-edit')) {
             $data['result'] = $request->getSession()->get('result-edit');
@@ -318,6 +341,30 @@ class ADController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
+    public function removeUserGroupAjaxAction(Request $request)
+    {
+        $result = false;
+        $message = "Erreur XMLHttpRequest";
+        if ($request->isXmlHttpRequest()) {
+            $dnUser = $request->get('dnUser');
+            $dnGroup = $request->get('dnGroup');
+            $username = $request->get('username');
+            $groupName = $request->get('groupName');
+            $ad = $this->get("ad_active_directory");
+            $result = $ad->removeUserGroup($dnGroup,$dnUser);
+            if ($result) {
+                $message = $username . " a été supprimé du groupe (".$groupName.".";
+            } else {
+                $message = $username . " n'a pas pu être supprimé du groupe .";
+            }
+        }
+        return new response (json_encode(array('result' => $result, "message" => $message)));
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function getUserAjaxAction(Request $request)
     {
         $result = false;
@@ -375,7 +422,7 @@ class ADController extends Controller
     public function searchAjaxAction(Request $request)
     {
         if ($request->isXmlHttpRequest()) {
-             $username = $request->get('person');        
+            $username = $request->get('person');
         }
 
 

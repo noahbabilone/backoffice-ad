@@ -7,8 +7,13 @@ fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
     
 ad_remove_user:
-    pattern: /user-remove/
+    pattern: /remove-user/
     defaults: { _controller: ADBundle:AD:removeUserAjax}
+    options:
+        expose: true
+ad_remove_user_group:
+    pattern: /remove-user-group/
+    defaults: { _controller: ADBundle:AD:removeUserGroupAjax}
     options:
         expose: true
 ad_get_user:

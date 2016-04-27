@@ -3,6 +3,7 @@
 namespace ADBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * User
@@ -114,9 +115,27 @@ class User
     /**
      * @var string
      *
+     * @ORM\Column(name="group", type="string", length=255)
+     */
+    private $group;  
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="groupNotSelect", type="string", length=255)
+     */
+    private $groupNotSelect;
+
+
+    private $memberOf;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="dn", type="string", length=255)
      */
     private $dn;
+
+
     /**
      * @var text
      *
@@ -132,8 +151,12 @@ class User
      */
     private $at;
 
-    private $OU = array("Saint-Mandé", "Luxembourg", "Issy-Les-Moulineaux", "test1", "test2",'test3');
+    private $OU = array("Saint-Mandé", "Luxembourg", "Issy-Les-Moulineaux", "test1", "test2", 'test3');
 
+    public function __construct()
+    {
+        $this->memberOf = new ArrayCollection();
+    }
 
     public function init($data)
     {
@@ -148,6 +171,17 @@ class User
             $this->setPostalCode($this->getData($data, "postalcode"));
             $this->setDescription($this->getData($data, "description"));
             $this->setPhone($this->getData($data, "telephonenumber"));
+            $this->setPhone($this->getData($data, "telephonenumber"));
+
+            if (isset($data[0]["memberof"]) && !empty($data[0]["memberof"])) {
+                foreach ($data[0]["memberof"] as $key => $val) {
+                    if ($key !== "count") {
+                        $this->addMemberOf($val);
+                    }
+                }
+
+            }
+
             $login = $this->getData($data, "userprincipalname");
             $at = explode("@", $login);
             $this->setLogin($login);
@@ -187,7 +221,7 @@ class User
      */
     public function setFirstName($firstName)
     {
-        $this->firstName = ucfirst($firstName);
+        $this->firstName = ucfirst(strtolower($firstName));
 
         return $this;
     }
@@ -465,7 +499,6 @@ class User
     {
 
         $this->service = $service;
-
         return $this;
     }
 
@@ -487,7 +520,7 @@ class User
      */
     public function setName($name)
     {
-        $this->name = $name;
+        $this->name =ucfirst(strtolower($name));
 
         return $this;
     }
@@ -574,6 +607,48 @@ class User
     }
 
     /**
+     * Set dn
+     * @param string $group
+     * @return User
+     */
+    public function setGroup($group)
+    {
+        $this->group = $group;
+
+        return $this;
+    }
+
+
+    /**
+     * Get group
+     * @return string
+     */
+    public function getGroup()
+    {
+        return $this->group;
+    }   /**
+     * Set groupNotSelect
+     * @param string $groupNotSelect
+     * @return User
+     */
+    public function setGroupNotSelect($groupNotSelect)
+    {
+        $this->groupNotSelect = $groupNotSelect;
+
+        return $this;
+    }
+
+
+    /**
+     * Get groupNotSelect
+     * @return string
+     */
+    public function getGroupNotSelect()
+    {
+        return $this->groupNotSelect;
+    }
+
+    /**
      * @param $array
      * @param $attr
      * @return null
@@ -585,12 +660,43 @@ class User
 
     function service($dn)
     {
-        $result=null;
+        $result = null;
         foreach ($this->OU as $ou) {
             if (strpos(strtolower($dn), strtolower("OU=" . $ou)) !== false) {
-               return strtolower($ou);
+                return strtolower($ou);
             }
         }
-        return  $result;
+        return $result;
+    }
+
+
+    /**
+     * Add member
+     *
+     * @param $member
+     * @return $this
+     */
+    public function addMemberOf($member)
+    {
+        $this->memberOf[] = $member;
+        return $this;
+    }
+
+    /**
+     * Remove member
+     * @param $member
+     */
+    public function removeMemberOf($member)
+    {
+        $this->memberOf->removeElement($member);
+    }
+
+    /**
+     * Get member
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMember()
+    {
+        return $this->memberOf;
     }
 }
