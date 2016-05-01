@@ -1,0 +1,143 @@
+{% extends "ADBundle::main.html.twig" %}
+
+  {% block stylesheets %}
+      {{ parent() }}
+      {% stylesheets
+      'https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css'
+      filter='cssrewrite' %}
+      <link rel="stylesheet" href="{{ asset_url }}"/>
+      {% endstylesheets %}
+  {% endblock %}
+{% block title %}
+    Ordinateurs - {{ parent() }}
+{% endblock %}
+
+{% block ad_body %}
+    <!-- BEGIN PAGE HEADER-->
+    <!-- BEGIN PAGE BAR -->
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <a href="{{ path('dashboard') }}"><i class="fa fa-home fa-fw"></i></a>
+                <i class="fa fa-circle"></i>
+            </li>
+            <li>
+                <span>Ordinateurs</span>
+                <i class="fa fa-circle"></i>
+            </li>
+        </ul>
+    </div>
+    <!-- END PAGE BAR -->
+
+    <!-- BEGIN PAGE TITLE-->
+    <h3 class="page-title"> Ordinateurs</h3>
+    <!-- END PAGE TITLE-->
+    {{ dump(computers) }}
+
+    <!-- END PAGE HEADER-->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN SAMPLE TABLE PORTLET-->
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-desktop fa-fw font-green"></i>
+                        <span class="caption-subject font-green bold uppercase">Listes des Ordinateurs</span>
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse"> </a>
+                        <a href="#portlet-config" data-toggle="modal" class="config"> </a>
+                        <a href="javascript:;" class="reload"> </a>
+                        <a href="" class="fullscreen"> </a>
+                        <a href="javascript:;" class="remove"> </a>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    {% if computers is defined %}
+                        <table class="table table-striped table-hover table-header-fixed order-column"
+                               id="table-computers" cellspacing="0" width="100%"
+                               data-line="25">
+                            <thead>
+                            <tr>
+                                {#<th>#</th>#}
+                                <th>Nom Pc</th>
+                                <th>OS</th>
+                                <th>DNS Host Name</th>
+                                <th>Groupes</th>
+                                {#  <th>serverreferencebl</th>
+                                  <th>ridsetreferences</th>
+                                  <th>distinguishedname</th>
+                                  <th>distinguishedname</th>#}
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for key, computer in computers %}
+                                {% if  key != "count" or key =="0" %}
+                                    <tr id="line-{{ key }}">
+                                        {#<td>{{ key }}</td>#}
+                                        <td>
+                                            <i class="fa fa-laptop fa-fw"></i> {{ ad_active_directory.getData(computer,"cn") }}
+                                        </td>
+                                        <td>
+                                            <i class="fa fa-desktop fa-fw"></i> {{ ad_active_directory.getData(computer,"operatingsystem") }}
+                                        </td>
+                                        <td>
+                                            <i class="fa fa-globe fa-fw"></i> {{ ad_active_directory.getData(computer,"dnshostname") }}
+                                        </td>
+                                        <td>
+                                            {% set arrayGroups=ad_active_directory.getArray(computer,"memberof") %}
+                                            {% if arrayGroups %}
+                                                <ul class="list-unstyled">
+                                                    {% for  keyUser, groupDn in arrayGroups %}
+                                                        {% if  keyUser != "count" or keyUser =="0" %}
+                                                            {% set group =ad_active_directory.getByDn(groupDn) %}
+                                                            <li>
+                                                                <i class="fa fa-users fa-fw"></i> {{ ad_active_directory.getOneData(group,"cn") }}
+                                                            </li>
+                                                        {% endif %}
+
+                                                    {% endfor %}
+
+                                                </ul>
+                                            {% endif %}
+                                        </td>
+
+                                        {#                                        <td>{{ ad_active_directory.getData(computer,"serverreferencebl") }}</td>
+                                                                                <td>{{ ad_active_directory.getData(computer,"ridsetreferences") }}</td>
+                                                                                <td>{{ ad_active_directory.getData(computer,"distinguishedname") }}</td>
+                                                                                <td>{{ ad_active_directory.getData(computer,"memberof") }}</td>#}
+
+
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        Pas d'utilisateur trouvé.
+                    {% endif %}
+                </div>
+            </div>
+            <!-- END SAMPLE TABLE PORTLET-->
+        </div>
+    </div>
+
+{% endblock %}
+    {% block javascripts %}
+        {{ parent() }}
+        {% javascripts
+        "bundles/ad/themes/global/scripts/datatable.js"
+
+        "bundles/ad/themes/global/plugins/datatables/datatables.min.js"
+        "bundles/ad/themes/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js"
+        "bundles/ad/themes/global/scripts/app.min.js"
+
+        "bundles/ad/themes/pages/scripts/table-datatables-fixedheader.min.js"
+        "assets/js/database-api.js" %}
+        <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+
+
+    {% endblock %}
+
+

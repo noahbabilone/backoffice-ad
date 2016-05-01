@@ -1,0 +1,324 @@
+{% extends "ADBundle::main.html.twig" %}
+
+  {% block stylesheets %}
+      {{ parent() }}
+      {% stylesheets
+      'https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css'
+      'bundles/ad/themes/global/plugins/bootstrap-select/css/bootstrap-select.min.css'
+      filter='cssrewrite' %}
+      <link rel="stylesheet" href="{{ asset_url }}"/>
+      {% endstylesheets %}
+  {% endblock %}
+{% block title %}
+    Ajout utilisateur - {{ parent() }}
+{% endblock %}
+
+{% block ad_body %}
+    <!-- BEGIN PAGE HEADER-->
+    <!-- BEGIN PAGE BAR -->
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <a href="{{ path('dashboard') }}"><i class="fa fa-home fa-fw"></i></a>
+                <i class="fa fa-circle"></i>
+            </li>
+            <li>
+                <span>Ajout utilisateur</span>
+                <i class="fa fa-circle"></i>
+            </li>
+        </ul>
+    </div>
+    <!-- END PAGE BAR -->
+
+    <!-- BEGIN PAGE TITLE-->
+    <h3 class="page-title"> Ajout d'un utilisateur</h3>
+    <!-- END PAGE TITLE-->
+
+    <!-- END PAGE HEADER-->
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption">
+
+                <span class="caption-subject font-red-sunglo bold uppercase"> <i class="icon-plus font-red-sunglo"></i> Formualire</span>
+                <span class="caption-helper">...</span>
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse"> </a>
+                <a href="#portlet-config" data-toggle="modal" class="config"> </a>
+                <a href="javascript:;" class="reload"> </a>
+                <a href="" class="fullscreen"> </a>
+                <a href="javascript:;" class="remove"> </a>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <!-- BEGIN FORM-->
+            <form action="#">
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Nom</label>
+
+                                        <div class="input-icon">
+                                            <i class="fa fa-user"></i>
+                                            <input type="text" class="form-control" placeholder="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Prenom</label>
+
+                                        <div class="input-icon">
+                                            <i class="fa fa-user"></i>
+                                            <input type="text" class="form-control" placeholder=""></div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Service</label>
+
+                                        <select class="bs-select form-control">
+                                            <option>Mustard</option>
+                                            <option>Ketchup</option>
+                                            <option>Relish</option>
+                                        </select>
+                                    </div>
+                                </div>  
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Groupes</label>
+
+                                        <select class="bs-select form-control" multiple>
+                                            <option>Mustard</option>
+                                            <option>Mustard</option>
+                                            <option>Mustard</option>
+                                            <option>Ketchup</option>
+                                            <option>Relish</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Service</label>
+
+                                        <div class="input-icon">
+                                            <i class="fa fa-sitemap"></i>
+                                            <select class="form-control">
+                                                <option>Option 1</option>
+                                                <option>Option 2</option>
+                                                <option>Option 3</option>
+                                                <option>Option 4</option>
+                                                <option>Option 5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Groupes</label>
+
+                                        <div class="input-icon">
+                                            <i class="fa fa-users"></i>
+                                            <select class="form-control">
+                                                <option>Option 1</option>
+                                                <option>Option 2</option>
+                                                <option>Option 3</option>
+                                                <option>Option 4</option>
+                                                <option>Option 5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-sm-12">
+                                    <label class="control-label">Mail</label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <div class="input-icon">
+                                            <i class="fa fa-envelope-o"></i>
+                                            <input type="text" class="form-control" placeholder="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <div class="input-icon">
+                                            <i class="fa fa-at"></i>
+                                            <select class="form-control">
+                                                <option>Option 1</option>
+                                                <option>Option 2</option>
+                                                <option>Option 3</option>
+                                                <option>Option 4</option>
+                                                <option>Option 5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Mot de passe</label>
+
+                                        <div class="input-icon">
+                                            <i class="fa fa-unlock-alt"></i>
+                                            <input type="text" class="form-control" placeholder="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Confirmation mot de passe</label>
+
+                                        <div class="input-icon">
+                                            <i class="fa fa-unlock-alt"></i>
+                                            <input type="text" class="form-control" placeholder="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- END FORM-->
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-body">
+
+                            <div class="row">
+                                <div class="col-sm-9">
+                                    <div class="form-group">
+                                        <label class="control-label">Adresse complète</label>
+
+                                        <div class="input-icon">
+                                            <i class="fa fa-building-o"></i>
+                                            <input type="text" class="form-control" placeholder="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label>Code postal</label>
+
+                                        <div class="input-icon">
+                                            <i class="fa fa-location-arrow"></i>
+                                            <input type="text" class="form-control" placeholder="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Ville</label>
+
+                                        <div class="input-icon">
+                                            <i class="fa fa-home"></i>
+                                            <input type="text" class="form-control" placeholder="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Pays</label>
+
+                                        <div class="input-icon">
+                                            <i class="fa fa-globe"></i>
+                                            <input type="text" class="form-control" placeholder="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Téléphone</label>
+
+                                        <div class="input-icon">
+                                            <i class="fa fa-phone"></i>
+                                            <input type="text" class="form-control" placeholder="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Fax</label>
+
+                                        <div class="input-icon">
+                                            <i class="fa fa-fax"></i>
+                                            <input type="text" class="form-control" placeholder="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Poste</label>
+
+                                        <div class="input-icon">
+                                            <i class="fa fa-graduation-cap"></i>
+                                            <input type="text" class="form-control" placeholder="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Description</label>
+
+                                        <div class="input-icon">
+                                            <i class="fa fa-list-alt"></i>
+                                            <textarea class="form-control" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- END FORM-->
+                    </div>
+
+
+                </div>
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <button type="submit" class="btn green btn-block">Submit</button>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="button" class="btn default btn-block">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {#<div class="tools">#}
+    {#<a href="javascript:;" class="collapse"> </a>#}
+    {#<a href="#portlet-config" data-toggle="modal" class="config"> </a>#}
+    {#<a href="javascript:;" class="reload"> </a>#}
+    {#<a href="" class="fullscreen"> </a>#}
+    {#<a href="javascript:;" class="remove"> </a>#}
+    {#</div>#}
+
+{% endblock %}
+    {% block javascripts %}
+        {{ parent() }}
+        {% javascripts
+        "bundles/ad/themes/global/scripts/datatable.js"
+
+        "bundles/ad/themes/global/plugins/datatables/datatables.min.js"
+        "bundles/ad/themes/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js"
+        "bundles/ad/themes/global/scripts/app.min.js"
+        "bundles/ad/themes/global/plugins/bootstrap-select/js/bootstrap-select.min.js"
+        "bundles/ad/themes/pages/scripts/components-bootstrap-select.min.js"
+        "bundles/ad/themes/pages/scripts/table-datatables-fixedheader.min.js"
+        "assets/js/database-api.js" %}
+        <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+
+
+    {% endblock %}
+
+

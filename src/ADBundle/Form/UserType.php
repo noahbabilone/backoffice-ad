@@ -94,6 +94,15 @@ class UserType extends AbstractType
                     ),
 
                 )
+            )->add('country', 'text', array(
+                    'label' => 'Pays',
+                    'required' => false,
+                    'attr' => array(
+                        'class' => 'form-control',
+                        'placeholder' => 'France',
+                    ),
+
+                )
             )->add('service', 'choice', array(
                     'label' => 'Service',
                     'choices' => array(
@@ -138,6 +147,16 @@ class UserType extends AbstractType
                     'attr' => array(
                         'class' => 'form-control',
                         'placeholder' => 'Téléphone',
+                        'autocomplete' => 'off'
+                    ),
+
+                )
+            ) ->add('office', 'number', array(
+                    'label' => 'Poste',
+                    'required' => false,
+                    'attr' => array(
+                        'class' => 'form-control',
+                        'placeholder' => 'Ingénieur, Administrateur,...',
                         'autocomplete' => 'off'
                     ),
 

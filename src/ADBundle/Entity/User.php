@@ -117,13 +117,18 @@ class User
      *
      * @ORM\Column(name="group", type="string", length=255)
      */
-    private $group;  
+    private $group;
     /**
      * @var string
      *
      * @ORM\Column(name="groupNotSelect", type="string", length=255)
      */
     private $groupNotSelect;
+    /**
+     * @var string
+     *
+     */
+    private $access;
 
 
     private $memberOf;
@@ -171,7 +176,7 @@ class User
             $this->setPostalCode($this->getData($data, "postalcode"));
             $this->setDescription($this->getData($data, "description"));
             $this->setPhone($this->getData($data, "telephonenumber"));
-            $this->setPhone($this->getData($data, "telephonenumber"));
+            $this->setAccess($this->getData($data, "admincount"));
 
             if (isset($data[0]["memberof"]) && !empty($data[0]["memberof"])) {
                 foreach ($data[0]["memberof"] as $key => $val) {
@@ -520,7 +525,7 @@ class User
      */
     public function setName($name)
     {
-        $this->name =ucfirst(strtolower($name));
+        $this->name = ucfirst(strtolower($name));
 
         return $this;
     }
@@ -618,6 +623,26 @@ class User
         return $this;
     }
 
+    /**
+     * Get access
+     *
+     * @return string
+     */
+    public function getAccess()
+    {
+        return $this->access;
+    }
+
+    /**
+     * Set dn
+     * @param string $access
+     * @return User
+     */
+    public function setAccess($access)
+    {
+        $this->access = $access;
+        return $this;
+    }
 
     /**
      * Get group
@@ -626,7 +651,9 @@ class User
     public function getGroup()
     {
         return $this->group;
-    }   /**
+    }
+
+    /**
      * Set groupNotSelect
      * @param string $groupNotSelect
      * @return User
@@ -698,5 +725,14 @@ class User
     public function getMember()
     {
         return $this->memberOf;
+    }
+
+    public static function checkAdminUser($data)
+    {
+        if (isset($data[0]["admincount"][0])) {
+            return ($data[0]["admincount"][0] == 1) ? TRUE : FALSE;
+        }
+        return FALSE;
+
     }
 }

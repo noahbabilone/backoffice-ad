@@ -71,6 +71,7 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
+                           
                             {% if form is defined %}
                             <div class="row">
                                 {{ form_start(form, { 'method': 'POST','attr': { 'role':'form'} }) }}
@@ -344,12 +345,12 @@
 
             });
             $('#select-group').change(function () {
-                var dn="";
+                var dn = "";
                 $.each($(this).val(), function (i, group) {
                     console.log(group);
-                    dn +="#DnGroup:"+group;
+                    dn += "#DnGroup:" + group;
                 });
-                $("#user_group").val(dn );
+                $("#user_group").val(dn);
             });
         });
     </script>

@@ -1,0 +1,222 @@
+{% extends "ADBundle::main.html.twig" %}
+
+  {% block stylesheets %}
+      {{ parent() }}
+      {% stylesheets
+      'https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css'
+      filter='cssrewrite' %}
+      <link rel="stylesheet" href="{{ asset_url }}"/>
+      {% endstylesheets %}
+  {% endblock %}
+{% block title %}
+    Dashboard - {{ parent() }}
+{% endblock %}
+
+{% block ad_body %}
+    <!-- BEGIN PAGE HEADER-->
+    <!-- BEGIN PAGE BAR -->
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <a href="{{ path('dashboard') }}"><i class="fa fa-home fa-fw"></i></a>
+                <i class="fa fa-circle"></i>
+            </li>
+            <li>
+                <span>Listes utilisateurs</span>
+                <i class="fa fa-circle"></i>
+            </li>
+            <li>
+                {% if ou is defined %}
+                    <span> {{ ou }} </span>
+                {% else %}
+                    <span>Tout </span>
+                {% endif %}
+                </span>
+
+            </li>
+        </ul>
+        <div class="page-toolbar">
+            <div id="dashboard-report-range" class="pull-right tooltips btn btn-sm" data-container="body"
+                 data-placement="bottom" data-original-title="Change dashboard date range">
+                <i class="icon-calendar"></i>&nbsp;
+                <span class="thin uppercase hidden-xs"></span>&nbsp;
+                <i class="fa fa-angle-down"></i>
+            </div>
+        </div>
+    </div>
+    <!-- END PAGE BAR -->
+
+    <!-- BEGIN PAGE TITLE-->
+    <h3 class="page-title"> Listes utilisateurs</h3>
+    <!-- END PAGE TITLE-->
+    <!-- END PAGE HEADER-->
+
+    <!-- BEGIN DASHBOARD STATS 1-->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN SAMPLE TABLE PORTLET-->
+            <div class="portlet light bordered">
+                {# <div class="portlet-title">
+                     <div class="caption">
+                         <i class="fa fa-list fa-fw font-green"></i>
+                         <span class="caption-subject font-green bold uppercase">Liste des utilisateurs</span>
+                     </div>
+                     <div class="actions">
+                         <div class="btn-group">
+                             <a class="btn btn-circle btn-default btn-sm" href="javascript:;" data-toggle="dropdown">
+                                 <i class="fa fa-cog fa-fw"></i>
+                                 <i class="fa fa-angle-down"></i>
+                             </a>
+                             <ul class="dropdown-menu" role="menu">
+                                 <li>
+                                     <a href="{{ path('list_users') }}">
+                                         <i class="fa fa-building  fa-fw"></i> Tout</a></li>
+                                 <li class="divider"></li>
+ 
+                                 <li>
+                                     <a href="{{ path('users_by_ou',{'ou': 'Issy-Les-Moulineaux'}) }}">
+                                         <i class="fa fa-building  fa-fw"></i> Issy Les Moulineaux</a></li>
+                                 <li>
+                                     <a href="{{ path('users_by_ou',{'ou': 'Luxembourg'}) }}">
+                                         <i class="fa fa-building  fa-fw"></i> Luxembourg</a></li>
+                                 <li>
+                                     <a href="{{ path('users_by_ou',{'ou': 'Saint-mande'}) }}">
+                                         <i class="fa fa-building  fa-fw"></i> Saint Mande</a>
+                                 </li>
+                             </ul>
+                         </div>
+ 
+                         <div class="btn-group">
+                             <a class="btn green btn-outline btn-circle btn-sm" href="javascript:;"
+                                data-toggle="dropdown">
+                                 <i class="fa fa-share fa-fw"></i>
+                                 <span class="hidden-xs">  </span>
+                                 <i class="fa fa-angle-down"></i>
+                             </a>
+                             <ul class="dropdown-menu pull-right" id="sample_3_tools">
+                                 <li>
+                                     <a href="javascript:;" data-action="0" class="tool-action">
+                                         <i class="icon-printer"></i> Print</a>
+                                 </li>
+                                 <li>
+                                     <a href="javascript:;" data-action="1" class="tool-action">
+                                         <i class="icon-check"></i> Copy</a>
+                                 </li>
+                                 <li>
+                                     <a href="javascript:;" data-action="2" class="tool-action">
+                                         <i class="icon-doc"></i> PDF</a>
+                                 </li>
+                                 <li>
+                                     <a href="javascript:;" data-action="3" class="tool-action">
+                                         <i class="icon-paper-clip"></i> Excel</a>
+                                 </li>
+                                 <li>
+                                     <a href="javascript:;" data-action="4" class="tool-action">
+                                         <i class="icon-cloud-upload"></i> CSV</a>
+                                 </li>
+                                 <li class="divider"></li>
+                                 <li>
+                                     <a href="javascript:;" data-action="5" class="tool-action">
+                                         <i class="icon-refresh"></i> Reload</a>
+                                 </li>
+                                 </li>
+                             </ul>
+                         </div>
+                         <a class="btn btn-circle btn-icon-only btn-default btn-sm fullscreen" href="javascript:;"
+                            data-original-title="" title=""> </a>
+ 
+                     </div>
+                 </div>#}
+                <div class="portlet-body">
+
+                    <ul class="nav nav-tabs">
+                        <li {% if ou is not defined %} class="active" {% endif %}>
+                            <a href="{{ path('list_users') }}"> Tout </a>
+                        </li>
+                        <li {% if ou is defined %} {% if ou == "Issy-Les-Moulineaux" %} class="active" {% endif %}{% endif %}>
+                            <a href="{{ path('users_by_ou',{'ou': 'Issy-Les-Moulineaux'}) }}"> Issy-Les-Moulineaux </a>
+                        </li>
+                        <li {% if ou is defined %} {% if ou == "Luxembourg" %} class="active" {% endif %}{% endif %}>
+                            <a href="{{ path('users_by_ou',{'ou': 'Luxembourg'}) }}"> Luxembourg </a>
+                        </li>
+                        <li {% if ou is defined %} {% if ou == "Saint-mande" %} class="active" {% endif %}{% endif %}>
+                            <a href="{{ path('users_by_ou',{'ou': 'Saint-mande'}) }}"> Saint-Mandé </a>
+                        </li>
+                    </ul>
+
+
+                    {% if users is defined %}
+                        <table class="table table-striped table-hover table-header-fixed order-column" id="table-users"
+                               data-line="25" cellspacing="0" width="100%"> 
+                            <thead>
+                            <tr>
+                                {#<th class="col-md-2">#</th>#}
+                                <th class="col-md-2">Login</th>
+                                <th class="col-md-2">Nom</th>
+                                <th class="col-md-4">Email</th>
+                                <th class="col-md-4">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for key, user in users %}
+                                {% if  key != "count" or key =="0" %}
+                                    <tr id="line-{{ key }}">
+                                        {#<td class="col-md-2">{{ key }}</td>#}
+                                        <td class="col-md-2">{{ ad_active_directory.getData(user,"samaccountname") }}</td>
+                                        <td class="col-md-3">{{ ad_active_directory.getData(user,"displayname") }}</td>
+                                        <td class="col-md-4">{{ ad_active_directory.getData(user,"userprincipalname") }}</td>
+
+                                        <td class="col-md-3">
+                                            {% set login=ad_active_directory.getData(user,"userprincipalname") %}
+                                            {% set dn=ad_active_directory.getData(user,"distinguishedname") %}
+                                            {#{{ path('get_user',{'login':login }) }}#}
+                                            <a href="" data-toggle="modal" data-target="#view-user"
+                                               data-user="{{ ad_active_directory.base64Encode(dn) }}"
+                                               class="btn btn-xs btn-outline  btn-circle btn-user-info dark"><i
+                                                        class="fa fa-user fa-fw"></i> Voir</a>
+                                            <a href="{{ path('edit_user',{'person':ad_active_directory.base64Encode(dn) }) }}"
+                                               class="btn btn-xs btn-outline btn-circle  blue"><i
+                                                        class="fa fa-edit fa-fw"></i> Edit</a>
+                                            {% if ad_active_directory.getData(user,"samaccountname") != "Administrator" %}
+                                                <a href=""
+                                                   class="btn btn-xs btn-outline btn-circle red btn-remove"
+                                                   data-action="remove-user"
+                                                   id="{{ ad_active_directory.getData(user,"cn") }}"
+                                                   data-tree="{{ dn }}"
+                                                   data-line="line-{{ key }}"><i class="fa fa-trash-o fa-fw"></i>Supp</a>
+                                            {% endif %}
+
+                                        </td>
+
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                </div>
+            </div>
+            <!-- END SAMPLE TABLE PORTLET-->
+        </div>
+    </div>
+    
+
+{% endblock %}
+    {% block javascripts %}
+        {{ parent() }}
+        {% javascripts
+        "bundles/ad/themes/global/scripts/datatable.js"
+
+        "bundles/ad/themes/global/plugins/datatables/datatables.min.js"
+        "bundles/ad/themes/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js"
+        "bundles/ad/themes/global/scripts/app.min.js"
+
+        "bundles/ad/themes/pages/scripts/table-datatables-fixedheader.min.js"
+        "assets/js/database-api.js" %}
+        <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+
+
+    {% endblock %}
+
+

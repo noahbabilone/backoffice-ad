@@ -1,112 +1,123 @@
 $(function () {
-    console.log("*****");
-    $(".btn-remove-user").click(function (e) {
-        var username = $.trim($(this).attr("id"));
-        $("#username").html(username);
-        var tree = $(this).attr("data-tree");
-        var line = $(this).attr("data-line");
-        console.log(tree);
-        $(".ok-delete-user").attr("data-tree", tree);
-        $(".ok-delete-user").attr("data-line", line);
-        $(".ok-delete-user").attr("data-username", username);
-        $('#myModal').modal();
-        e.preventDefault();
-    });
-
-    $(".ok-delete-user").click(function (e) {
-        var href = Routing.generate('ad_remove_user');
-        var tree = $.trim($(this).attr("data-tree"));
-        var line = $.trim($(this).attr("data-line"));
-        var username = $.trim($(this).attr("data-username"));
-
-        var data = {
-            tree: tree,
-            username: username
-        };
-
-        console.log(href + " " + tree);
-        $.getJSON(href, data)
-            .done(function (data) {
-                console.log(data.result);
-                $(".text-response-ajax").html(data.message);
-                if (data.result) {
-                    $('#' + line).fadeOut(500, function () {
-                        $(this).remove();
-                    });
-
-                    if ($(".response-ajax").hasClass("hide")) {
-                        if (!$(".response-ajax").hasClass("alert-success")) {
-                            $(".response-ajax").hasClass("alert-success");
-                        }
-                        if ($(".response-ajax").hasClass("alert-danger")) {
-                            $(".response-ajax").removeClass("alert-danger");
-                        }
-                        $(".response-ajax").fadeIn(300, function () {
-                            $(this).removeClass("hide");
-                        });
-                    }
-
-                } else {
-                    if ($(".response-ajax").hasClass("hide")) {
-                        if ($(".response-ajax").hasClass("alert-success")) {
-                            $(".response-ajax").removeClass("alert-success");
-                        }
-                        if (!$(".response-ajax").hasClass("alert-danger")) {
-                            $(".response-ajax").hasClass("alert-danger");
-                        }
-                        $(".response-ajax").fadeIn(300, function () {
-                            $(this).removeClass("hide");
-                        });
-                    }
-                }
-                $(".response-ajax").delay(35000).fadeOut(1000, function () {
-                    $(this).addClass("hide");
-                });
-            })
-            /*.fail(function (jqxhr, textStatus, error) {
-             var err = textStatus + ", " + error;
-             console.log("Request Failed: " + err);
-             })*/;
-
-        e.preventDefault();
-    });
-
-
-    $('.name, .firstName').keyup(function () {
-        var login;
-        if ($(".name").val())
-            login = $(".name").val().charAt(0);
-        if ($(".firstName").val())
-            login += $(".firstName").val();
-
-        console.log(login);
-        $('.login').val(login);
-    });
+    var regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)([a-zA-Z0-9]{8,})$/;
+    var textPwd = "Le mot de passe doit comporter au moins 8 caractères et doit comporter au moins un chiffre, une lettre en majuscule et en miniscule";
     
-    $(".password").keyup(function(){
-        var pwd =$.trim($(this).val());
-        if (pwd.match(/((([a-z]+)|([A-Z]+)([0-9]+)){8,})/)){
-            console.log("yes"+pwd);
-        }else{
-            console.log("No ");
+    $('.password').tooltip({
+        'trigger': 'focus',
+        placement: "bottom",
+        'title': textPwd
+    });
+    $('[data-toggle="tooltip"]').tooltip(); 
+
+    $(".password").keyup(function () {
+
+        var pwd = $.trim($(this).val());
+        if ((/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)([a-zA-Z0-9]{6,})$/).test(pwd)) {
+            console.log("yes " + pwd);
+        } else {
+            console.log("No " + pwd);
         }
-        
+
     });
-    
-    
+
     $('#save-edit-pwd').click(function (e) {
-       // e.preventDefault();
-        
-        if ($.trim($('.confirm-pwd').val()) != $.trim($('.password').val))
-        {
-            $('#champs-new-pwd').addClass('has-error');
-            console.log("Veuillez confirmer le nouveau mot de passe");
+
+        var response = grecaptcha.getResponse();
+        if (!$.trim($('.old-password').val())) {
+            if (!$('#champs-old-pwd').hasClass('has-error')) {
+                $('#champs-old-pwd').addClass('has-error');
+            }
+            if ($("#field-message-error").hasClass("hide")) {
+                $("#field-message-error").removeClass("hide")
+            }
+            $('.message-error').html('Veuillez rentrer le mot de passe actuel.');
+        } else if (!regex.test($.trim($('.password').val()))) {
+            $('.message-error').html(textPwd);
+
+            if (!$('#champs-new-pwd').hasClass('has-error')) {
+                $('#champs-new-pwd').addClass('has-error');
+            }
+            $("#champs-new-pwd .form-control-feedback").addClass('glyphicon-warning-sign');
+
+            if ($("#field-message-error").hasClass("hide")) {
+                $("#field-message-error").removeClass("hide")
+            }
             e.preventDefault();
+        } else if ($.trim($('.confirm-pwd').val()) != $.trim($('.password').val())) {
+            e.preventDefault();
+
+            if (!$('#champs-check-pwd').hasClass('has-error')) {
+                $('#champs-check-pwd').addClass('has-error');
+            }
+            if ($("#field-message-error").hasClass("hide")) {
+                $("#field-message-error").removeClass("hide")
+            }
+            $('.message-error').html('Veuillez confirmer votre nouveau mot de passe.');
+        } else if (response.length == 0) {
+            e.preventDefault();
+            $('#recaptcha-error').show();
+            if ($("#field-message-error").hasClass("hide")) {
+                $("#field-message-error").removeClass("hide")
+            }
+            $('.message-error').html('Veuillez cocher la case "Je ne suis pas un robot" .');
+        }
+    });
+
+
+    $('.password').keyup(function () {
+        if ($('#champs-check-pwd').hasClass('has-error')) {
+            $('#champs-check-pwd').removeClass('has-error');
+        }
+
+        if (regex.test($.trim($('.password').val()))) {
+            $("#champs-new-pwd .form-control-feedback").removeClass('glyphicon-warning-sign');
+            $("#champs-new-pwd .form-control-feedback").addClass('glyphicon-ok');
+            if ($('#champs-new-pwd').hasClass('has-error')) {
+                $('#champs-new-pwd').removeClass('has-error');
+            }
+            if (!$('#champs-new-pwd').hasClass('has-success')) {
+                $('#champs-new-pwd').addClass('has-success');
+            }
+        } else {
+            $("#champs-new-pwd .form-control-feedback").removeClass('glyphicon-ok');
+            $("#champs-new-pwd .form-control-feedback").addClass('glyphicon-warning-sign');
+            if (!$('#champs-new-pwd').hasClass('has-error')) {
+                $('#champs-new-pwd').addClass('has-error');
+            }
+
+            if ($('#champs-new-pwd').hasClass('has-success')) {
+                $('#champs-new-pwd').removeClass('has-success');
+            }
+        }
+    });
+
+    $('.confirm-pwd').keyup(function () {
+        if ($.trim($('.confirm-pwd').val()) != $.trim($('.password').val()) || !$.trim($('.confirm-pwd').val()) || !regex.test($.trim($('.password').val()))) {
+            if ($('#champs-check-pwd').hasClass('has-success')) {
+                $('#champs-check-pwd').removeClass('has-success');
+            }
+            $('#champs-check-pwd').addClass('has-error');
+            $("#champs-check-pwd .form-control-feedback").addClass('glyphicon-warning-sign');
+        } else {
+            $("#champs-check-pwd .form-control-feedback").removeClass('glyphicon-warning-sign');
+            $("#champs-check-pwd .form-control-feedback").addClass('glyphicon-ok');
+            if ($('#champs-check-pwd').hasClass('has-error')) {
+                $('#champs-check-pwd').removeClass('has-error');
+            }
+            if (!$('#champs-check-pwd').hasClass('has-success')) {
+                $('#champs-check-pwd').addClass('has-success');
+            }
+        }
+    });
+
+
+    $('.old-password').keyup(function () {
+        if ($(this).val()) {
+            console.log($(this).val());
+            if ($('#champs-old-pwd').hasClass('has-error')) {
+                $('#champs-old-pwd').removeClass('has-error');
+            }
         }
     });
     
-    
-    
-    
-
 });
