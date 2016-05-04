@@ -1,9 +1,46 @@
 $(function () {
+    console.log("Ad-js");
     var regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)([a-zA-Z0-9]{8,})$/;
+    var regexPhone = /^0[1-9]([0-9]){8}$/;
+
     var textPwd = "Le mot de passe doit comporter au moins 8 caractères et doit comporter au moins un chiffre, une lettre en majuscule et en miniscule";
-    var address = {
-        "Saint-Mandé": {}
-    }
+
+    $(".service").change(function () {
+        console.log($(this).val());
+        var address = "";
+        var service=$(this).val().substr(0,4);
+        if (service== "Sain") {
+            address = {
+                "address": "Bis, 2 Avenue Foch, 94160 Saint-Mandé",
+                "postalCode": "94160",
+                "city": "Saint-Mandé",
+                "country": "France",
+            };
+        } else if (service == "Issy") {
+            address =
+            {
+                "address": "16 Rue Jean Jacques Rousseau",
+                "postalCode": "92130",
+                "city": "Issy-les-Moulineaux",
+                "country": "France",
+            };
+        } else if (service == "Luxe") {
+            address = {
+                "address": "4 Avenue de la Gare",
+                "postalCode": "1610",
+                "city": "Luxembourg",
+                "country": "Luxembourg",
+            }
+        }
+        console.log(address);
+        $(".address").val(address.address);
+        $(".postalCode").val(address.postalCode);
+        $(".city").val(address.city);
+        $(".country").val(address.country);
+
+    });
+
+
     /* Deleting User */
     $(".btn-remove").click(function (e) {
 
@@ -42,7 +79,7 @@ $(function () {
         }
         //$.notify("Access granted", "success");
 
-         $('#remove-modal').modal();
+        $('#remove-modal').modal();
         e.preventDefault();
     });
 
@@ -54,7 +91,6 @@ $(function () {
             var tree = $.trim($(this).attr("data-tree"));
             var line = $.trim($(this).attr("data-line"));
             var username = $.trim($(this).attr("data-username"));
-
             data = {
                 tree: tree,
                 username: username
@@ -89,35 +125,26 @@ $(function () {
                             $(this).remove();
                         });
 
-                        if ($(".response-ajax").hasClass("hide")) {
-                            if (!$(".response-ajax").hasClass("alert-success")) {
-                                $(".response-ajax").hasClass("alert-success");
-                            }
-                            if ($(".response-ajax").hasClass("alert-danger")) {
-                                $(".response-ajax").removeClass("alert-danger");
-                            }
-                            $(".response-ajax").fadeIn(300, function () {
-                                $(this).removeClass("hide");
-                            });
-                        }
-
+                        $.notify({
+                            // options
+                            icon: 'glyphicon glyphicon-ok',
+                            message: data.message,
+                        }, {
+                            type: "success",
+                        });
 
                     } else {
-                        if ($(".response-ajax").hasClass("hide")) {
-                            if ($(".response-ajax").hasClass("alert-success")) {
-                                $(".response-ajax").removeClass("alert-success");
-                            }
-                            if (!$(".response-ajax").hasClass("alert-danger")) {
-                                $(".response-ajax").hasClass("alert-danger");
-                            }
-                            $(".response-ajax").fadeIn(300, function () {
-                                $(this).removeClass("hide");
-                            });
-                        }
+                        $.notify({
+                            // options
+                            icon: 'glyphicon glyphicon-warning-sign',
+                            title: 'Error: ',
+                            message: 'Une erreur s\'est produit lors de la suppression de l\'utilisateur',
+                        }, {
+                            type: "danger",
+
+                        });
+
                     }
-                    $(".response-ajax").delay(35000).fadeOut(1000, function () {
-                        $(this).addClass("hide");
-                    });
                 });
         }
 
@@ -173,28 +200,25 @@ $(function () {
         'title': textPwd
     });
 
+
     /* Password */
     $(".password").keyup(function () {
 
-        if ($('#field-confirm-password').hasClass('has-error')) {
-            $('#field-confirm-password').removeClass('has-error');
-        }
-        $("#field-confirm-password .form-control-feedback").removeClass('glyphicon-warning-sign');
+        $('#field-confirm-password').removeClass('has-error');
+        console.log($(this).val());
+        $("#field-password .form-control-feedback").removeClass('fa-unlock-alt');
+        $("#field-confirm-password .form-control-feedback").removeClass('fa-warning');
+        $("#field-confirm-password .form-control-feedback").removeClass('fa-check');
+        $("#field-confirm-password .form-control-feedback").addClass('fa-unlock-alt');
+        $("#field-confirm-password").removeClass('has-error');
+        $("#field-confirm-password").removeClass('has-success');
+        $(".confirm-password").val("");
+
 
         if (regex.test($.trim($(this).val()))) {
-            $("#field-password .form-control-feedback").removeClass('glyphicon-warning-sign');
-            $("#field-password .form-control-feedback").addClass('glyphicon-ok');
-            if ($('#field-password').hasClass('has-error')) {
-                $('#field-password').removeClass('has-error');
-            }
-            if (!$('#field-password').hasClass('has-success')) {
-                $('#field-password').addClass('has-success');
-            }
+            hasSuccess("field-password");
         } else {
-            if (!$('#field-password').hasClass('has-error')) {
-                $('#field-password').addClass('has-error');
-            }
-            $("#field-password .form-control-feedback").addClass('glyphicon-warning-sign');
+            hasError("field-password");
         }
         //console.log($(this).val());
     });
@@ -204,26 +228,15 @@ $(function () {
     $('.confirm-password').keyup(function () {
         var checkPwd = $.trim($('.confirm-password').val());
         console.log(checkPwd);
-
-
+        $("#field-confirm-password .form-control-feedback").removeClass('fa-unlock-alt');
         if (checkPwd != $.trim($('.password').val()) || !checkPwd || !regex.test(checkPwd)) {
-            if ($('#field-confirm-password').hasClass('has-success')) {
-                $('#field-confirm-password').removeClass('has-success');
-            }
-            $('#field-confirm-password').addClass('has-error');
-            $("#field-confirm-password .form-control-feedback").addClass('glyphicon-warning-sign');
+            hasError("field-confirm-password");
         } else {
-            $("#field-confirm-password .form-control-feedback").removeClass('glyphicon-warning-sign');
-            $("#field-confirm-password .form-control-feedback").addClass('glyphicon-ok');
-            if ($('#field-confirm-password').hasClass('has-error')) {
-                $('#field-confirm-password').removeClass('has-error');
-            }
-            if (!$('#field-confirm-password').hasClass('has-success')) {
-                $('#field-confirm-password').addClass('has-success');
-            }
+            hasSuccess("field-confirm-password");
         }
         //console.log($('.confirm-password').val() + "   ---> " + $('.password').val());
     });
+
 
     /* Btn Add User  */
     $('.add-user').click(function (e) {
@@ -235,104 +248,44 @@ $(function () {
                 if (!$.trim($("." + value).val())) {
                     if (!$('#field-' + value).hasClass('has-error')) {
                         $('#field-' + value).addClass('has-error');
-                        $("#field-" + value + " .form-control-feedback").addClass('glyphicon-warning-sign');
+                        $("#field-" + value + " .form-control-feedback");
                     }
                 }
             });
-            if ($("#field-message-error").hasClass("hide")) {
-                $("#field-message-error").removeClass("hide")
-            }
+            $("#field-message-error").removeClass("hide")
             $('.message-error').html('Veuillez remplir tous les champs obligatoires.');
             e.preventDefault();
         } else if (!regex.test($.trim($('.password').val()))) {
             $('.message-error').html(textPwd);
-
-            if (!$('#field-password').hasClass('has-error')) {
-                $('#field-password').addClass('has-error');
-            }
-            $("#field-password .form-control-feedback").addClass('glyphicon-warning-sign');
-
-            if ($("#field-message-error").hasClass("hide")) {
-                $("#field-message-error").removeClass("hide")
-            }
+            $('#field-password').addClass('has-error');
+            $("#field-message-error").removeClass("hide")
             e.preventDefault();
         } else if ($.trim($('.confirm-password').val()) != $.trim($('.password').val())) {
+
+            $('#field-confirm-password').addClass('has-error');
+            $("#field-message-error").removeClass("hide")
+            $('.message-error').html('Veuillez confirmer votre nouveau mot de passe.');
             e.preventDefault();
 
-            if (!$('#field-confirm-password').hasClass('has-error')) {
-                $('#field-confirm-password').addClass('has-error');
-            }
-            if ($("#field-message-error").hasClass("hide")) {
-                $("#field-message-error").removeClass("hide")
-            }
-            $('.message-error').html('Veuillez confirmer votre nouveau mot de passe.');
-        }
+        } else if (!regexPhone.test($('.phone').val()) && $('.phone').val()) {
+            e.preventDefault();
+            $("#field-message-error").removeClass("hide")
+            $('.message-error').html("Numero de téléphone invalide");
 
+        }
         //console.log(!(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)([a-zA-Z0-9]{6,})$/).test($.trim($('.password').val())));
     });
 
-
-    $('.password').keyup(function () {
-
-        if (regex.test($.trim($('.password').val()))) {
-            $("#field-password .form-control-feedback").removeClass('glyphicon-warning-sign');
-            $("#field-password .form-control-feedback").addClass('glyphicon-ok');
-            if ($('#field-password').hasClass('has-error')) {
-                $('#field-password').removeClass('has-error');
-            }
-            if (!$('#field-password').hasClass('has-success')) {
-                $('#field-password').addClass('has-success');
-            }
-        } else {
-            $("#field-password .form-control-feedback").removeClass('glyphicon-ok');
-            $("#field-password .form-control-feedback").addClass('glyphicon-warning-sign');
-            if (!$('#field-password').hasClass('has-error')) {
-                $('#field-password').addClass('has-error');
-            }
-
-            if ($('#field-password').hasClass('has-success')) {
-                $('#field-password').removeClass('has-success');
+    $('.old-password').keyup(function () {
+        if ($(this).val()) {
+            console.log($(this).val());
+            if ($('#champs-old-pwd').hasClass('has-error')) {
+                $('#champs-old-pwd').removeClass('has-error');
             }
         }
     });
 
 
-    //
-    //$('.old-password').keyup(function () {
-    //    if ($(this).val()) {
-    //        console.log($(this).val());
-    //        if ($('#champs-old-pwd').hasClass('has-error')) {
-    //            $('#champs-old-pwd').removeClass('has-error');
-    //        }
-    //    }
-    //});
-
-    $(".btn-user-info").click(function (e) {
-        e.preventDefault();
-        var user = $(this).attr("data-user");
-        var data = {"user": user};
-        var href = Routing.generate('ad_get_user');
-        console.log(href);
-        if (user) {
-            $.getJSON(href, data)
-                .done(function (data) {
-                    console.log(data.user);
-                    if (data.result) {
-                        var user = data.user
-                        $('#fullName').val(user.fullname);
-                        $('#login-user').val(user.login);
-                        // $('#service').val(user.service);
-                        $('#mail').val(user.username);
-                        $('#address').val(user.address);
-                        $('#ville-postalCode').val(user.villePostalCode);
-                        $('#phone').val(user.tel);
-                        $('#office').val(user.office);
-                    }
-
-                });
-        }
-        console.log(user);
-    });
     $("#save-edit").click(function (e) {
         var dnGroupNotSelect = "";
         $('#select-group option:not(:selected)').each(function (i, selected) {
@@ -351,34 +304,27 @@ $(function () {
                     }
                 }
             });
-            if ($("#field-message-error").hasClass("hide")) {
-                $("#field-message-error").removeClass("hide")
-            }
+            $("#field-message-error").removeClass("hide")
             $('.message-error').html('Veuillez remplir tous les champs obligatoires.');
             e.preventDefault();
         } else if ($('.password').val()) {
+
             if (!regex.test($.trim($('.password').val()))) {
                 $('.message-error').html(textPwd);
-
-                if (!$('#field-password').hasClass('has-error')) {
-                    $('#field-password').addClass('has-error');
-                }
-                $("#field-password .form-control-feedback").addClass('glyphicon-warning-sign');
-
-                if ($("#field-message-error").hasClass("hide")) {
-                    $("#field-message-error").removeClass("hide")
-                }
+                $('#field-password').addClass('has-error');
+                $("#field-message-error").removeClass("hide");
+                e.preventDefault();
             } else if ($.trim($('.confirm-password').val()) != $.trim($('.password').val())) {
                 e.preventDefault();
-
-                if (!$('#field-confirm-password').hasClass('has-error')) {
-                    $('#field-confirm-password').addClass('has-error');
-                }
-                if ($("#field-message-error").hasClass("hide")) {
-                    $("#field-message-error").removeClass("hide")
-                }
-                $('.message-error').html('Veuillez confirmer votre nouveau mot de passe.');
+                $('#field-confirm-password').addClass('has-error');
+                $("#field-message-error").removeClass("hide")
+                $('.message-error').html('Veuillez confirmer votre mot de passe.');
+                e.preventDefault();
             }
+        } else if (!regexPhone.test($('.phone').val()) && $('.phone').val()) {
+            e.preventDefault();
+            $("#field-message-error").removeClass("hide")
+            $('.message-error').html("Numero de téléphone invalide");
         }
     });
 
@@ -392,17 +338,47 @@ $(function () {
     });
 
 
-    function displayError(idBlock, message) {
-        if (!$('#' + idBlock).hasClass('has-error')) {
-            $('#' + idBlock).addClass('has-error');
+    $(".btn-user-info").click(function (e) {
+        e.preventDefault();
+        var user = $(this).attr("data-user");
+        var data = {"user": user};
+        var href = Routing.generate('ad_get_user');
+        console.log(href);
+        if (user) {
+            $.getJSON(href, data)
+                .done(function (data) {
+                    console.log(data.user);
+                    if (data.result) {
+                        var user = data.user
+                        $('#fullName').val(user.fullname);
+                        $('#login-user').val(user.login);
+                        $('#service').val(user.service);
+                        $('#mail').val(user.username);
+                        $('#address').val(user.address);
+                        $('#ville-postalCode').val(user.villePostalCode);
+                        $('#phone').val(user.tel);
+                        $('#office').val(user.office);
+                    }
+                });
         }
-        if (message == null) {
-            if ($("#field-message-error").hasClass("hide")) {
-                $("#field-message-error").removeClass("hide")
-            }
-            $('.message-error').html('Veuillez confirmer votre nouveau mot de passe.');
-        }
-        
+        console.log(user);
+    });
+
+
+    function hasSuccess(idField) {
+        $("#" + idField + " .form-control-feedback").removeClass('fa-warning');
+        $("#" + idField + " .form-control-feedback").addClass('fa-check');
+        $("#" + idField).removeClass('has-error');
+        $("#" + idField).addClass('has-success');
     }
 
-});
+    function hasError(idField) {
+        $("#" + idField).removeClass('has-success');
+        $("#" + idField).addClass('has-error');
+        $("#" + idField + " .form-control-feedback").removeClass('fa-check');
+        $("#" + idField + " .form-control-feedback").addClass('fa-warning')
+
+    }
+
+})
+;

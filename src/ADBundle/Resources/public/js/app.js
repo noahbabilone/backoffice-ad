@@ -1,25 +1,33 @@
 $(function () {
     var regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)([a-zA-Z0-9]{8,})$/;
+    var regexPhone = /^0[1-9]([0-9]){8}$/;
+    //var regexPhone = /^0[1-9]([-. ]?[0-9]{2}){4}$/;
     var textPwd = "Le mot de passe doit comporter au moins 8 caractères et doit comporter au moins un chiffre, une lettre en majuscule et en miniscule";
-    
+
     $('.password').tooltip({
         'trigger': 'focus',
         placement: "bottom",
         'title': textPwd
     });
-    $('[data-toggle="tooltip"]').tooltip(); 
+    $('[data-toggle="tooltip"]').tooltip();
+    
+    $('#save-edit-info').click(function (e) {
+        var response = grecaptcha.getResponse();
+       // console.log(regexPhone.test($('.phone').val()));
+        if (!regexPhone.test($('.phone').val()) && $('.phone').val()) {
+            e.preventDefault();
+            $("#field-message-error").removeClass("hide")
+            $('.message-error').html("Numero de téléphone invalide, numéro t");
 
-    $(".password").keyup(function () {
-
-        var pwd = $.trim($(this).val());
-        if ((/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)([a-zA-Z0-9]{6,})$/).test(pwd)) {
-            console.log("yes " + pwd);
-        } else {
-            console.log("No " + pwd);
+        } else if (response.length == 0) {
+            e.preventDefault();
+            $('#recaptcha-error').show();
+            if ($("#field-message-error").hasClass("hide")) {
+                $("#field-message-error").removeClass("hide")
+            }
+            $('.message-error').html('Veuillez cocher la case "Je ne suis pas un robot" .');
         }
-
     });
-
     $('#save-edit-pwd').click(function (e) {
 
         var response = grecaptcha.getResponse();
@@ -119,5 +127,5 @@ $(function () {
             }
         }
     });
-    
+
 });

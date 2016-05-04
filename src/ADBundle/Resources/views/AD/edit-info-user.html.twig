@@ -33,33 +33,26 @@
                                 <i class="material-icons left"></i>Modifier Mot de passe</a>
                         </div>
                         <div class="col-lg-5 ">
-                            <a href="{{ path('edit_password',{"person":ad_active_directory.base64Encode(user.login)}) }}"
+                            <a href="{{ path('edit_info_user',{"person":ad_active_directory.base64Encode(user.login)}) }}"
                                class="btn btn-sm btn-danger btn-block waves-effect waves-light deep-orange darken-2">
                                 <i class="material-icons left"></i>Modifier mes Infos</a>
                         </div>
                         <div class="col-lg-8 col-md-offset-2" style="margin-top: 20px;">
                             {% if result is defined %}
-                                {% if result is defined and result %}
-                                    {% if result == "success" %}
-                                        <div class="alert alert-success" role="alert">
+                                {% if result %}
+                                    <div class="alert alert-success" role="alert">
                                             <span class="glyphicon glyphicon-exclamation-sign"
                                                   aria-hidden="true"></span>
-                                            Votre mot de passe a été modifié et il sera pris en compte d'ici 30
-                                            minutes.
-                                        </div>
-                                    {% else %}
-                                        <div class="alert alert-danger" role="alert">
+                                        Les inforamtions concernant l'utilsiateur ont été modifiée.
+                                    </div>
+                                {% else %}
+                                    <div class="alert alert-danger" role="alert">
                                             <span class="glyphicon glyphicon-exclamation-sign"
                                                   aria-hidden="true"></span>
-                                            {{ result }}
-                                        </div>
-                                    {% endif %}
-                                {% endif %}
-                                {% if error is defined and error %}
-                                    <div class="alert alert-warning" role="alert" style="margin-top: 30px;">
-                                        {{ error | raw }}.
+                                        Aucune information a été modifiée.
                                     </div>
                                 {% endif %}
+
                             {% endif %}
                             <div class="alert alert-warning hide" id="field-message-error" role="alert">
                                 {#<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>#}
@@ -71,61 +64,46 @@
                         {{ form_start(form, { 'method': 'POST','attr': { 'role':'form'} }) }}
                         <div class="col-lg-8 col-md-offset-2">
 
-                            {% if form.login is defined %}
+                            {% if form.title is defined %}
                                 <div class="form-group">
-                                    {{ form_label(form.login) }}
+                                    {{ form_label(form.title) }}
                                     <div class="input-group input-field-edit">
-                                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                        <span class="form-control-feedback" aria-hidden="true"></span>
 
-                                        <div class="input-group-addon"><i class="fa fa-envelope fa-fw"></i>
+                                        <div class="input-group-addon"><i class="fa fa-graduation-cap"></i>
                                         </div>
-                                        {{ form_widget(form.login) }}
+                                        {{ form_widget(form.title) }}
                                     </div>
                                 </div>
 
                             {% endif %}
-                            {% if form.oldPassword is defined %}
-                                <div class="form-group has-feedback" id="champs-old-pwd">
-                                    {{ form_label(form.oldPassword) }}
-                                    <div class="input-group input-field-edit">
-                                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 
-                                        <div class="input-group-addon"><i class="fa fa-key fa-fw"></i></div>
-                                        {{ form_widget(form.oldPassword) }}
+
+                            {% if form.phone is defined %}
+                                <div class="form-group">
+                                    {{ form_label(form.phone) }}
+                                    <div class="input-group input-field-edit">
+                                        <span class="form-control-feedback" aria-hidden="true"></span>
+
+                                        <div class="input-group-addon"><i class="fa fa-phone fa-fw"></i>
+                                            {#Mob : +33 (0)#}
+                                        </div>
+                                        {{ form_widget(form.phone) }}
                                     </div>
                                 </div>
+
+                            {% endif %}
+                            {% if form.description is defined %}
+                                <div class="form-group">
+                                    {{ form_label(form.description) }}
+                                    <div class="input-group input-field-edit">
+                                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                        {{ form_widget(form.description) }}
+                                    </div>
+                                </div>
+
                             {% endif %}
 
-                            {% if form.password is defined %}
-                                <div class="form-group has-feedback" id="champs-new-pwd">
-                                    {{ form_label(form.password) }}
-                                    <div class="input-group input-field-edit">
-                                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-
-                                        <div class="input-group-addon"><i class="fa fa-unlock-alt fa-fw"></i>
-                                        </div>
-                                        {{ form_widget(form.password) }}
-                                    </div>
-                                </div>
-                                <div class="has-feedback" id="champs-check-pwd">
-
-                                    <label for="confirm-password" class="control-label">Confirmation mot de
-                                        passe</label>
-
-                                    <div class="input-group input-field-edit">
-                                        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-
-                                        <div class="input-group-addon"><i class="fa fa-unlock-alt fa-fw"></i>
-                                        </div>
-                                        <input type="password" placeholder="Confirmation mot de passe"
-                                               id="confirm-password"
-                                               class="form-control confirm-pwd"
-                                               name="confirm-password" autocomplete="off" required="required"
-                                               aria-describedby="inputError2Status"/>
-
-                                    </div>
-                                </div>
-                            {% endif %}
                         </div>
                         <div class="col-sm-7 col-md-offset-2" style="margin-top: 12px; margin-bottom: 12px;">
                             <div id="recaptcha" class="g-recaptcha"
@@ -134,7 +112,7 @@
                         <div class="col-sm-8 col-md-offset-2">
                             <button type="submit"
                                     class="btn btn-sm btn-danger btn-block waves-effect waves-light deep-orange darken-2"
-                                    id="save-edit-pwd">
+                                    id="save-edit-info">
                                 Enregistrer
                             </button>
                         </div>

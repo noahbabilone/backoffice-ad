@@ -16,7 +16,16 @@ class UserType extends AbstractType
     {
 
         $builder
-            ->add('name', 'text', array(
+            ->add('title', 'text', array(
+                    'label' => 'Fonction',
+                    'required' => false,
+                    'attr' => array(
+                        'class' => 'form-control',
+                        'placeholder' => 'Fonction',
+                        'autocomplete' => 'off'
+                    ),
+                )
+            ) ->add('name', 'text', array(
                     'label' => 'Nom',
                     'required' => true,
                     'attr' => array(
@@ -55,26 +64,8 @@ class UserType extends AbstractType
                     ),
                 )
             )
-            ->add('address', 'text', array(
-                    'label' => 'Adresse',
-                    'required' => false,
-                    'attr' => array(
-                        'class' => 'form-control',
-                        'placeholder' => 'Adresse',
-                        'autocomplete' => 'off'
-                    ),
-                )
-            )
-            ->add('postalCode', 'number', array(
-                    'label' => 'Code postal',
-                    'required' => false,
-                    'attr' => array(
-                        'class' => 'form-control',
-                        'placeholder' => '75001',
-                        'autocomplete' => 'off'
-                    ),
-                )
-            )->add('description', 'textarea', array(
+            
+           ->add('description', 'textarea', array(
                     'label' => 'Description',
                     'required' => false,
                     'attr' => array(
@@ -85,11 +76,31 @@ class UserType extends AbstractType
 
                 )
             )
+            ->add('address', 'text', array(
+                    'label' => 'Adresse',
+                    'required' => false,
+                    'attr' => array(
+                        'class' => 'form-control address',
+                        'placeholder' => 'Adresse',
+                        'autocomplete' => 'off'
+                    ),
+                )
+            )
+             ->add('postalCode', 'number', array(
+                    'label' => 'Code postal',
+                    'required' => false,
+                    'attr' => array(
+                        'class' => 'form-control postalCode',
+                        'placeholder' => '75001',
+                        'autocomplete' => 'off'
+                    ),
+                )
+            )
             ->add('city', 'text', array(
                     'label' => 'Ville',
                     'required' => false,
                     'attr' => array(
-                        'class' => 'form-control',
+                        'class' => 'form-control city',
                         'placeholder' => 'Paris',
                     ),
 
@@ -98,7 +109,7 @@ class UserType extends AbstractType
                     'label' => 'Pays',
                     'required' => false,
                     'attr' => array(
-                        'class' => 'form-control',
+                        'class' => 'form-control country',
                         'placeholder' => 'France',
                     ),
 
@@ -115,7 +126,7 @@ class UserType extends AbstractType
 
                     ),
                     'attr' => array(
-                        'class' => 'form-control',
+                        'class' => 'form-control service',
                         'placeholder' => 'service',
                     ),
 
@@ -123,7 +134,9 @@ class UserType extends AbstractType
             )->add('group', 'hidden', array(
                     'label' => '',
                     'attr' => array(
-                        'class' => 'select-groups',
+                        'class' => 'select-groups', 
+                        'autocomplete' => 'off'
+
                     ),
                 )
             )
@@ -141,28 +154,18 @@ class UserType extends AbstractType
 
                 )
             )
-            ->add('phone', 'number', array(
+            ->add('phone', 'text', array(
                     'label' => 'Téléphone',
                     'required' => false,
                     'attr' => array(
-                        'class' => 'form-control',
-                        'placeholder' => 'Téléphone',
+                        'class' => 'form-control phone',
+                        'placeholder' => '0601020304',
                         'autocomplete' => 'off'
                     ),
 
                 )
-            ) ->add('office', 'number', array(
-                    'label' => 'Poste',
-                    'required' => false,
-                    'attr' => array(
-                        'class' => 'form-control',
-                        'placeholder' => 'Ingénieur, Administrateur,...',
-                        'autocomplete' => 'off'
-                    ),
-
-                )
-            )
-            ->add('email', 'email', array(
+            ) 
+            ->add('email', 'text', array(
                     'label' => 'Email',
                     'required' => true,
                     'disabled' => true,

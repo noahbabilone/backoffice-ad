@@ -25,6 +25,12 @@ class User
     /**
      * @var string
      *
+     * @ORM\Column(name="title", type="string", length=255)
+     */
+    private $title;
+    /**
+     * @var string
+     *
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
@@ -166,16 +172,39 @@ class User
     public function init($data)
     {
         if (!empty($data)) {
-
             $this->setName($this->getData($data, "sn"));
+            $this->setTitle($this->getData($data, "title"));
             $this->setFirstName($this->getData($data, "givenname"));
             $this->setFullName($this->getData($data, "displayname"));
 //        $this->setOffice($this->getData($data, "physicaldeliveryofficename"));
             $this->setAddress($this->getData($data, "st"));
             $this->setCity($this->getData($data, "l"));
             $this->setPostalCode($this->getData($data, "postalcode"));
+            $country = $this->getData($data, "c");
+            if ($country == "FR") {
+                $country = "France";
+            } elseif ($country == "LU") {
+                $country = "Luxembourg";
+            }
+            $this->setCountry($country);
             $this->setDescription($this->getData($data, "description"));
-            $this->setPhone($this->getData($data, "telephonenumber"));
+
+            $telephone = $this->getData($data, "telephonenumber");
+            if ($telephone !== null) {
+                $tel = explode("(0)", $telephone);
+                if (count($tel) > 1) {
+                    $arrayPhone = str_split($tel[1]);
+                    $phone = "0";
+                    foreach ($arrayPhone as $key => $number) {
+                        if ($number != " ") {
+                            $phone .= $number;
+                        }
+                    }
+                    if (count(str_split($phone)) == 10)
+                        $this->setPhone($phone);
+                }
+            }
+
             $this->setAccess($this->getData($data, "admincount"));
 
             if (isset($data[0]["memberof"]) && !empty($data[0]["memberof"])) {
@@ -538,6 +567,29 @@ class User
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return User
+     */
+    public function setTitle($title)
+    {
+        $this->title = ucfirst(strtolower($title));
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
     }
 
 
