@@ -2,7 +2,6 @@ $(function () {
     console.log("Ad-js");
     var regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)([a-zA-Z0-9]{8,})$/;
     var regexPhone = /^0[1-9]([0-9]){8}$/;
-
     var textPwd = "Le mot de passe doit comporter au moins 8 caractères et doit comporter au moins un chiffre, une lettre en majuscule et en miniscule";
 
     $(".service").change(function () {

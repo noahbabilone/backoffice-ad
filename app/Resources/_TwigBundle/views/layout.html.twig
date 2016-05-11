@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>42Consulting - An Error Occurred: {{ status_text }} </title>
+    <link rel="icon" type="image/png" href="{{ asset('images/favicon/favicon-96x96.png') }}"
+          sizes="96x96">
+
+    <link href="{{ asset('bundles/ad/themes/global/plugins/font-awesome/css/font-awesome.min.css') }}"
+          rel="stylesheet"/>
+    <link href="{{ asset('bundles/ad/themes/global/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet"/>
+    <link rel="stylesheet"
+          href="{{ asset('bundles/ad/themes/global/plugins/simple-line-icons/simple-line-icons.min.css') }}"/>
+    <link href="{{ asset('bundles/ad/themes/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css') }}"
+          rel="stylesheet"/>
+    <link rel="stylesheet" href="{{ asset('bundles/ad/themes/global/css/components.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('bundles/ad/themes/global/css/plugins.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('bundles/ad/themes/pages/css/error.min.css') }}"/>
+
+</head>
+<body class="page-404-full-page">
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-4 col-md-offset-4 text-center" style="margin-top: 50px; margin-bottom: 24px;">
+            <a href="{{ path('dashboard') }}">
+                <img class="logo-42" src="{{ asset("images/42_alternative.png") }}" alt="logo 42 consulting"
+                     title="42Consulting backoffice"/></a>
+        </div>
+        <div class="col-md-12 page-500">
+            <div class=" number font-yellow-casablanca"> 404</div>
+            <div class=" details">
+                <h3>Oops! You're lost.</h3>
+
+                <p>We can not find the page you're looking for.<br/></p>
+
+                <p>
+                    <a href="{{ path('dashboard') }}" class="btn yellow-casablanca btn-outline"> Return home </a>
+                    <br></p>
+            </div>
+        </div>
+
+    </div>
+    
+    <footer style="position:absolute; bottom: 30px; width: inherit;">
+            <div class="row">
+                <div class="col-md-12">
+                    <hr>
+                    <p> Copyright © 42Consulting. 2016 
+                        <span class="pull-right">
+                            <a href="mailto:rachid.dahmani@estiam.com"
+                               title="Besoin d'aide"><i class="fa fa-envelope fa-fw"></i>Contact</a>
+                        </span>
+                    </p>
+
+                </div>
+            </div>
+        </footer>
+</div>
+
+
+</body>
+</html>

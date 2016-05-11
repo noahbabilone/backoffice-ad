@@ -21,21 +21,34 @@ class ADController extends Controller
 {
     /**
      * @Route("/dashboard",name="dashboard")
-     * @param Request $request
      * @return RedirectResponse|Response
      */
-    function indexAction(Request $request)
+    function indexAction()
     {
-        if (!$request->getSession()->has('user')) {
+
+        $ad = $this->get("ad_active_directory");
+        if (!$this->get('session')->has('user')) {
             return $this->redirectToRoute('login', array(), 301);
+        } else if ($ad->checkAccessAdmin($ad->base64Decode($this->get('session')->get('user'))) == FALSE) {
+            return $this->redirectToRoute('logout', array(), 301);
         }
+
         $ad = $this->get("ad_active_directory");
         $users = $ad->getAllUser();
+        $usersLocked = $ad->getUserInfoComputer("locked");
+        $usersDisabled = $ad->getUserInfoComputer("disabled");
+        $neverExpires = $ad->getUserInfoComputer("expires");
+        $computers = $ad->getAllComputer();
+
         $adGroups = $ad->getAllGroup();
 
         return $this->render('ADBundle:AD:index.html.twig', array(
             "users" => $users,
-            "groups" => $adGroups
+            "groups" => $adGroups,
+            "usersLocked" => $usersLocked,
+            "usersDisabled" => $usersDisabled,
+            "neverExpires" => $neverExpires,
+            "computers" => $computers,
         ));
     }
 
@@ -47,11 +60,12 @@ class ADController extends Controller
     public function loginAction(Request $request)
     {
         $ad = $this->get("ad_active_directory");
-        if ($request->getSession()->has('user')) {
-            if ($ad->checkAccessAdmin($ad->base64Decode($request->getSession()->get('user'))) !== FALSE) {
+        $session = $this->get('session');
+        if ($session->has('user')) {
+            if ($ad->checkAccessAdmin($ad->base64Decode($session->get('user'))) !== FALSE) {
                 return $this->redirectToRoute('dashboard', array(), 301);
             }
-            return $this->redirectToRoute('edit_password', array('person' => $request->getSession()->get('user')), 301);
+            return $this->redirectToRoute('edit_password', array('person' => $session->get('user')), 301);
         }
 
         $user = new User();
@@ -61,19 +75,19 @@ class ADController extends Controller
 
             $result = $ad->checkSession($user->getLogin(), $user->getPassword());
             if ($result) {
-                $request->getSession()->set('user', $ad->base64Encode($user->getLogin()));
+                $session->set('user', $ad->base64Encode($user->getLogin()));
                 $adUser = $ad->getUserByUserPrincipalName($user->getLogin());
                 $user->init($adUser);
                 //if ($ad->checkAccessAdmin($user->getLogin())) {
                 if ($user->getAccess() == 1) {
-                    $request->getSession()->set('username', $user->getFullName());
+                    $session->set('username', $user->getFullName());
                     return $this->redirectToRoute('dashboard', array(), 301);
                 }
                 return $this->redirectToRoute('edit_password', array('person' => $ad->base64Encode($user->getLogin())), 301);
             }
             $error = " Email ou Mot de passe <b>Incorrect</b>.";
         }
-        return $this->render('ADBundle:Default:login.html.twig', array(
+        return $this->render('ADBundle:AD:login.html.twig', array(
             'form' => $form->createView(),
             "error" => $error,
         ));
@@ -81,18 +95,15 @@ class ADController extends Controller
 
     /**
      * @Route("/list-users.html", name="list_users")
-     * @param Request $request
      * @return RedirectResponse|Response
      */
-    function listUsersAction(Request $request)
+    function listUsersAction()
     {
         $ad = $this->get("ad_active_directory");
-        if (!$request->getSession()->has('user')) {
+        if (!$this->get('session')->has('user')) {
             return $this->redirectToRoute('login', array(), 301);
-        } else if ($request->getSession()->has('user')) {
-            if ($ad->checkAccessAdmin($ad->base64Decode($request->getSession()->get('user'))) == FALSE) {
-                return $this->redirectToRoute('logout', array(), 301);
-            }
+        } else if ($ad->checkAccessAdmin($ad->base64Decode($this->get('session')->get('user'))) == FALSE) {
+            return $this->redirectToRoute('logout', array(), 301);
         }
 
         $users = $this->get("ad_active_directory")->getAllUser();
@@ -103,20 +114,17 @@ class ADController extends Controller
 
     /**
      * @Route("/list-computers.html", name="list_computers")
-     * @param Request $request
      * @return RedirectResponse|Response
      */
-    function listComputerAction(Request $request)
+    function listComputerAction()
     {
         $ad = $this->get("ad_active_directory");
-        if (!$request->getSession()->has('user')) {
+        if (!$this->get('session')->has('user')) {
             return $this->redirectToRoute('login', array(), 301);
-        } else if ($request->getSession()->has('user')) {
-            if ($ad->checkAccessAdmin($ad->base64Decode($request->getSession()->get('user'))) == FALSE) {
-                return $this->redirectToRoute('logout', array(), 301);
-            }
+        } else if ($ad->checkAccessAdmin($ad->base64Decode($this->get('session')->get('user'))) == FALSE) {
+            return $this->redirectToRoute('logout', array(), 301);
         }
-        $ad = $this->get("ad_active_directory");
+
         $computers = $ad->getAllComputer();
         return $this->render('ADBundle:AD:computers.html.twig', array(
             "computers" => $computers,
@@ -125,18 +133,15 @@ class ADController extends Controller
 
     /**
      * @Route("/list-groups.html", name="list_groups")
-     * @param Request $request
      * @return RedirectResponse|Response
      */
-    function listGroupAction(Request $request)
+    function listGroupAction()
     {
         $ad = $this->get("ad_active_directory");
-        if (!$request->getSession()->has('user')) {
+        if (!$this->get('session')->has('user')) {
             return $this->redirectToRoute('login', array(), 301);
-        } else if ($request->getSession()->has('user')) {
-            if ($ad->checkAccessAdmin($ad->base64Decode($request->getSession()->get('user'))) == FALSE) {
-                return $this->redirectToRoute('logout', array(), 301);
-            }
+        } else if ($ad->checkAccessAdmin($ad->base64Decode($this->get('session')->get('user'))) == FALSE) {
+            return $this->redirectToRoute('logout', array(), 301);
         }
         $adGroups = $ad->getAllGroup();
         return $this->render('ADBundle:AD:groups.html.twig', array(
@@ -152,8 +157,12 @@ class ADController extends Controller
     function UsersByOuAction($ou)
     {
         $ad = $this->get("ad_active_directory");
-        
-        
+        if (!$this->get('session')->has('user')) {
+            return $this->redirectToRoute('login', array(), 301);
+        } else if ($ad->checkAccessAdmin($ad->base64Decode($this->get('session')->get('user'))) == FALSE) {
+            return $this->redirectToRoute('logout', array(), 301);
+        }
+
         $tabOU = array("Issy-Les-Moulineaux", "Saint-mande", "Luxembourg", "Compteutilisateur", "Compteutilisateur");
         if (in_array($ou, $tabOU)) {
             $users = $ad->getAllUser($ou);
@@ -169,22 +178,18 @@ class ADController extends Controller
     /**
      * @Route("/user/{login}", name="get_user")
      * @param $login
-     * @param Request $request
      * @return RedirectResponse
      */
-    function getUserAction($login, Request $request)
+    function getUserAction($login)
     {
         $ad = $this->get("ad_active_directory");
-        if (!$request->getSession()->has('user')) {
+        if (!$this->get('session')->has('user')) {
             return $this->redirectToRoute('login', array(), 301);
-        } else if ($request->getSession()->has('user')) {
-             if ($ad->checkAccessAdmin($ad->base64Decode($request->getSession()->get('user'))) == FALSE) {
-                return $this->redirectToRoute('logout', array(), 301);
-            }
+        } else if ($ad->checkAccessAdmin($ad->base64Decode($this->get('session')->get('user'))) == FALSE) {
+            return $this->redirectToRoute('logout', array(), 301);
         }
+
         $user = $ad->getUser($login);
-        dump($user);
-        die;
         return $this->render('ADBundle:Default:index.html.twig', array(
             "users" => $user,
         ));
@@ -197,14 +202,13 @@ class ADController extends Controller
      */
     function addUserAction(Request $request)
     {
-          $ad = $this->get("ad_active_directory");
-        if (!$request->getSession()->has('user')) {
+        $ad = $this->get("ad_active_directory");
+        if (!$this->get('session')->has('user')) {
             return $this->redirectToRoute('login', array(), 301);
-        } else if ($request->getSession()->has('user')) {
-             if ($ad->checkAccessAdmin($ad->base64Decode($request->getSession()->get('user'))) == FALSE) {
-                return $this->redirectToRoute('logout', array(), 301);
-            }
+        } else if ($ad->checkAccessAdmin($ad->base64Decode($this->get('session')->get('user'))) == FALSE) {
+            return $this->redirectToRoute('logout', array(), 301);
         }
+
         $result = null;
         $adGroups = $ad->getAllGroup();
         $data["groups"] = $adGroups;
@@ -213,7 +217,7 @@ class ADController extends Controller
         $user->setPostalCode("94160");
         $user->setCity("Saint-Mandé");
         $user->setCountry("France");
-        
+
         $form = $this->createForm(new UserType(), $user);
         $data ['form'] = $form->createView();
 
@@ -233,8 +237,13 @@ class ADController extends Controller
      */
     function removeUserAction($person)
     {
-        // $this->checkSession();
         $ad = $this->get("ad_active_directory");
+        if (!$this->get('session')->has('user')) {
+            return $this->redirectToRoute('login', array(), 301);
+        } else if ($ad->checkAccessAdmin($ad->base64Decode($this->get('session')->get('user'))) == FALSE) {
+            return $this->redirectToRoute('logout', array(), 301);
+        }
+
         $ad->removeUser($person);
         return $this->redirectToRoute('list_users');
     }
@@ -247,15 +256,13 @@ class ADController extends Controller
      */
     function editUserAction(Request $request, $person)
     {
-         $ad = $this->get("ad_active_directory");
-        if (!$request->getSession()->has('user')) {
-            return $this->redirectToRoute('login', array(), 301);
-        } else if ($request->getSession()->has('user')) {
-             if ($ad->checkAccessAdmin($ad->base64Decode($request->getSession()->get('user'))) == FALSE) {
-                return $this->redirectToRoute('logout', array(), 301);
-            }
-        }
         $ad = $this->get("ad_active_directory");
+        if (!$this->get('session')->has('user')) {
+            return $this->redirectToRoute('login', array(), 301);
+        } else if ($ad->checkAccessAdmin($ad->base64Decode($this->get('session')->get('user'))) == FALSE) {
+            return $this->redirectToRoute('logout', array(), 301);
+        }
+
         $person = $ad->base64Decode($person);
         $adUser = $ad->getUser($person);
         $user = new User();
@@ -295,7 +302,7 @@ class ADController extends Controller
      */
     function editPasswordUserAction(Request $request, $person)
     {
-        if (!$request->getSession()->has('user')) {
+        if (!$this->get('session')->has('user')) {
             return $this->redirectToRoute('login', array(), 301);
         }
         $ad = $this->get("ad_active_directory");
@@ -327,7 +334,7 @@ class ADController extends Controller
      */
     function editInfoUserAction(Request $request, $person)
     {
-        if (!$request->getSession()->has('user')) {
+        if (!$this->get('session')->has('user')) {
             return $this->redirectToRoute('login', array(), 301);
         }
         $ad = $this->get("ad_active_directory");
@@ -369,6 +376,11 @@ class ADController extends Controller
     function byLoginAction($login)
     {
         $ad = $this->get("ad_active_directory");
+        if (!$this->get('session')->has('user')) {
+            return $this->redirectToRoute('login', array(), 301);
+        } else if ($ad->checkAccessAdmin($ad->base64Decode($this->get('session')->get('user'))) == FALSE) {
+            return $this->redirectToRoute('logout', array(), 301);
+        }
         $ad = $ad->getUserByLogin($login);
         $result = null;
         $user = new User();
@@ -455,7 +467,7 @@ class ADController extends Controller
                 $data["username"] = $user->getData($adUser, "userprincipalname");
                 $data["address"] = $user->getData($adUser, "st");
                 $data["villePostalCode"] = $user->getData($adUser, "l") . " " . $user->getData($adUser, "postalcode");
-                 $data["country"] =$user->getData($adUser,"c");
+                $data["country"] = $user->getData($adUser, "c");
                 $data["tel"] = $user->getData($adUser, "telephonenumber");
                 $data["office"] = $user->getData($adUser, "title");
                 $result = true;
@@ -474,25 +486,13 @@ class ADController extends Controller
      */
     function  checkSession($ad)
     {
-       if (!$this->get('session')->has('user')) {
+        if (!$this->get('session')->has('user')) {
             return $this->redirectToRoute('login', array(), 301);
         } else if ($this->get('session')->has('user')) {
-             if ($ad->checkAccessAdmin($ad->base64Decode($this->get('session')->get('user'))) == FALSE) {
+            if ($ad->checkAccessAdmin($ad->base64Decode($this->get('session')->get('user'))) == FALSE) {
                 return $this->redirectToRoute('logout', array(), 301);
             }
         }
-    }
-
-
-    /**
-     * @Route("/search/{person}", name="ad_search")
-     * @param $person
-     * @return RedirectResponse|Response
-     */
-    function searchAction($person)
-    {
-        dump($person);
-        die;
     }
 
     /**

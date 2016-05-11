@@ -3,7 +3,6 @@
   {% block stylesheets %}
       {{ parent() }}
       {% stylesheets
-      'https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css'
       'bundles/ad/themes/global/plugins/bootstrap-select/css/bootstrap-select.min.css'
       filter='cssrewrite' %}
       <link rel="stylesheet" href="{{ asset_url }}"/>
@@ -38,17 +37,17 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-
                 <span class="caption-subject font-red-sunglo bold uppercase"> <i class="icon-plus font-red-sunglo"></i> Formualire</span>
                 <span class="caption-helper">...</span>
             </div>
+
             <div class="tools">
                 <a href="javascript:;" class="collapse"> </a>
-                <a href="#portlet-config" data-toggle="modal" class="config"> </a>
                 <a href="javascript:;" class="reload"> </a>
                 <a href="" class="fullscreen"> </a>
                 <a href="javascript:;" class="remove"> </a>
             </div>
+
         </div>
         <div class="portlet-body form">
             <!-- BEGIN FORM-->
@@ -258,7 +257,8 @@
                                     </div>
                                 {% endif %}
                                 <div class="col-sm-12">
-                                    <hr>                                </div>
+                                    <hr>
+                                </div>
                                 {% if form.address is defined %}
                                     <div class="col-sm-9">
                                         <div class="form-group has-feedback">
@@ -355,27 +355,13 @@
         </div>
     </div>
 
-    {#<div class="tools">#}
-    {#<a href="javascript:;" class="collapse"> </a>#}
-    {#<a href="#portlet-config" data-toggle="modal" class="config"> </a>#}
-    {#<a href="javascript:;" class="reload"> </a>#}
-    {#<a href="" class="fullscreen"> </a>#}
-    {#<a href="javascript:;" class="remove"> </a>#}
-    {#</div>#}
-
+   
 {% endblock %}
     {% block javascripts %}
         {{ parent() }}
         {% javascripts
-        "bundles/ad/themes/global/scripts/datatable.js"
-
-        "bundles/ad/themes/global/plugins/datatables/datatables.min.js"
-        "bundles/ad/themes/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js"
-        "bundles/ad/themes/global/scripts/app.min.js"
         "bundles/ad/themes/global/plugins/bootstrap-select/js/bootstrap-select.min.js"
-        "bundles/ad/themes/pages/scripts/components-bootstrap-select.js"
-        "bundles/ad/themes/pages/scripts/table-datatables-fixedheader.min.js"
-        "assets/js/database-api.js" %}
+        "bundles/ad/themes/pages/scripts/components-bootstrap-select.js" %}
         <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
 

@@ -15,7 +15,6 @@ class UserEditType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-//       
             ->add('password', 'password', array(
                     'label' => 'Mot de passe',
                     'required' => false,

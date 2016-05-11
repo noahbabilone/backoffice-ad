@@ -40,13 +40,10 @@
             <div class="caption">
                 <i class="fa fa-users fa-fw font-green"></i>
                 <span class="caption-subject font-green bold uppercase">Listes des Groupes</span>
-                {#
-                                <span class="caption-subject font-green bold uppercase">Groupes</span>
-                #}
             </div>
+            
             <div class="tools">
                 <a href="javascript:;" class="collapse"> </a>
-                <a href="#portlet-config" data-toggle="modal" class="config"> </a>
                 <a href="javascript:;" class="reload"> </a>
                 <a href="" class="fullscreen"> </a>
                 <a href="javascript:;" class="remove"> </a>
@@ -137,13 +134,8 @@
     {% block javascripts %}
         {{ parent() }}
         {% javascripts
-        "bundles/ad/themes/global/scripts/datatable.js"
 
         "bundles/ad/themes/global/plugins/datatables/datatables.min.js"
-        "bundles/ad/themes/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js"
-        "bundles/ad/themes/global/scripts/app.min.js"
-
-        "bundles/ad/themes/pages/scripts/table-datatables-fixedheader.min.js"
         "assets/js/database-api.js" %}
         <script src="{{ asset_url }}"></script>
         {% endjavascripts %}

@@ -145,16 +145,14 @@ class User
      * @ORM\Column(name="dn", type="string", length=255)
      */
     private $dn;
-
-
+    
     /**
      * @var text
      *
      * @ORM\Column(name="description", type="string", length=255)
      */
     private $description;
-
-
+    
     /**
      * @var text
      *
@@ -228,8 +226,6 @@ class User
             $dn = $this->getData($data, "distinguishedname");
             $this->setDn($dn);
             $this->setService($this->service($dn));
-
-
         }
         return $this;
 

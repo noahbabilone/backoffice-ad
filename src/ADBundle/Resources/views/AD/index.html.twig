@@ -25,14 +25,6 @@
                 <span>Dashboard</span>
             </li>
         </ul>
-        <div class="page-toolbar">
-            <div id="dashboard-report-range" class="pull-right tooltips btn btn-sm" data-container="body"
-                 data-placement="bottom" data-original-title="Change dashboard date range">
-                <i class="icon-calendar"></i>&nbsp;
-                <span class="thin uppercase hidden-xs"></span>&nbsp;
-                <i class="fa fa-angle-down"></i>
-            </div>
-        </div>
     </div>
     <!-- END PAGE BAR -->
 
@@ -46,62 +38,89 @@
     <!-- END PAGE HEADER-->
 
     <!-- BEGIN DASHBOARD STATS 1-->
-    {#
-        <div class="row">
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <a class="dashboard-stat dashboard-stat-v2 blue" href="#">
-                    <div class="visual">
-                        <i class="fa fa-comments"></i>
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+            <a class="dashboard-stat dashboard-stat-v2 blue" href="{{ path('list_users') }}">
+                <div class="visual">
+                    <i class="fa fa-users"></i>
+                </div>
+                <div class="details">
+                    <div class="number">
+                        <span data-counter="counterup" data-value="{{ users | length }}">{{ users | length }}</span>
                     </div>
-                    <div class="details">
-                        <div class="number">
-                            <span data-counter="counterup" data-value="1349">0</span>
-                        </div>
-                        <div class="desc"> New Feedbacks</div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <a class="dashboard-stat dashboard-stat-v2 red" href="#">
-                    <div class="visual">
-                        <i class="fa fa-bar-chart-o"></i>
-                    </div>
-                    <div class="details">
-                        <div class="number">
-                            <span data-counter="counterup" data-value="12,5">0</span>M$
-                        </div>
-                        <div class="desc"> Total Profit</div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <a class="dashboard-stat dashboard-stat-v2 green" href="#">
-                    <div class="visual">
-                        <i class="fa fa-shopping-cart"></i>
-                    </div>
-                    <div class="details">
-                        <div class="number">
-                            <span data-counter="counterup" data-value="549">0</span>
-                        </div>
-                        <div class="desc"> New Orders</div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <a class="dashboard-stat dashboard-stat-v2 purple" href="#">
-                    <div class="visual">
-                        <i class="fa fa-globe"></i>
-                    </div>
-                    <div class="details">
-                        <div class="number"> +
-                            <span data-counter="counterup" data-value="89"></span>%
-                        </div>
-                        <div class="desc"> Brand Popularity</div>
-                    </div>
-                </a>
-            </div>
+                    <div class="desc"> Comptes utilisateurs</div>
+                </div>
+            </a>
         </div>
-    #}
+        <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+            <a class="dashboard-stat dashboard-stat-v2 red-flamingo" href="{{ path('list_users') }}">
+                <div class="visual">
+                    <i class="fa fa-remove"></i>
+                </div>
+                <div class="details">
+                    <div class="number">
+                        <span data-counter="counterup" data-value="{{ usersLocked | length }}">0</span>
+                    </div>
+                    <div class="desc"> Utilisateurs bloqués</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+            <a class="dashboard-stat dashboard-stat-v2 purple" href="{{ path('list_users') }}">
+                <div class="visual">
+                    <i class="fa fa-comments"></i>
+                </div>
+                <div class="details">
+                    <div class="number">
+                        <span data-counter="counterup" data-value="{{ groups | length }}">{{ groups | length }}</span>
+                    </div>
+                    <div class="desc"> Groupes</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+            <a class="dashboard-stat dashboard-stat-v2 red" href="{{ path('list_users') }}">
+                <div class="visual">
+                    <i class="fa fa-bar-chart-o"></i>
+                </div>
+                <div class="details">
+                    <div class="number">
+                        <span data-counter="counterup"
+                              data-value="{{ usersDisabled | length }}">{{ usersDisabled | length }}</span>
+                    </div>
+                    <div class="desc"> Utilisateurs désactivés</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+            <a class="dashboard-stat dashboard-stat-v2 green" href="{{ path('list_computers') }}">
+                <div class="visual">
+                    <i class="fa fa-shopping-cart"></i>
+                </div>
+                <div class="details">
+                    <div class="number">
+                        <span data-counter="counterup"
+                              data-value="{{ neverExpires | length }}">{{ neverExpires | length }}</span>
+                    </div>
+                    <div class="desc"> Compte jamais expirés</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+            <a class="dashboard-stat dashboard-stat-v2 yellow-casablanca" href="#">
+                <div class="visual">
+                    <i class="fa fa-laptop"></i>
+                </div>
+                <div class="details">
+                    <div class="number">
+                        <span data-counter="counterup"
+                              data-value="{{ computers | length }}">{{ computers | length }}</span>
+                    </div>
+                    <div class="desc"> Ordinateurs</div>
+                </div>
+            </a>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-md-12">
@@ -344,12 +363,11 @@
     {% block javascripts %}
         {{ parent() }}
         {% javascripts
-        "bundles/ad/themes/global/scripts/datatable.js"
         "bundles/ad/themes/global/plugins/datatables/datatables.min.js"
-        "bundles/ad/themes/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js"
+        
+        "bundles/ad/themes/global/plugins/counterup/jquery.waypoints.min.js"
+        "bundles/ad/themes/global/plugins/counterup/jquery.counterup.min.js"
 
-        "bundles/ad/themes/global/scripts/app.min.js"
-        "bundles/ad/themes/pages/scripts/table-datatables-fixedheader.min.js"
         "assets/js/database-api.js" %}
         <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
@@ -357,4 +375,20 @@
 
     {% endblock %}
 
+{#"bundles/ad/themes/layouts/layout/scripts/layout.min.js"
+        "bundles/ad/themes/layouts/layout/scripts/demo.min.js"
+        "bundles/ad/themes/layouts/global/scripts/quick-sidebar.min.js"
+        "assets/js/bootstrap-notify.min.js"
+        
+                "bundles/ad/themes/global/plugins/morris/morris.min.js"
 
+                "bundles/ad/themes/global/plugins/moment.min.js"
+
+                "bundles/ad/themes/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js"
+
+        
+                "bundles/ad/themes/global/scripts/datatable.js"
+
+        
+        
+#}

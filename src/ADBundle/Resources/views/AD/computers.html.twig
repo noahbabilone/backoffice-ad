@@ -126,13 +126,7 @@
     {% block javascripts %}
         {{ parent() }}
         {% javascripts
-        "bundles/ad/themes/global/scripts/datatable.js"
-
         "bundles/ad/themes/global/plugins/datatables/datatables.min.js"
-        "bundles/ad/themes/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js"
-        "bundles/ad/themes/global/scripts/app.min.js"
-
-        "bundles/ad/themes/pages/scripts/table-datatables-fixedheader.min.js"
         "assets/js/database-api.js" %}
         <script src="{{ asset_url }}"></script>
         {% endjavascripts %}

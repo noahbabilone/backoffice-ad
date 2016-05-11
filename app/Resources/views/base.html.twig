@@ -9,16 +9,14 @@
     {#<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>#}
      <link rel="icon" type="image/png" href="{{ asset('images/favicon/favicon-96x96.png') }}"
           sizes="96x96">
-    <link rel="icon" type="image/png" href="{{ asset('images/favicon/favicon-32x32.png') }}"
-          sizes="32x32">
-    <link rel="icon" type="image/png" href="{{ asset('images/favicon/favicon-16x16.png') }}"
-          sizes="16x16">
-
-    {#<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Arimo:400,700,400italic">#}
+    {#<link rel="icon" type="image/png" href="{{ asset('images/favicon/favicon-32x32.png') }}"#}
+          {#sizes="32x32">#}
+    {#<link rel="icon" type="image/png" href="{{ asset('images/favicon/favicon-16x16.png') }}"#}
+          {#sizes="16x16">#}
     {% block stylesheets %}
         {% stylesheets
-        'bundles/ad/bower_components/bootstrap/dist/css/bootstrap.min.css'
-        'bundles/ad/bower_components/font-awesome/css/font-awesome.min.css'
+        'bundles/ad/themes/global/plugins/bootstrap/css/bootstrap.min.css'
+        'bundles/ad/themes/global/plugins/font-awesome/css/font-awesome.min.css'
          filter='cssrewrite' %}
         <link rel="stylesheet" href="{{ asset_url }}"/>
         {% endstylesheets %}
@@ -38,4 +36,3 @@
 
 </body>
 </html>
-    

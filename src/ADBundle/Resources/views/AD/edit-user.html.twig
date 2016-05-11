@@ -3,7 +3,6 @@
   {% block stylesheets %}
       {{ parent() }}
       {% stylesheets
-      'https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css'
       'bundles/ad/themes/global/plugins/bootstrap-select/css/bootstrap-select.min.css'
       filter='cssrewrite' %}
       <link rel="stylesheet" href="{{ asset_url }}"/>
@@ -45,9 +44,9 @@
                 <span class="caption-subject font-red-sunglo bold uppercase"> <i class="icon-plus font-red-sunglo"></i> Formualire</span>
                 <span class="caption-helper">...</span>
             </div>
+       
             <div class="tools">
                 <a href="javascript:;" class="collapse"> </a>
-                <a href="#portlet-config" data-toggle="modal" class="config"> </a>
                 <a href="javascript:;" class="reload"> </a>
                 <a href="" class="fullscreen"> </a>
                 <a href="javascript:;" class="remove"> </a>
@@ -339,7 +338,8 @@
                         <div class="form-actions">
                             <div class="row">
                                 <div class="col-md-3 col-offset-sm-3">
-                                    <button type="submit" class="btn green btn-block" id="save-edit">Enregistrer</button>
+                                    <button type="submit" class="btn green btn-block" id="save-edit">Enregistrer
+                                    </button>
                                 </div>
                                 <div class="col-md-3">
                                     <button type="button" class="btn default btn-block">Annuler</button>
@@ -363,49 +363,35 @@
 
         </div>
     </div>
-
-    {#<div class="tools">#}
-    {#<a href="javascript:;" class="collapse"> </a>#}
-    {#<a href="#portlet-config" data-toggle="modal" class="config"> </a>#}
-    {#<a href="javascript:;" class="reload"> </a>#}
-    {#<a href="" class="fullscreen"> </a>#}
-    {#<a href="javascript:;" class="remove"> </a>#}
-    {#</div>#}
-
+    
 {% endblock %}
     {% block javascripts %}
         {{ parent() }}
         {% javascripts
-        "bundles/ad/themes/global/scripts/datatable.js"
-
-        "bundles/ad/themes/global/plugins/datatables/datatables.min.js"
-        "bundles/ad/themes/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js"
-        "bundles/ad/themes/global/scripts/app.min.js"
         "bundles/ad/themes/global/plugins/bootstrap-select/js/bootstrap-select.min.js"
-        "bundles/ad/themes/pages/scripts/components-bootstrap-select.js"
-        "bundles/ad/themes/pages/scripts/table-datatables-fixedheader.min.js"
-        "assets/js/database-api.js" %}
+        "bundles/ad/themes/pages/scripts/components-bootstrap-select.js" 
+        %}
         <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
-        
-            <script>
-        $(document).ready(function () {
-            var dnGroup = "";
-            $('#select-group option:selected').each(function (i, selected) {
-                dnGroup += "#DnGroup:" + $(selected).val();
-            });
-            $("#user_edit_group").val(dnGroup);
 
-            $('#select-group').change(function () {
-                var dn = "";
-                $.each($(this).val(), function (i, group) {
-                    console.log(group);
-                    dn += "#DnGroup:" + group;
+        <script>
+            $(document).ready(function () {
+                var dnGroup = "";
+                $('#select-group option:selected').each(function (i, selected) {
+                    dnGroup += "#DnGroup:" + $(selected).val();
                 });
-                $("#user_edit_group").val(dn);
+                $("#user_edit_group").val(dnGroup);
+
+                $('#select-group').change(function () {
+                    var dn = "";
+                    $.each($(this).val(), function (i, group) {
+                        console.log(group);
+                        dn += "#DnGroup:" + group;
+                    });
+                    $("#user_edit_group").val(dn);
+                });
             });
-        });
-    </script>
+        </script>
 
 
     {% endblock %}
