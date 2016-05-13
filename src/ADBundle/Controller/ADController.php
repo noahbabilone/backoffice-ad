@@ -81,6 +81,7 @@ class ADController extends Controller
                 //if ($ad->checkAccessAdmin($user->getLogin())) {
                 if ($user->getAccess() == 1) {
                     $session->set('username', $user->getFullName());
+                    $session->set('dn', $ad->base64Encode($user->getDn()));
                     return $this->redirectToRoute('dashboard', array(), 301);
                 }
                 return $this->redirectToRoute('edit_password', array('person' => $ad->base64Encode($user->getLogin())), 301);
@@ -213,7 +214,7 @@ class ADController extends Controller
         $adGroups = $ad->getAllGroup();
         $data["groups"] = $adGroups;
         $user = new User();
-        $user->setAddress("16 Rue Jean Jacques Rousseau");
+        $user->setAddress("Bis, 2 Avenue Foch");
         $user->setPostalCode("94160");
         $user->setCity("Saint-Mandé");
         $user->setCountry("France");
@@ -271,7 +272,7 @@ class ADController extends Controller
         $form = $this->createForm(new UserEditType(), $user);
         $data = array('form' => $form->createView());
         $data['user'] = $user;
-        $data['users'] = $adUser;
+        $data['adUser'] = $adUser;
         $adGroups = $ad->getAllGroup();
         $data["groups"] = $adGroups;
 
@@ -292,7 +293,6 @@ class ADController extends Controller
         }
         return $this->render('ADBundle:AD:edit-user.html.twig', $data);
     }
-
 
     /**
      * @Route("/edit-password/user={person}.html", name="edit_password")
@@ -392,9 +392,10 @@ class ADController extends Controller
     /**
      * @Route("/logout", name="logout")
      */
-    function disconnectionAction()
+    function logoutAction()
     {
         $this->get('session')->remove('user');
+        $this->get('session')->remove('dn');
         $this->get('session')->clear();
         return $this->redirectToRoute('login', array(), 301);
 
@@ -406,6 +407,14 @@ class ADController extends Controller
      */
     function removeUserAjaxAction(Request $request)
     {
+        $ad = $this->get("ad_active_directory");
+        if (!$this->get('session')->has('user')) {
+            return $this->redirectToRoute('login', array(), 301);
+        } else if ($ad->checkAccessAdmin($ad->base64Decode($this->get('session')->get('user'))) == FALSE) {
+            return $this->redirectToRoute('logout', array(), 301);
+        }
+
+
         $result = false;
         $message = "Erreur XMLHttpRequest";
         if ($request->isXmlHttpRequest()) {
@@ -428,6 +437,13 @@ class ADController extends Controller
      */
     function removeUserGroupAjaxAction(Request $request)
     {
+        $ad = $this->get("ad_active_directory");
+        if (!$this->get('session')->has('user')) {
+            return $this->redirectToRoute('login', array(), 301);
+        } else if ($ad->checkAccessAdmin($ad->base64Decode($this->get('session')->get('user'))) == FALSE) {
+            return $this->redirectToRoute('logout', array(), 301);
+        }
+
         $result = false;
         $message = "Erreur XMLHttpRequest";
         if ($request->isXmlHttpRequest()) {

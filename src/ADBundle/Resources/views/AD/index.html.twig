@@ -39,82 +39,65 @@
 
     <!-- BEGIN DASHBOARD STATS 1-->
     <div class="row">
-        <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
             <a class="dashboard-stat dashboard-stat-v2 blue" href="{{ path('list_users') }}">
                 <div class="visual">
-                    <i class="fa fa-users"></i>
+                    <i class="fa fa-user"></i>
                 </div>
                 <div class="details">
                     <div class="number">
-                        <span data-counter="counterup" data-value="{{ users | length }}">{{ users | length }}</span>
+                        <span data-counter="counterup" data-value="{{ users | length }}">0</span>
                     </div>
                     <div class="desc"> Comptes utilisateurs</div>
                 </div>
             </a>
         </div>
-        <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
             <a class="dashboard-stat dashboard-stat-v2 red-flamingo" href="{{ path('list_users') }}">
                 <div class="visual">
                     <i class="fa fa-remove"></i>
                 </div>
                 <div class="details">
+
+
+                    {#<div class="number">#}
+                        {#<span data-counter="counterup" data-value="{{ usersLocked | length }}">0</span>#}
+                    {#</div>#}
+                    {#<div class="desc"> Utilisateurs bloqués</div>#}
+                           
                     <div class="number">
-                        <span data-counter="counterup" data-value="{{ usersLocked | length }}">0</span>
+                        <span data-counter="counterup"
+                              data-value="{{ usersDisabled | length }}">0</span>
                     </div>
-                    <div class="desc"> Utilisateurs bloqués</div>
+                    <div class="desc"> Utilisateurs désactivés</div>
+
+
                 </div>
             </a>
         </div>
-        <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
-            <a class="dashboard-stat dashboard-stat-v2 purple" href="{{ path('list_users') }}">
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <a class="dashboard-stat dashboard-stat-v2 purple" href="{{ path('list_groups') }}">
                 <div class="visual">
-                    <i class="fa fa-comments"></i>
+                    <i class="fa fa-users"></i>
                 </div>
                 <div class="details">
                     <div class="number">
-                        <span data-counter="counterup" data-value="{{ groups | length }}">{{ groups | length }}</span>
+                        <span data-counter="counterup" data-value="{{ groups | length }}">0</span>
                     </div>
                     <div class="desc"> Groupes</div>
                 </div>
             </a>
         </div>
-        <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
-            <a class="dashboard-stat dashboard-stat-v2 red" href="{{ path('list_users') }}">
-                <div class="visual">
-                    <i class="fa fa-bar-chart-o"></i>
-                </div>
-                <div class="details">
-                    <div class="number">
-                        <span data-counter="counterup"
-                              data-value="{{ usersDisabled | length }}">{{ usersDisabled | length }}</span>
-                    </div>
-                    <div class="desc"> Utilisateurs désactivés</div>
-                </div>
-            </a>
-        </div>
-        <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
-            <a class="dashboard-stat dashboard-stat-v2 green" href="{{ path('list_computers') }}">
-                <div class="visual">
-                    <i class="fa fa-shopping-cart"></i>
-                </div>
-                <div class="details">
-                    <div class="number">
-                        <span data-counter="counterup"
-                              data-value="{{ neverExpires | length }}">{{ neverExpires | length }}</span>
-                    </div>
-                    <div class="desc"> Compte jamais expirés</div>
-                </div>
-            </a>
-        </div>
-        <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
-            <a class="dashboard-stat dashboard-stat-v2 yellow-casablanca" href="#">
+
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <a class="dashboard-stat dashboard-stat-v2 yellow-casablanca" href="{{ path('list_computers') }}">
                 <div class="visual">
                     <i class="fa fa-laptop"></i>
                 </div>
                 <div class="details">
                     <div class="number">
                         <span data-counter="counterup"
-                              data-value="{{ computers | length }}">{{ computers | length }}</span>
+                              data-value="{{ computers | length }}">0</span>
                     </div>
                     <div class="desc"> Ordinateurs</div>
                 </div>
@@ -133,11 +116,12 @@
                     </div>
                     <div class="actions">
                         <div class="btn-group">
-                            <a class="btn btn-circle btn-default btn-sm" href="javascript:;" data-toggle="dropdown">
+                            <a class="btn btn-circle btn-default btn-sm" href="javascript:;" data-toggle="dropdown"
+                               data-hover="dropdown" data-close-others="true">
                                 <i class="fa fa-cog fa-fw"></i>
                                 <i class="fa fa-angle-down"></i>
                             </a>
-                            <ul class="dropdown-menu" role="menu">
+                            <ul class="dropdown-menu pull-right" role="menu">
                                 <li>
                                     <a href="{{ path('list_users') }}">
                                         Tout</a></li>
@@ -160,6 +144,11 @@
                            data-original-title="" title=""> </a>
 
                     </div>
+
+                    <a href="javascript:;" class="collapse" data-original-title="Réduire" title="Réduire"> </a>
+                    <a href="javascript:;" class="reload" data-original-title="Recharger" title="Recharger"> </a>
+                    <a href="" class="fullscreen" data-original-title="Plein écran" title="Plein écran"> </a>
+                    <a href="javascript:;" class="remove" data-original-title="Fermer" title="Fermer"> </a>
                 </div>
                 <div class="portlet-body">
                     {% if users is defined %}
@@ -177,25 +166,24 @@
                             </thead>
                             <tbody>
                             {% for key, user in users %}
-                                {% if  key != "count" or key =="0" %}
+                                {% set userprincipalname =ad_active_directory.getData(user,"userprincipalname") %}
+                                {% if  ((key != "count" or key =="0") and userprincipalname is not null ) %}
                                     <tr id="line-{{ key }}">
                                         {#<td class="col-md-2">{{ key }}</td>#}
                                         <td class="col-md-2">{{ ad_active_directory.getData(user,"samaccountname") }}</td>
                                         <td class="col-md-3">{{ ad_active_directory.getData(user,"displayname") }}</td>
-                                        <td class="col-md-4">{{ ad_active_directory.getData(user,"userprincipalname") }}</td>
+                                        <td class="col-md-4">{{ userprincipalname }}</td>
 
                                         <td class="col-md-3">
-                                            {% set login=ad_active_directory.getData(user,"userprincipalname") %}
                                             {% set dn=ad_active_directory.getData(user,"distinguishedname") %}
-                                            {#{{ path('get_user',{'login':login }) }}#}
                                             <a href="" data-toggle="modal" data-target="#view-user"
                                                data-user="{{ ad_active_directory.base64Encode(dn) }}"
                                                class="btn btn-xs btn-outline  btn-circle btn-user-info dark"><i
                                                         class="fa fa-user fa-fw"></i> Voir</a>
-                                            <a href="{{ path('edit_user',{'person':ad_active_directory.base64Encode(dn) }) }}"
-                                               class="btn btn-xs btn-outline btn-circle  blue"><i
-                                                        class="fa fa-edit fa-fw"></i> Edit</a>
                                             {% if ad_active_directory.getData(user,"samaccountname") != "Administrator" %}
+                                                <a href="{{ path('edit_user',{'person':ad_active_directory.base64Encode(dn) }) }}"
+                                                   class="btn btn-xs btn-outline btn-circle  blue"><i
+                                                            class="fa fa-edit fa-fw"></i> Edit</a>
                                                 <a href=""
                                                    class="btn btn-xs btn-outline btn-circle red btn-remove"
                                                    data-action="remove-user"
@@ -223,55 +211,11 @@
                         <i class="fa fa-users fa-fw font-green"></i>
                         <span class="caption-subject font-green bold uppercase">Groupes</span>
                     </div>
-                    <div class="actions">
-
-                        <div class="btn-group">
-                            <a class="btn btn-circle btn-default btn-sm" href="javascript:;" data-toggle="dropdown">
-                                <i class="fa fa-list"></i>
-                                <i class="fa fa-angle-down"></i>
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="javascript:;">
-                                        <i class="icon-user"></i> New User </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:;">
-                                        <i class="icon-present"></i> New Event
-                                        <span class="badge badge-success">4</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:;">
-                                        <i class="icon-basket"></i> New order </a>
-                                </li>
-                                <li class="divider"></li>
-                                <li>
-                                    <a href="javascript:;">
-                                        <i class="icon-flag"></i> Pending Orders
-                                        <span class="badge badge-danger">4</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:;">
-                                        <i class="icon-users"></i> Pending Users
-                                        <span class="badge badge-warning">12</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
-                            <i class="icon-cloud-upload"></i>
-                        </a>
-                        <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
-                            <i class="icon-wrench"></i>
-                        </a>
-                        <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
-                            <i class="icon-trash"></i>
-                        </a>
-                        <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;"
-                           data-original-title="" title=""> </a>
-
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse" data-original-title="Réduire" title="Réduire"> </a>
+                        <a href="javascript:;" class="reload" data-original-title="Recharger" title="Recharger"> </a>
+                        <a href="" class="fullscreen" data-original-title="Plein écran" title="Plein écran"> </a>
+                        <a href="javascript:;" class="remove" data-original-title="Fermer" title="Fermer"> </a>
                     </div>
                 </div>
                 <div class="portlet-body">
@@ -364,7 +308,7 @@
         {{ parent() }}
         {% javascripts
         "bundles/ad/themes/global/plugins/datatables/datatables.min.js"
-        
+
         "bundles/ad/themes/global/plugins/counterup/jquery.waypoints.min.js"
         "bundles/ad/themes/global/plugins/counterup/jquery.counterup.min.js"
 

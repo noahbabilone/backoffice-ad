@@ -175,7 +175,7 @@ class User
             $this->setFirstName($this->getData($data, "givenname"));
             $this->setFullName($this->getData($data, "displayname"));
 //        $this->setOffice($this->getData($data, "physicaldeliveryofficename"));
-            $this->setAddress($this->getData($data, "st"));
+            $this->setAddress($this->getData($data, "streetaddress"));
             $this->setCity($this->getData($data, "l"));
             $this->setPostalCode($this->getData($data, "postalcode"));
             $country = $this->getData($data, "c");

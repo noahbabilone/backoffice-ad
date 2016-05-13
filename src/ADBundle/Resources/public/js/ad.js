@@ -10,7 +10,7 @@ $(function () {
         var service=$(this).val().substr(0,4);
         if (service== "Sain") {
             address = {
-                "address": "Bis, 2 Avenue Foch, 94160 Saint-Mandé",
+                "address": "Bis, 2 Avenue Foch",
                 "postalCode": "94160",
                 "city": "Saint-Mandé",
                 "country": "France",

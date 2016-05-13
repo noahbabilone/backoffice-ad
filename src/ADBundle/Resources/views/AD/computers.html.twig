@@ -32,7 +32,7 @@
     <!-- BEGIN PAGE TITLE-->
     <h3 class="page-title"> Ordinateurs</h3>
     <!-- END PAGE TITLE-->
-    {{ dump(computers) }}
+    {#{{ dump(computers) }}#}
 
     <!-- END PAGE HEADER-->
     <div class="row">
@@ -45,76 +45,229 @@
                         <span class="caption-subject font-green bold uppercase">Listes des Ordinateurs</span>
                     </div>
                     <div class="tools">
-                        <a href="javascript:;" class="collapse"> </a>
-                        <a href="#portlet-config" data-toggle="modal" class="config"> </a>
-                        <a href="javascript:;" class="reload"> </a>
-                        <a href="" class="fullscreen"> </a>
-                        <a href="javascript:;" class="remove"> </a>
+                        <a href="javascript:;" class="collapse" data-original-title="Réduire" title="Réduire"> </a>
+                        <a href="javascript:;" class="reload" data-original-title="Recharger" title="Recharger"> </a>
+                        <a href="" class="fullscreen" data-original-title="Plein écran" title="Plein écran"> </a>
+                        <a href="javascript:;" class="remove" data-original-title="Fermer" title="Fermer"> </a>
                     </div>
                 </div>
                 <div class="portlet-body">
                     {% if computers is defined %}
-                        <table class="table table-striped table-hover table-header-fixed order-column"
-                               id="table-computers" cellspacing="0" width="100%"
-                               data-line="25">
-                            <thead>
-                            <tr>
-                                {#<th>#</th>#}
-                                <th>Nom Pc</th>
-                                <th>OS</th>
-                                <th>DNS Host Name</th>
-                                <th>Groupes</th>
-                                {#  <th>serverreferencebl</th>
-                                  <th>ridsetreferences</th>
-                                  <th>distinguishedname</th>
-                                  <th>distinguishedname</th>#}
-                            </tr>
-                            </thead>
-                            <tbody>
+                        <div class="panel-group accordion" id="accordion3">
+
                             {% for key, computer in computers %}
                                 {% if  key != "count" or key =="0" %}
-                                    <tr id="line-{{ key }}">
-                                        {#<td>{{ key }}</td>#}
-                                        <td>
-                                            <i class="fa fa-laptop fa-fw"></i> {{ ad_active_directory.getData(computer,"cn") }}
-                                        </td>
-                                        <td>
-                                            <i class="fa fa-desktop fa-fw"></i> {{ ad_active_directory.getData(computer,"operatingsystem") }}
-                                        </td>
-                                        <td>
-                                            <i class="fa fa-globe fa-fw"></i> {{ ad_active_directory.getData(computer,"dnshostname") }}
-                                        </td>
-                                        <td>
-                                            {% set arrayGroups=ad_active_directory.getArray(computer,"memberof") %}
-                                            {% if arrayGroups %}
-                                                <ul class="list-unstyled">
-                                                    {% for  keyUser, groupDn in arrayGroups %}
-                                                        {% if  keyUser != "count" or keyUser =="0" %}
-                                                            {% set group =ad_active_directory.getByDn(groupDn) %}
-                                                            <li>
-                                                                <i class="fa fa-users fa-fw"></i> {{ ad_active_directory.getOneData(group,"cn") }}
-                                                            </li>
+
+
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a class="accordion-toggle accordion-toggle-styled collapsed"
+                                                   data-toggle="collapse" data-parent="#accordion3"
+                                                   href="#control-{{ key }}">
+                                                    <i class="fa fa-desktop fa-fw"></i>
+                                                    {{ ad_active_directory.getData(computer,"cn") }}
+                                                    ( {{ ad_active_directory.getData(computer,"operatingsystem") }})
+                                                </a>
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="control-{{ key }}" class="panel-collapse collapse">
+                                            <div class="row">
+                                                <div class="col-sm-12" id="computers-table">
+                                                    {#<div class="panel-body">#}
+                                                    <table class="table table-responsive">
+                                                        <tr>
+                                                            <td class="col-sm-3"><i class="fa fa-laptop fa-fw"></i> <b>Nom
+                                                                    PC</b></td>
+                                                            <td>
+                                                                {{ ad_active_directory.getData(computer,"cn") }}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="col-sm-3"><i class="fa fa-cog fa-fw"></i>
+                                                                <b>OS</b>
+                                                            </td>
+                                                            <td>
+                                                                {{ ad_active_directory.getData(computer,"operatingsystem") }}
+
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="col-sm-3"><i class="fa fa-download fa-fw"></i>
+                                                                <b>Version</b>
+                                                            </td>
+                                                            <td>
+                                                                {{ ad_active_directory.getData(computer,"operatingsystemversion") }}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="col-sm-3"><i class="fa fa-cloud fa-fw"></i>
+                                                                <b>DNS Host Name</b></td>
+                                                            <td>
+                                                                {{ ad_active_directory.getData(computer,"dnshostname") }}
+                                                            </td>
+                                                        </tr>
+                                                        {% set ridsetreferences=ad_active_directory.getData(computer,"ridsetreferences") %}
+                                                        {% if ridsetreferences %}
+                                                            {% set ridRefs =ad_active_directory.getByDn(ridsetreferences) %}
+                                                            <tr>
+                                                                <td class="col-sm-3"><i class="fa fa-cube fa-fw"></i>
+                                                                    <b>Rid set</b></td>
+                                                                {% for  keyRid,ridRef in ridRefs %}
+                                                                    {% if  keyRid != "count" or keyRid =="0" %}
+                                                                        <td>
+                                                                            {{ ad_active_directory.getData(ridRef,"cn") }}
+                                                                        </td>
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            </tr>
                                                         {% endif %}
 
-                                                    {% endfor %}
+                                                        {% set arrayGroups=ad_active_directory.getArray(computer,"memberof") %}
+                                                        {% if arrayGroups %}
+                                                            <tr>
+                                                                <td class="col-sm-3"><i class="fa fa-users fa-fw"></i>
+                                                                    <b>Groupes</b></td>
+                                                                <td>
 
-                                                </ul>
-                                            {% endif %}
-                                        </td>
-
-                                        {#                                        <td>{{ ad_active_directory.getData(computer,"serverreferencebl") }}</td>
-                                                                                <td>{{ ad_active_directory.getData(computer,"ridsetreferences") }}</td>
-                                                                                <td>{{ ad_active_directory.getData(computer,"distinguishedname") }}</td>
-                                                                                <td>{{ ad_active_directory.getData(computer,"memberof") }}</td>#}
+                                                                    <ul class="list-unstyled">
+                                                                        {% for  keyUser, groupDn in arrayGroups %}
+                                                                            {% if  keyUser != "count" or keyUser =="0" %}
+                                                                                {% set group =ad_active_directory.getByDn(groupDn) %}
 
 
-                                    </tr>
+                                                                                <li>
+                                                                                    {{ ad_active_directory.getOneData(group,"cn") }}
+                                                                                </li>
+                                                                            {% endif %}
+
+                                                                        {% endfor %}
+
+                                                                    </ul>
+                                                                </td>
+                                                            </tr>
+                                                        {% endif %}
+                                                      
+                                                        {% set serverreferencebl=ad_active_directory.getData(computer,"serverreferencebl") %}
+                                                        {% if serverreferencebl %}
+                                                            {% set servers =ad_active_directory.getByDn(serverreferencebl) %}
+                                                            <tr>
+                                                                <td class="col-sm-3"><i class="fa fa-server fa-fw"></i>
+                                                                    <b>Serveur réf</b></td>
+                                                                <td>
+
+                                                                    <ul class="list-unstyled">
+                                                                        {% for  keyserver, server in servers %}
+                                                                            {% if  keyserver != "count" or keyserver =="0" %}
+                                                                                <li>
+                                                                                    {{ ad_active_directory.getData(server,"cn") }}
+                                                                                    {{ ad_active_directory.getData(server,"dnshostname") }}
+                                                                                </li>
+                                                                            {% endif %}
+
+                                                                        {% endfor %}
+
+                                                                    </ul>
+                                                                </td>
+                                                            </tr>
+                                                        {% endif %}
+
+
+                                                        {% set serviceprincipalname=  ad_active_directory.getArray(computer,"serviceprincipalname") %}
+                                                        {% if serviceprincipalname %}
+                                                            <tr>
+                                                                <td class="col-sm-3"><i class="fa fa-cogs fa-fw"></i>
+                                                                    <b>Service principal Name</b></td>
+                                                                <td>
+                                                                    <ul class="list-unstyled">
+                                                                        {% for  keyservice, service in serviceprincipalname %}
+                                                                            {% if  keyservice != "count" or keyservice =="0" %}
+                                                                                <li>
+                                                                                    {{ service }}
+                                                                                </li>
+                                                                            {% endif %}
+
+                                                                        {% endfor %}
+
+                                                                    </ul>
+                                                                </td>
+                                                            </tr>
+                                                        {% endif %}
+
+                                                    </table>
+
+                                                    <ul class="list-unstyled">
+                                                        <li></li>
+                                                    </ul>
+                                                    {#<p>#}
+                                                    {#<a class="btn blue" href="ui_tabs_accordions_navs.html#collapse_3_2"#}
+                                                    {#target="_blank"> Activate this section via URL </a>#}
+                                                    {#</p>#}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {#</div>#}
+                                    </div>
+
                                 {% endif %}
                             {% endfor %}
-                            </tbody>
-                        </table>
+                        </div>
+
+                        {#<table class="table table-striped table-hover table-header-fixed order-column"#}
+                        {#id="table-computers" cellspacing="0" width="100%"#}
+                        {#data-line="25">#}
+                        {#<thead>#}
+                        {#<tr>#}
+                        {#&#123;&#35;<th>#</th>&#35;&#125;#}
+                        {#<th>Nom Pc</th>#}
+                        {#<th>OS</th>#}
+                        {#<th>DNS Host Name</th>#}
+                        {#<th>Groupes</th>#}
+                        {#&#123;&#35;  <th>serverreferencebl</th>#}
+                        {#<th>ridsetreferences</th>#}
+                        {#<th>distinguishedname</th>#}
+                        {#<th>distinguishedname</th>&#35;&#125;#}
+                        {#</tr>#}
+                        {#</thead>#}
+                        {#<tbody>#}
+                        {#{% for key, computer in computers %}#}
+                        {#{% if  key != "count" or key =="0" %}#}
+                        {#<tr id="line-{{ key }}">#}
+                        {#&#123;&#35;<td>{{ key }}</td>&#35;&#125;#}
+                        {#<td>#}
+                        {#<i class="fa fa-laptop fa-fw"></i> {{ ad_active_directory.getData(computer,"cn") }}#}
+                        {#</td>#}
+                        {#<td>#}
+                        {#<i class="fa fa-desktop fa-fw"></i> {{ ad_active_directory.getData(computer,"operatingsystem") }}#}
+                        {#</td>#}
+                        {#<td>#}
+                        {#<i class="fa fa-globe fa-fw"></i> {{ ad_active_directory.getData(computer,"dnshostname") }}#}
+                        {#</td>#}
+                        {#<td>#}
+                        {#{% set arrayGroups=ad_active_directory.getArray(computer,"memberof") %}#}
+                        {#{% if arrayGroups %}#}
+                        {#<ul class="list-unstyled">#}
+                        {#{% for  keyUser, groupDn in arrayGroups %}#}
+                        {#{% if  keyUser != "count" or keyUser =="0" %}#}
+                        {#{% set group =ad_active_directory.getByDn(groupDn) %}#}
+                        {#<li>#}
+                        {#<i class="fa fa-users fa-fw"></i> {{ ad_active_directory.getOneData(group,"cn") }}#}
+                        {#</li>#}
+                        {#{% endif %}#}
+
+                        {#{% endfor %}#}
+
+                        {#</ul>#}
+                        {#{% endif %}#}
+                        {#</td>#}
+                        {#</tr>#}
+                        {#{% endif %}#}
+                        {#{% endfor %}#}
+                        {#</tbody>#}
+                        {#</table>#}
                     {% else %}
-                        Pas d'utilisateur trouvé.
+                        Aucun ordi trouvé.
                     {% endif %}
                 </div>
             </div>
