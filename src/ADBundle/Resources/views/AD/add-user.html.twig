@@ -316,16 +316,18 @@
                                     </div>
                                 {% endif %}
 
-                                <div class="col-sm-6">
-                                    <div class="form-group has-feedback">
-                                        <label class="control-label">Fax</label>
+                                {% if form.mobile is defined %}
+                                    <div class="col-sm-6">
+                                        <div class="form-group has-feedback">
+                                            {{ form_label(form.mobile) }}
 
-                                        <div class="input-icon">
-                                            <i class="fa fa-fax"></i>
-                                            <input type="text" class="form-control" placeholder="">
+                                            <div class="input-icon">
+                                                <i class="fa fa-mobile"></i>
+                                                {{ form_widget(form.mobile) }}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                {% endif %}
 
 
                             </div>

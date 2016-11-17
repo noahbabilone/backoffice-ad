@@ -31,8 +31,7 @@
     <!-- BEGIN PAGE TITLE-->
     <h3 class="page-title"> Dashboard
         <small>dashboard & statistics</small>
-
-
+    {#{{ dump(users) }}#}
     </h3>
     <!-- END PAGE TITLE-->
     <!-- END PAGE HEADER-->
@@ -46,14 +45,15 @@
                 </div>
                 <div class="details">
                     <div class="number">
-                        <span data-counter="counterup" data-value="{{ users | length }}">0</span>
+                        <span data-counter="counterup" data-value="{{ (users | length )- 1 }}">0</span>
                     </div>
                     <div class="desc"> Comptes utilisateurs</div>
                 </div>
             </a>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-            <a class="dashboard-stat dashboard-stat-v2 red-flamingo" href="{{ path('list_users') }}">
+            <a class="dashboard-stat dashboard-stat-v2 red-flamingo"
+               href="{{ path('users_filter', {'filter':'disabled'}) }}">
                 <div class="visual">
                     <i class="fa fa-remove"></i>
                 </div>
@@ -61,13 +61,13 @@
 
 
                     {#<div class="number">#}
-                        {#<span data-counter="counterup" data-value="{{ usersLocked | length }}">0</span>#}
+                    {#<span data-counter="counterup" data-value="{{ usersLocked | length }}">0</span>#}
                     {#</div>#}
                     {#<div class="desc"> Utilisateurs bloqués</div>#}
-                           
+
                     <div class="number">
                         <span data-counter="counterup"
-                              data-value="{{ usersDisabled | length }}">0</span>
+                              data-value="{{ ( usersDisabled | length )- 1 }}">0</span>
                     </div>
                     <div class="desc"> Utilisateurs désactivés</div>
 
@@ -82,7 +82,7 @@
                 </div>
                 <div class="details">
                     <div class="number">
-                        <span data-counter="counterup" data-value="{{ groups | length }}">0</span>
+                        <span data-counter="counterup" data-value="{{ ( groups | length )- 1 }}">0</span>
                     </div>
                     <div class="desc"> Groupes</div>
                 </div>
@@ -104,7 +104,7 @@
             </a>
         </div>
     </div>
-
+    
     <div class="row">
         <div class="col-md-12">
             <!-- BEGIN SAMPLE TABLE PORTLET-->
@@ -158,8 +158,8 @@
                             <thead>
                             <tr>
                                 {#<th class="col-md-2">#</th>#}
-                                <th class="col-md-2">Login</th>
                                 <th class="col-md-2">Nom</th>
+                                <th class="col-md-2">Login</th>
                                 <th class="col-md-4">Email</th>
                                 <th class="col-md-3">Actions</th>
                             </tr>
@@ -167,11 +167,11 @@
                             <tbody>
                             {% for key, user in users %}
                                 {% set userprincipalname =ad_active_directory.getData(user,"userprincipalname") %}
-                                {% if  ((key != "count" or key =="0") and userprincipalname is not null ) %}
+                                {% if  ( userprincipalname is not null ) %}
                                     <tr id="line-{{ key }}">
                                         {#<td class="col-md-2">{{ key }}</td>#}
-                                        <td class="col-md-2">{{ ad_active_directory.getData(user,"samaccountname") }}</td>
                                         <td class="col-md-3">{{ ad_active_directory.getData(user,"displayname") }}</td>
+                                        <td class="col-md-2">{{ ad_active_directory.getData(user,"samaccountname") }}</td>
                                         <td class="col-md-4">{{ userprincipalname }}</td>
 
                                         <td class="col-md-3">

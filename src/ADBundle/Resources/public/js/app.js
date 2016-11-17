@@ -1,8 +1,10 @@
 $(function () {
-    var regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)([a-zA-Z0-9]{8,})$/;
+    //var regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)([a-zA-Z0-9]{8,})$/;
+    var regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)([-+!*$@%_\w]{8,15})$/;
     var regexPhone = /^0[1-9]([0-9]){8}$/;
     //var regexPhone = /^0[1-9]([-. ]?[0-9]{2}){4}$/;
-    var textPwd = "Le mot de passe doit comporter au moins 8 caractères et doit comporter au moins un chiffre, une lettre en majuscule et en miniscule";
+    var textPwd = "Le mot de passe doit comporter au moins 8 caractères et doit comporter au moins un chiffre ou des " +
+        "caractères spéciaux (-+!*$@%_), une lettre en majuscule et en miniscule";
 
     $('.password').tooltip({
         'trigger': 'focus',
@@ -10,10 +12,10 @@ $(function () {
         'title': textPwd
     });
     $('[data-toggle="tooltip"]').tooltip();
-    
+
     $('#save-edit-info').click(function (e) {
         var response = grecaptcha.getResponse();
-       // console.log(regexPhone.test($('.phone').val()));
+        // console.log(regexPhone.test($('.phone').val()));
         if (!regexPhone.test($('.phone').val()) && $('.phone').val()) {
             e.preventDefault();
             $("#field-message-error").removeClass("hide")
@@ -73,48 +75,42 @@ $(function () {
 
 
     $('.password').keyup(function () {
-        if ($('#champs-check-pwd').hasClass('has-error')) {
-            $('#champs-check-pwd').removeClass('has-error');
-        }
+        $('#champs-check-pwd').removeClass('has-error');
 
         if (regex.test($.trim($('.password').val()))) {
             $("#champs-new-pwd .form-control-feedback").removeClass('glyphicon-warning-sign');
             $("#champs-new-pwd .form-control-feedback").addClass('glyphicon-ok');
-            if ($('#champs-new-pwd').hasClass('has-error')) {
-                $('#champs-new-pwd').removeClass('has-error');
-            }
-            if (!$('#champs-new-pwd').hasClass('has-success')) {
-                $('#champs-new-pwd').addClass('has-success');
-            }
+            $('#champs-new-pwd').removeClass('has-error');
+            $('#champs-new-pwd').addClass('has-success');
         } else {
             $("#champs-new-pwd .form-control-feedback").removeClass('glyphicon-ok');
             $("#champs-new-pwd .form-control-feedback").addClass('glyphicon-warning-sign');
-            if (!$('#champs-new-pwd').hasClass('has-error')) {
-                $('#champs-new-pwd').addClass('has-error');
-            }
-
-            if ($('#champs-new-pwd').hasClass('has-success')) {
-                $('#champs-new-pwd').removeClass('has-success');
-            }
+            $('#champs-new-pwd').addClass('has-error');
+            $('#champs-new-pwd').removeClass('has-success');
         }
+
+
     });
+
+    $('.password').change(function () {
+        $("#champs-check-pwd .form-control-feedback").removeClass('glyphicon-warning-sign');
+        $("#champs-check-pwd .form-control-feedback").removeClass('glyphicon-ok');
+        $("#champs-check-pwd").removeClass('has-error');
+        $("#champs-check-pwd").removeClass('has-success');
+        $(".confirm-pwd").val("");
+    });
+
 
     $('.confirm-pwd').keyup(function () {
         if ($.trim($('.confirm-pwd').val()) != $.trim($('.password').val()) || !$.trim($('.confirm-pwd').val()) || !regex.test($.trim($('.password').val()))) {
-            if ($('#champs-check-pwd').hasClass('has-success')) {
-                $('#champs-check-pwd').removeClass('has-success');
-            }
+            $('#champs-check-pwd').removeClass('has-success');
             $('#champs-check-pwd').addClass('has-error');
             $("#champs-check-pwd .form-control-feedback").addClass('glyphicon-warning-sign');
         } else {
             $("#champs-check-pwd .form-control-feedback").removeClass('glyphicon-warning-sign');
             $("#champs-check-pwd .form-control-feedback").addClass('glyphicon-ok');
-            if ($('#champs-check-pwd').hasClass('has-error')) {
-                $('#champs-check-pwd').removeClass('has-error');
-            }
-            if (!$('#champs-check-pwd').hasClass('has-success')) {
-                $('#champs-check-pwd').addClass('has-success');
-            }
+            $('#champs-check-pwd').removeClass('has-error');
+            $('#champs-check-pwd').addClass('has-success');
         }
     });
 

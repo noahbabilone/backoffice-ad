@@ -27,6 +27,7 @@ class ADController extends Controller
     {
 
         $ad = $this->get("ad_active_directory");
+        
         if (!$this->get('session')->has('user')) {
             return $this->redirectToRoute('login', array(), 301);
         } else if ($ad->checkAccessAdmin($ad->base64Decode($this->get('session')->get('user'))) == FALSE) {
@@ -78,7 +79,9 @@ class ADController extends Controller
                 $session->set('user', $ad->base64Encode($user->getLogin()));
                 $adUser = $ad->getUserByUserPrincipalName($user->getLogin());
                 $user->init($adUser);
+                 
                 //if ($ad->checkAccessAdmin($user->getLogin())) {
+                
                 if ($user->getAccess() == 1) {
                     $session->set('username', $user->getFullName());
                     $session->set('dn', $ad->base64Encode($user->getDn()));
@@ -165,14 +168,55 @@ class ADController extends Controller
         }
 
         $tabOU = array("Issy-Les-Moulineaux", "Saint-mande", "Luxembourg", "Compteutilisateur", "Compteutilisateur");
+
+
         if (in_array($ou, $tabOU)) {
+
             $users = $ad->getAllUser($ou);
+
         } else {
             $users = $ad->getAllUser();
         }
         return $this->render('ADBundle:AD:list_users.html.twig', array(
             "users" => $users,
             "ou" => $ou
+        ));
+    }
+
+    /**
+     * @Route("/users-filter-{filter}.html", name="users_filter")
+     * @param $filter
+     * @return Response
+     */
+    function UsersFilterAction($filter)
+    {
+
+
+        $ad = $this->get("ad_active_directory");
+        if (!$this->get('session')->has('user')) {
+            return $this->redirectToRoute('login', array(), 301);
+        } else if ($ad->checkAccessAdmin($ad->base64Decode($this->get('session')->get('user'))) == FALSE) {
+            return $this->redirectToRoute('logout', array(), 301);
+        }
+        $users = null;
+        $ou = null;
+
+        if ($filter === "locked") {
+            $users = $ad->getUserInfoComputer("locked");
+            $ou = "Bloqués";
+
+        } else if ($filter === "disabled") {
+            $users = $ad->getUserInfoComputer("disabled");
+            $ou = "Désactivés";
+
+        } else if ($filter === "expires") {
+            $users = $ad->getUserInfoComputer("expires");
+            $ou = "Expirés";
+        }
+
+        return $this->render('ADBundle:AD:list_users.html.twig', array(
+            "users" => $users,
+            "ou" => $ou,
         ));
     }
 
@@ -500,7 +544,7 @@ class ADController extends Controller
      * @return RedirectResponse
      * @internal param Request $request
      */
-    function  checkSession($ad)
+    function checkSession($ad)
     {
         if (!$this->get('session')->has('user')) {
             return $this->redirectToRoute('login', array(), 301);

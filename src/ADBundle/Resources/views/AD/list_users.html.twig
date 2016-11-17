@@ -62,11 +62,19 @@
                         <li {% if ou is defined %} {% if ou == "Saint-mande" %} class="active" {% endif %}{% endif %}>
                             <a href="{{ path('users_by_ou',{'ou': 'Saint-mande'}) }}"> Saint-Mandé </a>
                         </li>
+                        <li {% if ou is defined %} {% if ou == "Bloqués" %} class="active" {% endif %}{% endif %}>
+                            <a href="{{ path('users_filter',{'filter': 'locked'}) }}"> Bloqués </a>
+                        </li>
+                        <li {% if ou is defined %} {% if ou == "Désactivés" %} class="active" {% endif %}{% endif %}>
+                            <a href="{{ path('users_filter',{'filter': 'disabled'}) }}"> Désactivés </a>
+                        </li>
+                        <li {% if ou is defined %} {% if ou == "Expirés" %} class="active" {% endif %}{% endif %}>
+                            <a href="{{ path('users_filter',{'filter': 'expires'}) }}"> Expirés </a>
+                        </li>
                     </ul>
 
-
                     {% if users is defined %}
-
+                        {#{{ dump(users) }}#}
                         <table class="table table-striped table-hover table-header-fixed order-column" id="table-users"
                                data-line="25" cellspacing="0" width="100%">
                             <thead>
@@ -81,7 +89,7 @@
                             <tbody>
                             {% for key, user in users %}
                                 {% set userprincipalname =ad_active_directory.getData(user,"userprincipalname") %}
-                                {% if  ((key != "count" or key =="0") and userprincipalname is not null ) %}
+                                {% if  ( userprincipalname is not null ) %}
                                     <tr id="line-{{ key }}">
                                         {#<td class="col-md-2">{{ key }}</td>#}
                                         <td class="col-md-2">{{ ad_active_directory.getData(user,"samaccountname") }}</td>

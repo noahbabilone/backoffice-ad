@@ -1,14 +1,16 @@
 $(function () {
     console.log("Ad-js");
-    var regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)([a-zA-Z0-9]{8,})$/;
-    var regexPhone = /^0[1-9]([0-9]){8}$/;
-    var textPwd = "Le mot de passe doit comporter au moins 8 caractères et doit comporter au moins un chiffre, une lettre en majuscule et en miniscule";
+    //var regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)([a-zA-Z0-9]{8,})$/;
+    var regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)([-+!*$@%_\w]{8,})$/;
 
+    var regexPhone = /^0[1-9]([0-9]){8}$/;
+    var textPwd = "Le mot de passe doit comporter au moins 8 caractères et doit comporter au moins un chiffre ou des " +
+        "caractères spéciaux (-+!*$@%_), une lettre en majuscule et en miniscule";
     $(".service").change(function () {
         console.log($(this).val());
         var address = "";
-        var service=$(this).val().substr(0,4);
-        if (service== "Sain") {
+        var service = $(this).val().substr(0, 4);
+        if (service == "Sain") {
             address = {
                 "address": "Bis, 2 Avenue Foch",
                 "postalCode": "94160",
@@ -269,7 +271,12 @@ $(function () {
         } else if (!regexPhone.test($('.phone').val()) && $('.phone').val()) {
             e.preventDefault();
             $("#field-message-error").removeClass("hide")
-            $('.message-error').html("Numero de téléphone invalide");
+            $('.message-error').html("Numero de téléphone fix invalide");
+
+        }else if (!regexPhone.test($('.mobile').val()) && $('.mobile').val()) {
+            e.preventDefault();
+            $("#field-message-error").removeClass("hide")
+            $('.message-error').html("Numero de téléphone mobile invalide");
 
         }
         //console.log(!(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)([a-zA-Z0-9]{6,})$/).test($.trim($('.password').val())));
@@ -324,7 +331,13 @@ $(function () {
             e.preventDefault();
             $("#field-message-error").removeClass("hide")
             $('.message-error').html("Numero de téléphone invalide");
+        } else if (!regexPhone.test($('.mobile').val()) && $('.mobile').val()) {
+            e.preventDefault();
+            $("#field-message-error").removeClass("hide")
+            $('.message-error').html("Numero de téléphone mobile invalide");
         }
+        // e.preventDefault();
+
     });
 
 

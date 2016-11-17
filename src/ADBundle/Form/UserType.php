@@ -25,7 +25,7 @@ class UserType extends AbstractType
                         'autocomplete' => 'off'
                     ),
                 )
-            ) ->add('name', 'text', array(
+            )->add('name', 'text', array(
                     'label' => 'Nom',
                     'required' => true,
                     'attr' => array(
@@ -64,8 +64,7 @@ class UserType extends AbstractType
                     ),
                 )
             )
-            
-           ->add('description', 'textarea', array(
+            ->add('description', 'textarea', array(
                     'label' => 'Description',
                     'required' => false,
                     'attr' => array(
@@ -86,7 +85,7 @@ class UserType extends AbstractType
                     ),
                 )
             )
-             ->add('postalCode', 'number', array(
+            ->add('postalCode', 'number', array(
                     'label' => 'Code postal',
                     'required' => false,
                     'attr' => array(
@@ -134,7 +133,7 @@ class UserType extends AbstractType
             )->add('group', 'hidden', array(
                     'label' => '',
                     'attr' => array(
-                        'class' => 'select-groups', 
+                        'class' => 'select-groups',
                         'autocomplete' => 'off'
 
                     ),
@@ -146,6 +145,8 @@ class UserType extends AbstractType
                         "42consulting.fr" => "42consulting.fr",
                         "42consulting.lu" => "42consulting.lu",
                         "42mediatvcom.fr" => "42mediatvcom.fr",
+                        "42consulting.ma" => "42consulting.ma",
+                        "42consulting.nl" => "42consulting.nl",
                     ),
                     'attr' => array(
                         'class' => 'form-control',
@@ -155,16 +156,26 @@ class UserType extends AbstractType
                 )
             )
             ->add('phone', 'text', array(
-                    'label' => 'Téléphone',
+                    'label' => 'Fix',
                     'required' => false,
                     'attr' => array(
                         'class' => 'form-control phone',
+                        'placeholder' => '0105020304',
+                        'autocomplete' => 'off'
+                    ),
+
+                )
+            )->add('mobile', 'text', array(
+                    'label' => 'Mobile',
+                    'required' => false,
+                    'attr' => array(
+                        'class' => 'form-control mobile',
                         'placeholder' => '0601020304',
                         'autocomplete' => 'off'
                     ),
 
                 )
-            ) 
+            )
             ->add('email', 'text', array(
                     'label' => 'Email',
                     'required' => true,

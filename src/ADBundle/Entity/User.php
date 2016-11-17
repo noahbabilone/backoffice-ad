@@ -87,6 +87,12 @@ class User
      * @ORM\Column(name="phone", type="string", length=255)
      */
     private $phone;
+ /**
+     * @var string
+     *
+     * @ORM\Column(name="mobile", type="string", length=255)
+     */
+    private $mobile;
 
     /**
      * @var string
@@ -187,7 +193,7 @@ class User
             $this->setCountry($country);
             $this->setDescription($this->getData($data, "description"));
 
-            $telephone = $this->getData($data, "telephonenumber");
+            $telephone = $this->getData($data, "homephone");
             if ($telephone !== null) {
                 $tel = explode("(0)", $telephone);
                 if (count($tel) > 1) {
@@ -201,9 +207,22 @@ class User
                     if (count(str_split($phone)) == 10)
                         $this->setPhone($phone);
                 }
+            } 
+            $mobile = $this->getData($data, "telephonenumber");
+            if ($mobile !== null) {
+                $tel = explode("(0)", $mobile);
+                if (count($tel) > 1) {
+                    $arrayPhone = str_split($tel[1]);
+                    $phone = "0";
+                    foreach ($arrayPhone as $key => $number) {
+                        if ($number != " ") {
+                            $phone .= $number;
+                        }
+                    }
+                    if (count(str_split($phone)) == 10)
+                        $this->setMobile($phone);
+                }
             }
-
-            $this->setAccess($this->getData($data, "admincount"));
 
             if (isset($data[0]["memberof"]) && !empty($data[0]["memberof"])) {
                 foreach ($data[0]["memberof"] as $key => $val) {
@@ -217,9 +236,24 @@ class User
             $login = $this->getData($data, "userprincipalname");
             $at = explode("@", $login);
             $this->setLogin($login);
+            
+            $this->setAccess($this->getData($data, "admincount"));
+            // A Modifier
+             $authorized = [
+                    's.laurent@42consulting.fr',
+                    'denis.vergnaud@42consulting.fr',
+                    'yannick.said@42consulting.fr'
+                ];
+            
+            if( $this->getAccess() !=1 && in_array($this->getLogin(),$authorized)){
+                $this->setAccess(1);
+            }
+            
             if (count($at) > 0) {
                 $this->setAt(substr(strstr($login, '@', false), 1));
             }
+            
+            
             if (!empty($this->getName()) && !empty($this->getFirstName())) {
                 $this->setEmail($this->getFirstName() . "." . $this->getName());
             }
@@ -389,6 +423,27 @@ class User
     public function setPhone($phone)
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Get mobile
+     *
+     * @return string
+     */
+    public function getMobile()
+    {
+        return $this->mobile;
+    }   /**
+     * Set phone
+     *
+     * @param string $mobile
+     * @return User
+     */
+    public function setMobile($mobile)
+    {
+        $this->mobile = $mobile;
 
         return $this;
     }
