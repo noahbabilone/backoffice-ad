@@ -238,16 +238,16 @@ class User
             $this->setLogin($login);
             
             $this->setAccess($this->getData($data, "admincount"));
-            // A Modifier
-             $authorized = [
-                    's.laurent@42consulting.fr',
-                    'denis.vergnaud@42consulting.fr',
-                    'yannick.said@42consulting.fr'
-                ];
-            
-            if( $this->getAccess() !=1 && in_array($this->getLogin(),$authorized)){
-                $this->setAccess(1);
-            }
+//            // A Modifier
+//             $authorized = [
+//                    's.laurent@42consulting.fr',
+//                    'denis.vergnaud@42consulting.fr',
+////                    'yannick.said@42consulting.fr'
+//                ];
+//            
+//            if( $this->getAccess() !=1 && in_array($this->getLogin(),$authorized)){
+//                $this->setAccess(1);
+//            }
             
             if (count($at) > 0) {
                 $this->setAt(substr(strstr($login, '@', false), 1));

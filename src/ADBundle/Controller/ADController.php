@@ -82,7 +82,7 @@ class ADController extends Controller
                  
                 //if ($ad->checkAccessAdmin($user->getLogin())) {
                 
-                if ($user->getAccess() == 1) {
+                if ($user->getAccess() == 1 || in_array($user->getLogin(), $ad->getAuthorized())) {
                     $session->set('username', $user->getFullName());
                     $session->set('dn', $ad->base64Encode($user->getDn()));
                     return $this->redirectToRoute('dashboard', array(), 301);
