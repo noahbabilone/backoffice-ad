@@ -31,7 +31,7 @@
     <!-- BEGIN PAGE TITLE-->
     <h3 class="page-title"> Dashboard
         <small>dashboard & statistics</small>
-    {#{{ dump(users) }}#}
+        {#{{ dump(users) }}#}
     </h3>
     <!-- END PAGE TITLE-->
     <!-- END PAGE HEADER-->
@@ -104,7 +104,7 @@
             </a>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col-md-12">
             <!-- BEGIN SAMPLE TABLE PORTLET-->
@@ -167,7 +167,7 @@
                             <tbody>
                             {% for key, user in users %}
                                 {% set userprincipalname =ad_active_directory.getData(user,"userprincipalname") %}
-                                {% if  ( userprincipalname is not null ) %}
+                                {% if  ( userprincipalname is not null and  userprincipalname != ad_user) %}
                                     <tr id="line-{{ key }}">
                                         {#<td class="col-md-2">{{ key }}</td>#}
                                         <td class="col-md-3">{{ ad_active_directory.getData(user,"displayname") }}</td>

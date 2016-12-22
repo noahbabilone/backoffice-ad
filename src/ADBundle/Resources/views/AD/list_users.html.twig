@@ -89,7 +89,7 @@
                             <tbody>
                             {% for key, user in users %}
                                 {% set userprincipalname =ad_active_directory.getData(user,"userprincipalname") %}
-                                {% if  ( userprincipalname is not null ) %}
+                                {% if  ( userprincipalname is not null and  userprincipalname != ad_user) %}
                                     <tr id="line-{{ key }}">
                                         {#<td class="col-md-2">{{ key }}</td>#}
                                         <td class="col-md-2">{{ ad_active_directory.getData(user,"samaccountname") }}</td>

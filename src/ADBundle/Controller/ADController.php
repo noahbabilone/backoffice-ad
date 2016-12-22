@@ -339,7 +339,7 @@ class ADController extends Controller
     }
 
     /**
-     * @Route("/edit-password/user={person}.html", name="edit_password")
+     * @Route("/edit/{person}.html", name="edit_password")
      * @param $person
      * @param Request $request
      * @return Response

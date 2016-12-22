@@ -3,7 +3,7 @@ $(function () {
     var regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)([-+!*$@%_\w]{8,15})$/;
     var regexPhone = /^0[1-9]([0-9]){8}$/;
     //var regexPhone = /^0[1-9]([-. ]?[0-9]{2}){4}$/;
-    var textPwd = "Le mot de passe doit comporter au moins 8 caractères et doit comporter au moins un chiffre ou des " +
+    var textPwd = "Le mot de passe doit comporter au moins 8 caractères, dont un chiffre ou des " +
         "caractères spéciaux (-+!*$@%_), une lettre en majuscule et en miniscule";
 
     $('.password').tooltip({
@@ -12,6 +12,20 @@ $(function () {
         'title': textPwd
     });
     $('[data-toggle="tooltip"]').tooltip();
+
+    $("#btn_show_pwd").click(function () {
+        if ($("#user_edit_password_password").attr('type') == "text") {
+            $("#user_edit_password_password").attr('type', 'password')
+            $("#btn_show_pwd").text("Afficher");
+        } else {
+            $("#user_edit_password_password").attr('type', 'text')
+            $("#btn_show_pwd").text("Masquer");
+        }
+
+    }).blur(function () {
+        $("#user_edit_password_password").attr('type', 'password')
+        $("#btn_show_pwd").text("Afficher");
+    })
 
     $('#save-edit-info').click(function (e) {
         var response = grecaptcha.getResponse();

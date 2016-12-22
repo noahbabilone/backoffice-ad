@@ -53,12 +53,11 @@
 
             {% if groups is defined %}
                 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                    {% for  key, tab in groups %}
-                        {% for  group in tab %}
+                    {% for tab in groups %}
+                        {% for  key, group in tab %}
                             {% if group|length >1 %}
                                 {% set groupTitle =ad_active_directory.getData(group,"cn") %}
                                 {% set arrayMembers =ad_active_directory.getArray(group,"member") %}
-
                                 <div class="panel panel-default">
                                     <div class="panel-heading" role="tab" id="group-{{ key }}">
                                         <a class="collapsed" role="button" data-toggle="collapse"
@@ -68,7 +67,7 @@
 
                                             <h6 class="panel-title">
                                                 {{ groupTitle }} <span
-                                                        class="badge badge-info pull-right">{{ arrayMembers| length -1 }}</span>
+                                                        class="badge badge-info pull-right">{% if arrayMembers| length >0 %}{{ arrayMembers| length -1 }}{% else %}0{% endif %}</span>
                                             </h6>
                                         </a>
                                     </div>
