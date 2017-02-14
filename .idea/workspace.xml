@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="da979315-245f-4eb1-bf5e-e2d5ed90c171" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ADBundle/Resources/views/AD/edit-info-user.html.twig" afterPath="$PROJECT_DIR$/src/ADBundle/Resources/views/AD/edit-info-user.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ADBundle/Resources/views/AD/edit-pwd-user.html.twig" afterPath="$PROJECT_DIR$/src/ADBundle/Resources/views/AD/edit-pwd-user.html.twig" />
     </list>
     <ignored path="active_derectory.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -22,7 +23,7 @@
     <favorites_list name="active_derectory" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.45064378">
+    <splitter split-orientation="horizontal" split-proportion="0.7321888">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="services.yml" pinned="false" current-in-tab="false">
@@ -55,31 +56,33 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="edit-info-user.html.twig" pinned="false" current-in-tab="true">
+          <file leaf-file-name="main.html.twig" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/ADBundle/Resources/views/main.html.twig">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="5140">
+                  <caret line="418" column="0" selection-start-line="418" selection-start-column="0" selection-end-line="418" selection-end-column="0" />
+                  <folding>
+                    <element signature="e#11342#20308#0#Twig" expanded="false" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="edit-info-user.html.twig" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/ADBundle/Resources/views/AD/edit-info-user.html.twig">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="240">
-                  <caret line="87" column="90" selection-start-line="87" selection-start-column="90" selection-end-line="87" selection-end-column="90" />
+                <state relative-caret-position="300">
+                  <caret line="16" column="25" selection-start-line="16" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="tables.css" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/ADBundle/Resources/public/css/tables.css">
+          <file leaf-file-name="edit-pwd-user.html.twig" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/ADBundle/Resources/views/AD/edit-pwd-user.html.twig">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="3300">
-                  <caret line="165" column="35" selection-start-line="165" selection-start-column="35" selection-end-line="165" selection-end-column="35" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="base.html.twig" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/Resources/views/base.html.twig">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="240">
-                  <caret line="12" column="28" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="28" />
+                <state relative-caret-position="320">
+                  <caret line="16" column="50" selection-start-line="16" selection-start-column="50" selection-end-line="16" selection-end-column="50" />
                   <folding />
                 </state>
               </provider>
@@ -167,16 +170,6 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="routing.yml" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/config/routing.yml">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="440">
-                  <caret line="22" column="20" selection-start-line="22" selection-start-column="20" selection-end-line="22" selection-end-column="20" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
           <file leaf-file-name="ActiveDirectory.php" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/ADBundle/Service/ActiveDirectory.php">
               <provider selected="true" editor-type-id="text-editor">
@@ -199,6 +192,16 @@
               </provider>
             </entry>
           </file>
+          <file leaf-file-name="base.html.twig" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/app/Resources/views/base.html.twig">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="240">
+                  <caret line="12" column="28" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="28" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
           <file leaf-file-name="parameters.yml" pinned="true" current-in-tab="false">
             <entry file="remoteDeploymentFS://&lt;337f779e-7687-4b5d-afe8-48f883701797&gt;/app/config/parameters.yml">
               <provider selected="true" editor-type-id="text-editor">
@@ -209,7 +212,7 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="app.php" pinned="false" current-in-tab="true">
+          <file leaf-file-name="app.php" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/web/app.php">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="600">
@@ -222,17 +225,17 @@
           <file leaf-file-name="index.html.twig" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/ADBundle/Resources/views/AD/index.html.twig">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="4440">
-                  <caret line="222" column="20" selection-start-line="222" selection-start-column="20" selection-end-line="222" selection-end-column="20" />
+                <state relative-caret-position="400">
+                  <caret line="20" column="43" selection-start-line="20" selection-start-column="34" selection-end-line="20" selection-end-column="43" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="list_users.html.twig" pinned="false" current-in-tab="false">
+          <file leaf-file-name="list_users.html.twig" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/ADBundle/Resources/views/AD/list_users.html.twig">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="320">
+                <state relative-caret-position="1760">
                   <caret line="98" column="25" selection-start-line="98" selection-start-column="25" selection-end-line="98" selection-end-column="25" />
                   <folding />
                 </state>
@@ -286,7 +289,6 @@
         <option value="&lt;23a9962c-f8c5-45aa-ada9-c8ca5b72e099&gt;/app/config/config.yml" />
         <option value="&lt;23a9962c-f8c5-45aa-ada9-c8ca5b72e099&gt;/src/ADBundle/Service/ActiveDirectory.php" />
         <option value="$PROJECT_DIR$/src/ADBundle/Entity/User.php" />
-        <option value="$PROJECT_DIR$/src/ADBundle/Resources/views/AD/edit-pwd-user.html.twig" />
         <option value="$PROJECT_DIR$/src/ADBundle/Resources/public/js/app.js" />
         <option value="$PROJECT_DIR$/src/ADBundle/Resources/public/css/tables.css" />
         <option value="$PROJECT_DIR$/app/config/config.yml" />
@@ -300,6 +302,7 @@
         <option value="$PROJECT_DIR$/src/ADBundle/Controller/ADController.php" />
         <option value="$PROJECT_DIR$/src/ADBundle/Service/ActiveDirectory.php" />
         <option value="$PROJECT_DIR$/src/ADBundle/Resources/views/AD/edit-info-user.html.twig" />
+        <option value="$PROJECT_DIR$/src/ADBundle/Resources/views/AD/edit-pwd-user.html.twig" />
       </list>
     </option>
   </component>
@@ -1005,12 +1008,12 @@
       <workItem from="1486638239653" duration="1894000" />
       <workItem from="1486715864479" duration="11614000" />
       <workItem from="1486768977671" duration="32000" />
-      <workItem from="1487063582713" duration="1214000" />
+      <workItem from="1487063582713" duration="1439000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="56682000" />
+    <option name="totallyTimeSpent" value="56907000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1268,13 +1271,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ADBundle/Resources/views/AD/edit-pwd-user.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2120">
-          <caret line="106" column="83" selection-start-line="106" selection-start-column="71" selection-end-line="106" selection-end-column="83" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ADBundle/Resources/public/js/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -1334,44 +1330,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ADBundle/Resources/views/main.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5340">
-          <caret line="418" column="0" selection-start-line="418" selection-start-column="0" selection-end-line="418" selection-end-column="0" />
-          <folding>
-            <element signature="e#11342#20308#0#Twig" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/base.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="12" column="28" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ADBundle/Resources/public/css/tables.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3300">
           <caret line="165" column="35" selection-start-line="165" selection-start-column="35" selection-end-line="165" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ADBundle/Resources/config/services.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="3" column="103" selection-start-line="3" selection-start-column="103" selection-end-line="3" selection-end-column="103" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ADBundle/Resources/views/AD/index.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4440">
-          <caret line="222" column="20" selection-start-line="222" selection-start-column="20" selection-end-line="222" selection-end-column="20" />
           <folding />
         </state>
       </provider>
@@ -1428,14 +1390,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ADBundle/Resources/views/AD/list_users.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="98" column="25" selection-start-line="98" selection-start-column="25" selection-end-line="98" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ADBundle/Service/ActiveDirectory.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="400">
@@ -1466,10 +1420,60 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ADBundle/Resources/views/AD/edit-info-user.html.twig">
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/base.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
-          <caret line="87" column="90" selection-start-line="87" selection-start-column="90" selection-end-line="87" selection-end-column="90" />
+          <caret line="12" column="28" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ADBundle/Resources/views/AD/index.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="20" column="43" selection-start-line="20" selection-start-column="34" selection-end-line="20" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ADBundle/Resources/views/AD/list_users.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1760">
+          <caret line="98" column="25" selection-start-line="98" selection-start-column="25" selection-end-line="98" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ADBundle/Resources/config/services.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="3" column="103" selection-start-line="3" selection-start-column="103" selection-end-line="3" selection-end-column="103" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ADBundle/Resources/views/main.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5140">
+          <caret line="418" column="0" selection-start-line="418" selection-start-column="0" selection-end-line="418" selection-end-column="0" />
+          <folding>
+            <element signature="e#11342#20308#0#Twig" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ADBundle/Resources/views/AD/edit-info-user.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="16" column="25" selection-start-line="16" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ADBundle/Resources/views/AD/edit-pwd-user.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="16" column="50" selection-start-line="16" selection-start-column="50" selection-end-line="16" selection-end-column="50" />
           <folding />
         </state>
       </provider>
