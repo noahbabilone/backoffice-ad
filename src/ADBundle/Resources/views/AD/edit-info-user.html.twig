@@ -85,7 +85,7 @@
                                     <div class="input-group input-field-edit">
                                         <span class="form-control-feedback" aria-hidden="true"></span>
 
-                                        <div class="input-group-addon"><i class="fa fa-phone fa-fw"></i>
+                                        <div class="input-group-addon"><i class="fa fa-fax fa-fw"></i>
                                             {#Mob : +33 (0)#}
                                         </div>
                                         {{ form_widget(form.phone) }}
@@ -95,14 +95,14 @@
                             {% endif %}
 
                             {% if form.mobile is defined %}
-                                <div class="col-sm-6">
-                                    <div class="form-group has-feedback">
-                                        {{ form_label(form.mobile) }}
+                               <div class="form-group">
+                                    {{ form_label(form.mobile) }}
+                                    <div class="input-group input-field-edit">
+                                        <span class="form-control-feedback" aria-hidden="true"></span>
 
-                                        <div class="input-icon">
-                                            <i class="fa fa-mobile"></i>
-                                            {{ form_widget(form.mobile) }}
+                                        <div class="input-group-addon"><i class="fa fa-phone fa-fw"></i>
                                         </div>
+                                        {{ form_widget(form.mobile) }}
                                     </div>
                                 </div>
                             {% endif %}
