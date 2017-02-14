@@ -27,12 +27,14 @@ class ADController extends Controller
     {
 
         $ad = $this->get("ad_active_directory");
-        
+
         if (!$this->get('session')->has('user')) {
             return $this->redirectToRoute('login', array(), 301);
         } else if ($ad->checkAccessAdmin($ad->base64Decode($this->get('session')->get('user'))) == FALSE) {
+            return $this->redirectToRoute('edit_password', array('person' => $this->get('session')->get('user')), 301);
+        } /*else {
             return $this->redirectToRoute('logout', array(), 301);
-        }
+        }*/
 
         $ad = $this->get("ad_active_directory");
         $users = $ad->getAllUser();
@@ -79,9 +81,9 @@ class ADController extends Controller
                 $session->set('user', $ad->base64Encode($user->getLogin()));
                 $adUser = $ad->getUserByUserPrincipalName($user->getLogin());
                 $user->init($adUser);
-                 
+
                 //if ($ad->checkAccessAdmin($user->getLogin())) {
-                
+
                 if ($user->getAccess() == 1 || in_array($user->getLogin(), $ad->getAuthorized())) {
                     $session->set('username', $user->getFullName());
                     $session->set('dn', $ad->base64Encode($user->getDn()));
