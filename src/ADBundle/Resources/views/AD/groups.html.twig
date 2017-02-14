@@ -22,7 +22,7 @@
                 <i class="fa fa-circle"></i>
             </li>
             <li>
-                <span>Listes Groupes</span>
+                <span>Liste Groupes</span>
             </li>
         </ul>
     </div>
@@ -39,7 +39,7 @@
         <div class="portlet-title">
             <div class="caption">
                 <i class="fa fa-users fa-fw font-green"></i>
-                <span class="caption-subject font-green bold uppercase">Listes des Groupes</span>
+                <span class="caption-subject font-green bold uppercase">Liste des Groupes</span>
             </div>
 
             <div class="tools">
@@ -94,23 +94,24 @@
 
                                                         {% set user =ad_active_directory.getUser(userMemberDn) %}
                                                         {% set userName = ad_active_directory.getOneData(user,"samaccountname") %}
-
-                                                        <tr id="line-{{ groupTitle }}-{{ userName }}-{{ keyUser }}">
-                                                            <td class="col-md-2">{{ userName }}</td>
-                                                            <td class="col-md-3">{{ ad_active_directory.getOneData(user,"displayname") }}</td>
-                                                            <td class="col-md-4">{{ ad_active_directory.getOneData(user,"userprincipalname") }}</td>
-                                                            <td class="col-md-1 text-center">
-                                                                <a href=""
-                                                                   class="btn btn-xs red btn-outline btn-circle btn-remove"
-                                                                   id="{{ userName }}"
-                                                                   data-action="remove-group"
-                                                                   data-groupName="{{ groupTitle }}"
-                                                                   data-dnGroup="{{ ad_active_directory.getData(group,"distinguishedname") }}"
-                                                                   data-dnUser="{{ userMemberDn }}"
-                                                                   data-line="line-{{ groupTitle }}-{{ userName }}-{{ keyUser }}"><i
-                                                                            class="fa fa-trash-o fa-fw"></i> Supp</a>
-                                                            </td>
-                                                        </tr>
+                                                        
+                                                            <tr id="line-{{ groupTitle }}-{{ userName }}-{{ keyUser }}">
+                                                                <td class="col-md-2">{{ userName }}</td>
+                                                                <td class="col-md-3">{{ ad_active_directory.getOneData(user,"displayname") }}</td>
+                                                                <td class="col-md-4">{{ ad_active_directory.getOneData(user,"userprincipalname") }}</td>
+                                                                <td class="col-md-1 text-center">
+                                                                    <a href=""
+                                                                       class="btn btn-xs red btn-outline btn-circle btn-remove"
+                                                                       id="{{ userName }}"
+                                                                       data-action="remove-group"
+                                                                       data-groupName="{{ groupTitle }}"
+                                                                       data-dnGroup="{{ ad_active_directory.getData(group,"distinguishedname") }}"
+                                                                       data-dnUser="{{ userMemberDn }}"
+                                                                       data-line="line-{{ groupTitle }}-{{ userName }}-{{ keyUser }}"><i
+                                                                                class="fa fa-trash-o fa-fw"></i>
+                                                                        Supp</a>
+                                                                </td>
+                                                            </tr>
                                                     {% endif %}
                                                 {% endfor %}
                                                 </tbody>

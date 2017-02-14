@@ -184,7 +184,7 @@ class ADController extends Controller
     }
 
     /**
-     * @Route("/users-filter-{filter}.html", name="users_filter")
+     * @Route("/users/filter-{filter}.html", name="users_filter")
      * @param $filter
      * @return Response
      */
