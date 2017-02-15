@@ -222,11 +222,13 @@
 
                     {% if groups is defined %}
                         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            {{ dump(groups) }}
                             {% for tab in groups %}
                                 {% for  key, group in tab %}
-                                    {% if group|length >1 %}
-                                        {% set groupTitle =ad_active_directory.getData(group,"cn") %}
-                                        {% set arrayMembers =ad_active_directory.getArray(group,"member") %}
+                                    {% set groupTitle =ad_active_directory.getData(group,"cn") %}
+                                    {% set arrayMembers =ad_active_directory.getArray(group,"member") %}
+                                    {% if group|length >1 and groupTitle %}
+
                                         <div class="panel panel-default">
                                             <div class="panel-heading" role="tab" id="group-{{ key }}">
                                                 <a class="collapsed" role="button" data-toggle="collapse"
