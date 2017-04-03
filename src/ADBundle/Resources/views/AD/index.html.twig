@@ -222,7 +222,6 @@
 
                     {% if groups is defined %}
                         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                            {{ dump(groups) }}
                             {% for tab in groups %}
                                 {% for  key, group in tab %}
                                     {% set groupTitle =ad_active_directory.getData(group,"cn") %}
