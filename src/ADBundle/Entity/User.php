@@ -123,7 +123,13 @@ class User
      *
      * @ORM\Column(name="service", type="string", length=255)
      */
-    private $service;
+    private $service;  
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="licence", type="string", length=255)
+     */
+    private $licence;
     /**
      * @var string
      *
@@ -595,6 +601,28 @@ class User
     public function getService()
     {
         return $this->service;
+    }
+    /**
+     * Set service
+     *
+     * @param string $licence
+     * @return User
+     */
+    public function setLicence($licence)
+    {
+
+        $this->licence = $licence;
+        return $this;
+    }
+
+    /**
+     * Get licence
+     *
+     * @return string
+     */
+    public function getLicence()
+    {
+        return $this->licence;
     }
 
     /**

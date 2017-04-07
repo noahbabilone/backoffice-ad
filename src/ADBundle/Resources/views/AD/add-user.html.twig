@@ -149,13 +149,24 @@
                                 {% endif %}
 
                                 {% if form.login is defined %}
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-6">
                                         <div class="form-group has-feedback">
                                             {{ form_label(form.login) }}
                                             <div class="input-icon">
                                                 <i class="fa fa-user"></i>
                                                 {{ form_widget(form.login) }}
                                             </div>
+                                        </div>
+                                    </div>
+                                {% endif %}  
+                                {% if form.licence is defined %}
+                                    <div class="col-sm-6">
+                                        <div class="form-group has-feedback">
+                                            {{ form_label(form.licence) }}
+                                            {#<div class="input-icon">#}
+                                                {#<i class="fa fa-certificate"></i>#}
+                                                {{ form_widget(form.licence) }}
+                                            {#</div>#}
                                         </div>
                                     </div>
                                 {% endif %}

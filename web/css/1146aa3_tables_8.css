@@ -1,0 +1,175 @@
+.table td {
+    vertical-align: middle !important;
+    /*vertical-align: middle !important;*/
+}
+
+.table th i {
+    transition: all .5s;
+}
+
+.table thead > tr > th {
+    /*padding: 15px 5px !important;*/
+    padding: 5px 5px;
+}
+
+.table .td-csa i {
+    color: #5cb85c;
+}
+
+.table .card-line i {
+    color: #5cb85c;
+}
+
+.table span.ranking {
+    display: inline-block;
+    font-size: 10px;
+    background-color: #222222;
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50% !important;
+    padding-top: 5px;
+    font-weight: 200;
+}
+
+.table span.barre {
+    display: block;
+    text-decoration: line-through;
+    font-size: 10px;
+}
+
+.table {
+    overflow: hidden;
+}
+
+table th, table td {
+    text-align: center;
+}
+
+.table .menu-table > hr {
+    border-color: white;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+.table tbody tr {
+    /*border-left: 4px solid transparent;*/
+    /*transition: all .5s;*/
+}
+
+.table tbody tr.tr-active, tbody tr.tr-active:hover {
+    border-color: #32b2bf;
+    background-color: #F3F4F6 !important;
+}
+
+.table thead > tr {
+    background-color: #36C6D3 !important;
+    color: white;
+    padding: 10px 0;
+}
+
+.table thead tr a {
+    color: #ffffff !important;
+}
+
+.table > thead > tr > th {
+    border-bottom-color: #32b2bf;
+}
+
+.table > thead > tr > th:hover {
+    background-color: #36C6D3;
+}
+
+.table thead th i {
+    color: white;
+}
+
+.table th, .table td {
+    font-weight: 200;
+    /*text-transform: capitalize;*/
+}
+
+.table tr {
+    position: relative;
+    /*cursor: pointer;*/
+}
+
+.table tbody > tr {
+    /*cursor: pointer;*/
+}
+
+.table tr th a:hover {
+    text-decoration: none;
+}
+
+.btn-contextual {
+    width: 33px;
+    height: 33px;
+    border-radius: 50% !important;
+    transition: all .5s;
+}
+
+.btn-contextual:hover {
+    transform: rotateZ(90deg);
+    border-color: #36C6D3;
+    background-color: white;
+    color: #36C6D3;
+}
+
+.td-image {
+    padding: 0 !important;
+}
+
+.td-image > img {
+    width: 2.3vw !important;
+}
+
+.td-image-landscape {
+    padding: 0 !important;
+}
+
+.td-image-landscape img {
+    height: 2.3vw !important;
+    /*width: 25%;*/
+
+}
+
+.pagination > li > a {
+    color: #393939;
+}
+
+.pagination > .active > a, .pagination > .active > a:focus,
+.pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus,
+.pagination > .active > span:hover {
+    background-color: #32b2bf !important;
+    border-color: #32b2bf;
+    color: #fff;
+}
+
+.img_preview {
+    cursor: pointer !important;
+}
+
+
+table .dataTable.no-footer {
+    border-bottom: 1px solid #32b2bf;
+}
+
+table.dataTable thead th, table.dataTable thead td,
+table.dataTable.no-footer {
+    border-bottom-color: #32b2bf !important;
+
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: #32b2bf !important;
+    border: 1px solid #32b2bf !important;
+    color: #ffffff !important;
+}
+
+.dataTables_paginate .dataTables_wrapper .dataTables_paginate .paginate_button. current{
+    color: #fff !important;
+}
+
+
