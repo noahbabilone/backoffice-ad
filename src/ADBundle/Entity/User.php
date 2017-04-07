@@ -190,6 +190,7 @@ class User
             $this->setAddress($this->getData($data, "streetaddress"));
             $this->setCity($this->getData($data, "l"));
             $this->setPostalCode($this->getData($data, "postalcode"));
+            $this->setLicence($this->getData($data, "employeetype"));
             $country = $this->getData($data, "c");
             if ($country == "FR") {
                 $country = "France";

@@ -44,7 +44,7 @@
                 <span class="caption-subject font-red-sunglo bold uppercase"> <i class="icon-plus font-red-sunglo"></i> Formualire</span>
                 <span class="caption-helper">...</span>
             </div>
-       
+
             <div class="tools">
                 <a href="javascript:;" class="collapse" data-original-title="Réduire" title="Réduire"> </a>
                 <a href="javascript:;" class="reload" data-original-title="Recharger" title="Recharger"> </a>
@@ -80,7 +80,7 @@
 
                                 <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                 <span class="sr-only">Error:</span>
-                                    Erreurr lors de la modification.
+                                Erreurr lors de la modification.
                             </div>
                         {% endif %}
                         {% if error is defined and error %}
@@ -150,14 +150,26 @@
                                     </div>
                                 {% endif %}
 
+
                                 {% if form.login is defined %}
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-6">
                                         <div class="form-group has-feedback">
                                             {{ form_label(form.login) }}
                                             <div class="input-icon">
                                                 <i class="fa fa-user"></i>
                                                 {{ form_widget(form.login) }}
                                             </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                {% if form.licence is defined %}
+                                    <div class="col-sm-6">
+                                        <div class="form-group has-feedback">
+                                            {{ form_label(form.licence) }}
+                                            {#<div class="input-icon">#}
+                                            {#<i class="fa fa-certificate"></i>#}
+                                            {{ form_widget(form.licence) }}
+                                            {#</div>#}
                                         </div>
                                     </div>
                                 {% endif %}
@@ -365,14 +377,13 @@
 
         </div>
     </div>
-    
+
 {% endblock %}
     {% block javascripts %}
         {{ parent() }}
         {% javascripts
         "bundles/ad/themes/global/plugins/bootstrap-select/js/bootstrap-select.min.js"
-        "bundles/ad/themes/pages/scripts/components-bootstrap-select.js" 
-        %}
+        "bundles/ad/themes/pages/scripts/components-bootstrap-select.js" %}
         <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
 

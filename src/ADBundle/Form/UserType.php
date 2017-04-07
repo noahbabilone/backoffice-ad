@@ -157,6 +157,8 @@ class UserType extends AbstractType
             )
             ->add('licence', 'choice', array(
                     'label' => 'Licence',
+                    'data' => null,
+                    'required' => false,
                     'choices' => array(
                         "K1" => "K1 Webmail",
                         "E3" => "E3 Pack Office 2016",
