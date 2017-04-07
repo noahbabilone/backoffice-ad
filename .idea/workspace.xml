@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="da979315-245f-4eb1-bf5e-e2d5ed90c171" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ADBundle/Entity/User.php" afterPath="$PROJECT_DIR$/src/ADBundle/Entity/User.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ADBundle/Form/UserType.php" afterPath="$PROJECT_DIR$/src/ADBundle/Form/UserType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ADBundle/Resources/views/AD/edit-user.html.twig" afterPath="$PROJECT_DIR$/src/ADBundle/Resources/views/AD/edit-user.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ADBundle/Service/ActiveDirectory.php" afterPath="$PROJECT_DIR$/src/ADBundle/Service/ActiveDirectory.php" />
     </list>
     <ignored path="active_derectory.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -41,8 +38,8 @@
           <file leaf-file-name="User.php" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/ADBundle/Entity/User.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="249">
-                  <caret line="192" column="65" lean-forward="false" selection-start-line="192" selection-start-column="53" selection-end-line="192" selection-end-column="65" />
+                <state relative-caret-position="789">
+                  <caret line="219" column="16" lean-forward="true" selection-start-line="219" selection-start-column="16" selection-end-line="219" selection-end-column="16" />
                   <folding />
                 </state>
               </provider>
@@ -144,10 +141,10 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="ActiveDirectory.php" pinned="false" current-in-tab="true">
+          <file leaf-file-name="ActiveDirectory.php" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/ADBundle/Service/ActiveDirectory.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="380">
+                <state relative-caret-position="-1780">
                   <caret line="44" column="38" lean-forward="false" selection-start-line="44" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
                   <folding />
                 </state>
@@ -174,11 +171,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="UserType.php" pinned="false" current-in-tab="false">
+          <file leaf-file-name="UserType.php" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/ADBundle/Form/UserType.php">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="202">
-                  <caret line="152" column="51" lean-forward="true" selection-start-line="152" selection-start-column="51" selection-end-line="152" selection-end-column="51" />
+                <state relative-caret-position="342">
+                  <caret line="159" column="37" lean-forward="false" selection-start-line="159" selection-start-column="0" selection-end-line="160" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -305,9 +302,9 @@
         <option value="$PROJECT_DIR$/src/ADBundle/Controller/ADController.php" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/ADBundle/Resources/views/AD/edit-user.html.twig" />
-        <option value="$PROJECT_DIR$/src/ADBundle/Form/UserType.php" />
         <option value="$PROJECT_DIR$/src/ADBundle/Entity/User.php" />
         <option value="$PROJECT_DIR$/src/ADBundle/Service/ActiveDirectory.php" />
+        <option value="$PROJECT_DIR$/src/ADBundle/Form/UserType.php" />
       </list>
     </option>
   </component>
@@ -1003,12 +1000,12 @@
       <workItem from="1486768977671" duration="32000" />
       <workItem from="1487063582713" duration="4341000" />
       <workItem from="1491206793664" duration="387000" />
-      <workItem from="1491558736588" duration="4428000" />
+      <workItem from="1491558736588" duration="4550000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="64624000" />
+    <option name="totallyTimeSpent" value="64746000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1466,26 +1463,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/ADBundle/Service/ActiveDirectory.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1780">
+          <caret line="44" column="38" lean-forward="false" selection-start-line="44" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ADBundle/Entity/User.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="249">
-          <caret line="192" column="65" lean-forward="false" selection-start-line="192" selection-start-column="53" selection-end-line="192" selection-end-column="65" />
+        <state relative-caret-position="789">
+          <caret line="219" column="16" lean-forward="true" selection-start-line="219" selection-start-column="16" selection-end-line="219" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ADBundle/Form/UserType.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="152" column="51" lean-forward="true" selection-start-line="152" selection-start-column="51" selection-end-line="152" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ADBundle/Service/ActiveDirectory.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="44" column="38" lean-forward="false" selection-start-line="44" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+        <state relative-caret-position="342">
+          <caret line="159" column="37" lean-forward="false" selection-start-line="159" selection-start-column="0" selection-end-line="160" selection-end-column="0" />
           <folding />
         </state>
       </provider>

@@ -157,7 +157,7 @@ class UserType extends AbstractType
             )
             ->add('licence', 'choice', array(
                     'label' => 'Licence',
-                    'data' => null,
+//                    'data' => null,
                     'required' => false,
                     'choices' => array(
                         "K1" => "K1 Webmail",
