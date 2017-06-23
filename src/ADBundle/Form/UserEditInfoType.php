@@ -25,6 +25,7 @@ class UserEditInfoType extends AbstractType
             ->remove('city')
             ->remove('country')
             ->remove('email')
+            ->remove('licence')
             ->remove('description')
         ;
     }
