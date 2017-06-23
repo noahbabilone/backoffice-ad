@@ -9,8 +9,7 @@
 /build/
 /vendor/
 /bin/
-.idea/workspace.xml
-.idea/*
 /composer.phar
 /web/css
 /web/js
+.idea
